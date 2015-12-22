@@ -3,6 +3,6 @@
 #
 
 # Hook up all sysutils ports
-SUBDIR=	arch
+SUBDIR=	arch lsx
 
 .include <bsd.subdir.mk>

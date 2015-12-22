@@ -1,0 +1,6 @@
+Utility that lists the executables in a directory tree.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+###
+bin/lsx
+man/man1/lsx.0

@@ -1,0 +1,19 @@
+lsx - list executables
+======================
+Prints all executable file names of given absolute paths to standard output.
+
+
+Installation
+------------
+Edit config.mk to match your local setup (lsx is installed into
+the /usr/local namespace by default).
+
+Afterwards enter the following command to build and install lsx (if
+necessary as root):
+
+    make clean install
+
+
+Running lsx
+-----------
+Simply invoke the 'lsx' with arbitrary paths as arguments.
