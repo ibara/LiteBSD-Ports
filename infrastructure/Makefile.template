@@ -1,0 +1,13 @@
+# LiteBSD Ports Makefile
+
+V=	# Must have a value!
+PROG=	myprogram
+SRCS=	source1.c source2.c \
+	source3.c source4.c
+
+# I like to add these CFLAGS and LDFLAGS as I find
+# you often save 15K-30K per program with them.
+CFLAGS+=-ffunction-sections -fdata-sections
+LDFLAGS+=-Wl,--gc-sections
+
+.include <bsd.port.mk>
