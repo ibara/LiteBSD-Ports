@@ -1,0 +1,36 @@
+FAQ
+===
+
+Where is IRC command xy (ignore etc.)?
+--------------------------------------
+ii is for advanced users, please use standard tools like awk, sed and grep for
+this. This can be done easily and will not bloat the code.
+
+Where is a graphical interface?
+-------------------------------
+Basically ii follows the UNIX philosophy so it is only file based. But it
+should be easy to build different interface because they only have to handle
+the FIFOs and output files. Feel free to implement or wait until we have done
+this. Actually I use ii in combination with vim, multitail and screen and it works
+like a charm.
+
+Which commands are supported?
+-----------------------------
+j (join or msg), t (topic), a (away), n (nick), l (leave). The missing are
+obsolete or can be easily used by typing the IRC commands itself (i.e. /WHO
+instead of /who).
+
+How can I recognize queries?
+----------------------------
+ii itself doesn't support this but the queries.sh script is an example
+of how to get the new and changed files in your irc directory.
+To get an instant notice of a new file other mechanisms like inotify/dnotify
+could be used as well but I was too lazy to try it out since the script
+is enough for me.
+
+What other fancy stuff can I do with ii?
+----------------------------------------
+It is very easy to write irc bots in ii:
+tail -f \#/out | while read foo; do name=echo $foo | awk '{print $2}' | sed 's,<\\(.*\\)>,\\1,'; if 0 -eq expr $RANDOM % 10 then echo "$name: WHAT??" ; fi; done
+This will just spam a channel but think about using nagios2irc or you can
+use ii to generate channel stats. Your imagination should be boundless.

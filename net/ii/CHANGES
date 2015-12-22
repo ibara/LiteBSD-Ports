@@ -1,0 +1,42 @@
+1.7 (2013-01-05)
+    - -k now specifies an environment variable that contains the
+      server key. This behaviour has been changed in order to not
+      expose the password in the process list.
+    - Fix parsing of JOIN messages for certain servers.
+      Thanks Ivan Kanakarakis!
+    - Use , rather than _ for slash characters in channel names.
+      As per RFC , is not allowed in a channel name, while _ is.
+      Thanks plomplomplom and Nils Dagsson Moskopp!
+
+1.6 (2011-01-31):
+    - fix regression introduced for handling unknown commands
+
+1.5 (2011-01-24):
+    - fix channel name comparison in add_channel(), compare lowercase
+      to prevent leaking file descriptors in the long run => Thanks samurai!
+    - only handle commands ii explicitely understands and treat the rest
+      as raw irc (only worked for raw commands in capital lettersin the past) => Thanks samurai!
+    - create in FIFO on receiving a privmsg directly instead of requiring a new
+      /j command first => Thanks Evan Gates
+      this also implies that in FIFOs aren't deleted on channel leaves any longer because
+      this itself creates a channel event again which in turn would recreate the file
+    - minor changes
+
+1.4 (2008-08-09):
+    - fix directory traversal on servers that support SAJOIN
+      NOTE: not marking as security relevant as it is only possible to
+      create directories outside (which is of course annoying) of the irc
+      hierarchy but not overwriting arbitrary files with the channel name.
+    - documentation fixes
+    - general cleanup
+
+1.3 (2007-07-14):
+    - server messages about users (QUIT,JOIN) will no longer
+      go to the user directories but to the server out file to
+      give an easy method to monitor it and to prevent spamming
+      the irc directory.
+
+1.2 (2007-06-23):
+    - Exit on channel creation failure, thanks Michael Prokop
+    - Implemented joining of password protected channels
+    - Removed -v option from the manpage since it's not implemented

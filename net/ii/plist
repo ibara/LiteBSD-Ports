@@ -1,0 +1,6 @@
+Minimalist FIFO and filesystem-based IRC client
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+###
+bin/ii
+man/man1/ii.0

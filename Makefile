@@ -3,6 +3,6 @@
 #
 
 # Hook up all directories
-SUBDIR=	sysutils
+SUBDIR=	net sysutils
 
 .include <bsd.subdir.mk>
