@@ -1,0 +1,8 @@
+Simple program from OpenBSD that prints the host's CPU architecture.
+Maintainer: Brian Callahan <bcallah@openbsd.org>
+License: BSD
+###
+bin/arch
+bin/machine
+man/man1/arch.0
+man/man1/machine.0
