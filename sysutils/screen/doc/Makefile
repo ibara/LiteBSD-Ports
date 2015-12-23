@@ -1,0 +1,54 @@
+# Generated automatically from Makefile.in by configure.
+# Makefile for Screen documentation
+
+srcdir = .
+
+prefix = /usr/local
+mandir = $(prefix)/man
+infodir = $(prefix)/info
+
+INSTALL = /usr/bin/install -c
+INSTALL_DATA = ${INSTALL} -m 644
+MAKEINFO = makeinfo
+TEXI2DVI = texi2dvi
+
+SHELL = /bin/sh
+
+all: screen.info
+
+dvi screen.dvi: screen.texinfo mostlyclean
+	$(TEXI2DVI) $(srcdir)/screen.texinfo
+
+info screen.info: screen.texinfo
+	$(MAKEINFO) $(srcdir)/screen.texinfo -o screen.info
+
+install: installdirs
+	$(INSTALL_DATA) $(srcdir)/screen.1 $(mandir)/man1/screen.1
+	-$(MAKE) screen.info
+	-if test -f screen.info; then d=.; else d=$(srcdir); fi; \
+	if test -f $$d/screen.info; then \
+	for f in $$d/screen.info*; do $(INSTALL_DATA) $$f $(infodir)/$$f;done; \
+	if $(SHELL) -c 'install-info --version' >/dev/null 2>&1; then \
+	  install-info --infodir=$(infodir) $$d/screen.info; \
+	else true; fi; \
+	fi
+
+uninstall:
+	rm -f $(mandir)/man1/screen.1
+	rm -f $(infodir)/screen.info*
+
+installdirs:
+	$(srcdir)/../etc/mkinstalldirs $(mandir)/man1 $(infodir)
+
+mostlyclean:
+	-rm -f *.cp *.cps *.fn *.fns *.ky *.kys *.pg *.tp *.vr
+	-rm -f *.log *.aux *.toc *~
+
+clean distclean clobber: mostlyclean
+	-rm -f *.dvi
+
+realclean: clean
+	-rm -f *.info*
+
+check installcheck:
+

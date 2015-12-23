@@ -1,0 +1,1026 @@
+dnl Process this file with autoconf to produce a configure script.
+dnl
+dnl $Id: configure.in,v 1.17 1994/05/31 12:31:46 mlschroe Exp $ FAU
+dnl
+dnl Many thanks to David MacKenzie for writing autoconf and
+dnl providing a sample configure.in file for screen.
+dnl
+AC_REVISION($Revision: 1.17 $)dnl
+AC_INIT(screen.c)
+AC_CONFIG_HEADER(config.h)
+
+dnl
+dnl Define some useful macros
+dnl
+define(AC_PROGRAM_SOURCE,
+[AC_REQUIRE([AC_PROG_CPP])AC_PROVIDE([$0])cat > conftest.c <<EOF
+[$1]
+_CUT_HERE_
+[$2]
+EOF
+$CPP $DEFS conftest.c 2>/dev/null | sed -e '1,/_CUT_HERE_/d' > conftest.out
+. ./conftest.out
+rm -f conftest*
+])dnl
+dnl
+define(AC_NOTE,
+[test -n "$silent" || echo "$1"])dnl
+
+dnl
+dnl Extract version from patchlevel.h
+dnl
+rev=`sed < ${srcdir}/patchlevel.h -n -e '/#define REV/s/#define REV  *//p'`
+vers=`sed < ${srcdir}/patchlevel.h -n -e '/#define VERS/s/#define VERS  *//p'`
+pat=`sed < ${srcdir}/patchlevel.h -n -e '/#define PATCHLEVEL/s/#define PATCHLEVEL  *//p'`
+VERSION="$rev.$vers.$pat"
+AC_NOTE(this is screen version $VERSION)
+AC_SUBST(VERSION)
+AC_PREFIX(gzip)
+
+AC_PROG_CC
+AC_PROG_CPP
+AC_GCC_TRADITIONAL
+AC_ISC_POSIX
+
+AC_TEST_PROGRAM(main(){exit(0);},,AC_ERROR(Can't run the compiler - sorry))
+
+AC_TEST_PROGRAM([
+main()
+{
+  int __something_strange_();
+  __something_strange_(0);
+}
+],AC_ERROR(Your compiler does not set the exit status - sorry))
+
+AC_PROG_AWK
+
+AC_PROG_INSTALL
+
+if test -f etc/toolcheck; then
+AC_CHECKING(for buggy tools)
+sh etc/toolcheck
+fi
+
+dnl
+dnl    ****  special unix variants  ****
+dnl
+if test -n "$ISC"; then
+  AC_DEFINE(ISC) LIBS="$LIBS -linet"
+fi
+
+dnl AC_CHECKING(for OSF1)
+dnl if test -f /bin/uname ; then
+dnl if test `/bin/uname` = OSF1 || test -f /osf_boot; then
+dnl AC_DEFINE(OSF1)	# this disables MIPS again....
+dnl fi
+dnl fi
+
+if test -f /sysV68 ; then
+AC_DEFINE(sysV68)
+fi
+
+AC_CHECKING(for MIPS)
+if test -f /lib/libmld.a || test -f /usr/lib/libmld.a || test -f /usr/lib/cmplrs/cc/libmld.a; then
+test -f /bin/mx || LIBS="$LIBS -lmld" # for nlist. But not on alpha.
+dnl djm@eng.umd.edu: "... for one thing, it doubles the size of the executable"
+dnl
+if test -r /dev/ptc; then
+AC_DEFINE(MIPS)
+AC_COMPILE_CHECK(wait3, , [wait3();], ,
+AC_COMPILE_CHECK(wait2, , [wait2();],
+dnl John Rouillard (rouilj@sni-usa.com):
+dnl need -I/usr/include/bsd in RISCOS otherwise sockets are broken, no
+dnl job control etc.
+dnl Detect RISCOS if wait2 is present, but not wait3.
+AC_DEFINE(USE_WAIT2) LIBS="$LIBS -lbsd" ; CC="$CC -I/usr/include/bsd"
+))
+fi
+fi
+
+AC_CHECKING(for Ultrix)
+AC_PROGRAM_EGREP(yes,
+[#if defined(ultrix) || defined(__ultrix)
+  yes
+#endif
+], ULTRIX=1)
+
+if test -f /usr/lib/libpyr.a ; then
+oldlibs="$LIBS"
+LIBS="$LIBS -lpyr"
+AC_COMPILE_CHECK(Pyramid OSX,,[open_controlling_pty("");],AC_DEFINE(OSX),LIBS="oldlibs")
+fi
+
+dnl ghazi@caip.rutgers.edu (Kaveh R. Ghazi):
+dnl BBN butterfly is not POSIX, but a MACH BSD system.
+dnl Do not define POSIX and TERMIO.
+AC_CHECKING(for butterfly)
+AC_PROGRAM_EGREP(yes,
+[#if defined(butterfly)
+  yes
+#endif
+], butterfly=1)
+
+if test -z "$butterfly"; then
+if test -n "$ULTRIX"; then
+  test -z "$GCC" && CC="$CC -YBSD"
+fi
+AC_CHECKING(for POSIX.1)
+AC_PROGRAM_EGREP(yes,
+[#include <sys/types.h>
+#include <unistd.h>
+main () {
+#ifdef _POSIX_VERSION
+  yes
+#endif
+], AC_NOTE(- you have a POSIX system) AC_DEFINE(POSIX) posix=1)
+fi
+
+AC_COMPILE_CHECK([System V],
+[#include <sys/types.h>
+#include <signal.h>
+#include <fcntl.h>], [int x = SIGCHLD | FNDELAY;], , AC_DEFINE(SYSV))
+
+AC_CHECKING(for sequent/ptx)
+AC_PROGRAM_EGREP(yes,
+[#ifdef _SEQUENT_
+  yes
+#endif
+], LIBS="$LIBS -lsocket -linet";seqptx=1)
+
+oldlibs="$LIBS"
+LIBS="$LIBS -lelf"
+AC_COMPILE_CHECK(SVR4,,,
+AC_HEADER_CHECK(dwarf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN),
+AC_HEADER_CHECK(elf.h, AC_DEFINE(SVR4) AC_DEFINE(BUGGYGETLOGIN)))
+,LIBS="$oldlibs")
+
+
+dnl
+dnl    ****  typedefs ****
+dnl
+dnl AC_CHECKING(for pid_t)
+dnl AC_PROGRAM_EGREP(pid_t,[#include <sys/types.h>
+dnl ],AC_DEFINE(PID_T_DEFINED))
+dnl
+dnl AC_CHECKING(for sig_t)
+dnl AC_PROGRAM_EGREP(sig_t,[#include <sys/types.h>
+dnl #include <signal.h>
+dnl ],AC_DEFINE(SIG_T_DEFINED))
+dnl
+dnl AC_CHECKING(for uid_t)
+dnl AC_PROGRAM_EGREP(uid_t,[#include <sys/types.h>
+dnl ],AC_DEFINE(UID_T_DEFINED))
+
+dnl
+dnl   ****     Job control     ****
+dnl
+
+AC_COMPILE_CHECK([BSD job control], 
+[#include <sys/types.h>
+#include <sys/ioctl.h>
+], [
+#ifdef POSIX
+tcsetpgrp(0, 0);
+#else
+int x = TIOCSPGRP;
+#ifdef SYSV
+setpgrp();
+#else
+int y = TIOCNOTTY;
+#endif
+#endif
+], AC_NOTE(- you have jobcontrol) AC_DEFINE(BSDJOBS), AC_NOTE(- you don't have jobcontrol))
+
+dnl
+dnl    ****  setreuid(), seteuid()  ****
+dnl
+AC_COMPILE_CHECK(setreuid, , [
+#ifdef __hpux
+setresuid(0, 0, 0);
+#else
+setreuid(0, 0);
+#endif
+], AC_DEFINE(HAVE_SETREUID))
+dnl
+dnl seteuid() check:
+dnl   linux seteuid was broken before V1.1.11
+dnl   NeXT, AUX, ISC, and ultrix are still broken (no saved uid support)
+dnl   Solaris seteuid doesn't change the saved uid, bad for
+dnl     multiuser screen sessions
+AC_COMPILE_CHECK(seteuid, , [
+#if defined(linux) || defined(NeXT) || defined(_AUX_SOURCE) || defined(AUX) || defined(ultrix) || (defined(sun) && defined(SVR4)) || defined(ISC) || defined(sony_news)
+seteuid_is_broken(0);
+#else
+seteuid(0);
+#endif
+], AC_DEFINE(HAVE_SETEUID))
+dnl
+dnl    ****  select()  ****
+dnl
+
+AC_COMPILE_CHECK(select,,[select(0, 0, 0, 0, 0);],, 
+LIBS="$LIBS -lnet -lnsl"
+AC_COMPILE_CHECK(select with $LIBS,,[select(0, 0, 0, 0, 0);],, 
+AC_ERROR(!!! no select - no screen))
+)
+dnl
+dnl    ****  FIFO tests  ****
+dnl
+
+AC_CHECKING(fifos)
+AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#ifndef O_NONBLOCK
+#define O_NONBLOCK O_NDELAY
+#endif
+#ifndef S_IFIFO
+#define S_IFIFO 0010000
+#endif
+
+char *fin = "/tmp/conftest$$";
+
+main()
+{
+  struct stat stb;
+  int f;
+
+  (void)alarm(5);
+#ifdef POSIX
+  if (mkfifo(fin, 0777))
+#else
+  if (mknod(fin, S_IFIFO|0777, 0))
+#endif
+    exit(1);
+  if (stat(fin, &stb) || (stb.st_mode & S_IFIFO) != S_IFIFO)
+    exit(1);
+  close(0);
+#ifdef __386BSD__
+  /*
+   * The next test fails under 386BSD, but screen works using fifos.
+   * Fifos in O_RDWR mode are only used for the BROKEN_PIPE case and for
+   * the select() configuration test.
+   */
+  exit(0);
+#endif
+  if (open(fin, O_RDONLY | O_NONBLOCK))
+    exit(1);
+  if (fork() == 0)
+    {
+      close(0);
+      if (open(fin, O_WRONLY | O_NONBLOCK))
+	exit(1);
+      close(0);
+      if (open(fin, O_WRONLY | O_NONBLOCK))
+	exit(1);
+      if (write(0, "TEST", 4) == -1)
+	exit(1);
+      exit(0);
+    }
+  f = 1;
+  if (select(1, &f, 0, 0, 0) == -1)
+    exit(1);
+  exit(0);
+}
+], AC_NOTE(- your fifos are usable);fifo=1,
+AC_NOTE(- your fifos are not usable))
+rm -f /tmp/conftest*
+
+if test -n "$fifo"; then
+AC_CHECKING(for broken fifo implementation)
+AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/time.h>
+#include <sys/stat.h>
+
+#ifndef O_NONBLOCK
+#define O_NONBLOCK O_NDELAY
+#endif
+#ifndef S_IFIFO
+#define S_IFIFO 0010000
+#endif
+
+char *fin = "/tmp/conftest$$";
+
+main()
+{
+  struct timeval tv;
+  int r, x;
+
+#ifdef POSIX
+  if (mkfifo(fin, 0600))
+#else
+  if (mknod(fin, S_IFIFO|0600, 0))
+#endif
+    exit(1);
+  close(0);
+  if (open(fin, O_RDONLY|O_NONBLOCK))
+    exit(1);
+  r = 1;
+  tv.tv_sec = 1;
+  tv.tv_usec = 0;
+  if (select(1, &r, 0, 0, &tv))
+    exit(1);
+  exit(0);
+}
+], AC_NOTE(- your implementation is ok), 
+AC_NOTE(- you have a broken implementation) AC_DEFINE(BROKEN_PIPE) fifobr=1)
+rm -f /tmp/conftest*
+fi
+
+dnl
+dnl    ****  SOCKET tests  ****
+dnl 
+dnl 	may need  	LIBS="$LIBS -lsocket" 	here
+dnl
+
+AC_CHECKING(sockets)
+AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <fcntl.h>
+
+char *son = "/tmp/conftest$$";
+
+main()
+{
+  int s1, s2, s3, l;
+  struct sockaddr_un a;
+
+  (void)alarm(5);
+  if ((s1 = socket(AF_UNIX, SOCK_STREAM, 0)) == -1)
+    exit(1);
+  a.sun_family = AF_UNIX;
+  strcpy(a.sun_path, son);
+  (void) unlink(son);
+  if (bind(s1, (struct sockaddr *) &a, strlen(son)+2) == -1)
+    exit(1);
+  if (listen(s1, 2))
+    exit(1);
+  if (fork() == 0)
+    {
+      if ((s2 = socket(AF_UNIX, SOCK_STREAM, 0)) == -1)
+	kill(getppid(), 3);
+      (void)connect(s2, (struct sockaddr *)&a, strlen(son) + 2);
+      if (write(s2, "HELLO", 5) == -1)
+	kill(getppid(), 3);
+      exit(0);
+    }
+  l = sizeof(a);
+  close(0);
+  if (accept(s1, &a, &l))
+    exit(1);
+  l = 1;
+  if (select(1, &l, 0, 0, 0) == -1)
+    exit(1);
+  exit(0);
+}
+], AC_NOTE(- your sockets are usable);sock=1,
+AC_NOTE(- your sockets are not usable))
+rm -f /tmp/conftest*
+
+if test -n "$sock"; then
+AC_CHECKING(socket implementation)
+AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+
+char *son = "/tmp/conftest$$";
+
+main()
+{
+  int s;
+  struct stat stb;
+  struct sockaddr_un a;
+  if ((s = socket(AF_UNIX, SOCK_STREAM, 0)) == -1)
+    exit(0);
+  a.sun_family = AF_UNIX;
+  strcpy(a.sun_path, son);
+  (void) unlink(son);
+  if (bind(s, (struct sockaddr *) &a, strlen(son)+2) == -1)
+    exit(0);
+  if (stat(son, &stb))
+    exit(1);
+  close(s);
+  exit(0);
+}
+],AC_NOTE(- you are normal),
+AC_NOTE(- unix domain sockets are not kept in the filesystem)
+AC_DEFINE(SOCK_NOT_IN_FS) socknofs=1)
+rm -f /tmp/conftest*
+fi
+
+
+dnl
+dnl    ****  choose sockets or fifos  ****
+dnl
+if test -n "$fifo"; then
+  if test -n "$sock"; then
+    if test -n "$nore"; then
+      AC_NOTE(- hmmm... better take the fifos)
+      AC_DEFINE(NAMEDPIPE)
+    elif test -n "$fifobr"; then
+      AC_NOTE(- as your fifos are broken lets use the sockets.)
+    else
+      AC_NOTE(- both sockets and fifos usable. let's take fifos.)
+      AC_DEFINE(NAMEDPIPE)
+    fi
+  else
+    AC_NOTE(- using named pipes, of course)
+    AC_DEFINE(NAMEDPIPE)
+  fi
+elif test -n "$sock"; then
+  AC_NOTE(- using unix-domain sockets, of course)
+else
+  AC_ERROR(you have neither usable sockets nor usable pipes -> no screen)
+fi
+
+dnl
+dnl    ****  check the select implementation ****
+dnl
+
+AC_CHECKING(select return value)
+AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+char *nam = "/tmp/conftest$$";
+
+#ifdef NAMEDPIPE
+
+#ifndef O_NONBLOCK
+#define O_NONBLOCK O_NDELAY
+#endif
+#ifndef S_IFIFO
+#define S_IFIFO 0010000
+#endif
+
+
+main()
+{
+  int l;
+
+#ifdef __FreeBSD__
+/* From Andrew A. Chernov (ache@astral.msk.su):
+ * opening RDWR fifo fails in BSD 4.4, but select return values is
+ * right.
+ */
+  exit(0);
+#endif
+  (void)alarm(5);
+#ifdef POSIX
+  if (mkfifo(nam, 0777))
+#else
+  if (mknod(nam, S_IFIFO|0777, 0))
+#endif
+    exit(1);
+  close(0);
+  if (open(nam, O_RDWR | O_NONBLOCK))
+    exit(1);
+  if (write(0, "TEST", 4) == -1)
+    exit(1);
+
+#else
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+
+main()
+{
+  int s1, s2, s3, l;
+  struct sockaddr_un a;
+
+  (void)alarm(5);
+  if ((s1 = socket(AF_UNIX, SOCK_STREAM, 0)) == -1)
+    exit(1);
+  a.sun_family = AF_UNIX;
+  strcpy(a.sun_path, nam);
+  (void) unlink(nam);
+  if (bind(s1, (struct sockaddr *) &a, strlen(nam)+2) == -1)
+    exit(1);
+  if (listen(s1, 2))
+    exit(1);
+  if (fork() == 0)
+    {
+      if ((s2 = socket(AF_UNIX, SOCK_STREAM, 0)) == -1)
+	kill(getppid(), 3);
+      (void)connect(s2, (struct sockaddr *)&a, strlen(nam) + 2);
+      if (write(s2, "HELLO", 5) == -1)
+	kill(getppid(), 3);
+      exit(0);
+    }
+  l = sizeof(a);
+  close(0);
+  if (accept(s1, (struct sockaddr *)&a, &l))
+    exit(1);
+#endif
+
+
+  l = 1;
+  if (select(1, &l, 0, 0, 0) == -1)
+    exit(1);
+  if (select(1, &l, &l, 0, 0) != 2)
+    exit(1);
+  exit(0);
+}
+],AC_NOTE(- select is ok),
+AC_NOTE(- it is not usable) AC_DEFINE(SELECT_BROKEN))
+
+dnl
+dnl    ****  termcap or terminfo  ****
+dnl
+AC_CHECKING(for tgetent)
+olibs="$LIBS"
+LIBS="-lcurses $olibs"
+AC_COMPILE_CHECK(libcurses,,tgetent((char *)0, (char *)0);,,
+LIBS="-ltermcap $olibs"
+AC_COMPILE_CHECK(libtermcap,,tgetent((char *)0, (char *)0);,,
+LIBS="-ltermlib $olibs"
+AC_COMPILE_CHECK(libtermlib,,tgetent((char *)0, (char *)0);,,
+AC_ERROR(!!! no tgetent - no screen))))
+
+AC_TEST_PROGRAM([
+main()
+{
+ exit(strcmp(tgoto("%p1%d", 0, 1), "1") ? 0 : 1);
+}], AC_NOTE(- you use the termcap database),
+AC_NOTE(- you use the terminfo database) AC_DEFINE(TERMINFO))
+AC_COMPILE_CHECK(ospeed,extern short ospeed;,ospeed=5;,,AC_DEFINE(NEED_OSPEED))
+
+dnl
+dnl    ****  PTY specific things  ****
+dnl
+AC_CHECKING(for /dev/ptc)
+if test -r /dev/ptc; then
+AC_DEFINE(HAVE_DEV_PTC)
+fi
+
+AC_CHECKING(for ptyranges)
+if test -d /dev/ptym ; then
+pdir='/dev/ptym'
+else
+pdir='/dev'
+fi
+ptys=`echo $pdir/pty??`
+if test "$ptys" != "$pdir/pty??" ; then
+p0=`echo $ptys | tr ' ' '\012' | sed -e 's/^.*\(.\).$/\1/g' | sort -u | tr -d '\012'`
+p1=`echo $ptys | tr ' ' '\012' | sed -e 's/^.*\(.\)$/\1/g'  | sort -u | tr -d '\012'`
+AC_DEFINE_UNQUOTED(PTYRANGE0,\"$p0\")
+AC_DEFINE_UNQUOTED(PTYRANGE1,\"$p1\")
+fi
+
+dnl    ****  pty mode/group handling ****
+dnl
+dnl support provided by Luke Mewburn <lm@rmit.edu.au>, 931222
+AC_CHECKING(default tty permissions/group)
+rm -f conftest_grp
+AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+main()
+{
+  struct stat sb;
+  char *x,*ttyname();
+  int om, m;
+  FILE *fp;
+
+  if (!(x = ttyname(0))) exit(1);
+  if (stat(x, &sb)) exit(1);
+  om = sb.st_mode;
+  if (om & 002) exit(0);
+  m = system("mesg y");
+  if (m == -1 || m == 127) exit(1);
+  if (stat(x, &sb)) exit(1);
+  m = sb.st_mode;
+  if (chmod(x, om)) exit(1);
+  if (m & 002) exit(0);
+  if (sb.st_gid == getgid()) exit(1);
+  if (!(fp=fopen("conftest_grp", "w")))
+    exit(1);
+  fprintf(fp, "%d\n", sb.st_gid);
+  fclose(fp);
+  exit(0);
+}
+],[
+    if test -f conftest_grp; then
+	ptygrp=`cat conftest_grp`
+	AC_NOTE(- pty mode: 0620, group: $ptygrp)
+	AC_DEFINE(PTYMODE, 0620)
+	AC_DEFINE_UNQUOTED(PTYGROUP,$ptygrp)
+    else
+	AC_NOTE(- ptys are world accessable)
+    fi
+],
+    AC_NOTE(- can't determine - assume ptys are world accessable)
+)
+rm -f conftest_grp
+
+dnl
+dnl    ****  utmp handling  ****
+dnl
+dnl linux has a void pututline, grrr, gcc will error when evaluating it.
+AC_COMPILE_CHECK(getutent, [#include <time.h> /* to get time_t on SCO */
+#include <sys/types.h>
+#if defined(SVR4) && !defined(DGUX)
+#include <utmpx.h>
+#define utmp utmpx
+#else
+#include <utmp.h>
+#endif
+#ifdef __hpux
+#define pututline _pututline
+#endif
+],
+[int x = DEAD_PROCESS; struct utmp *y = pututline((struct utmp *)0); getutent();], AC_DEFINE(GETUTENT),
+olibs="$LIBS"
+LIBS="$LIBS -lgen"
+AC_COMPILE_CHECK(getutent with -lgen, [#include <time.h>
+#include <sys/types.h>
+#if defined(SVR4) && !defined(DGUX)
+#include <utmpx.h>
+#define utmp utmpx
+#else
+#include <utmp.h>
+#endif
+#ifdef __hpux
+#define pututline _pututline
+#endif
+],
+[int x = DEAD_PROCESS; struct utmp *y = pututline((struct utmp *)0); getutent();], AC_DEFINE(GETUTENT), LIBS="$olibs")
+)
+AC_COMPILE_CHECK(ut_host, [#include <time.h>
+#include <sys/types.h>
+#if defined(SVR4) && !defined(DGUX)
+#include <utmpx.h>
+#define utmp utmpx
+#else
+#include <utmp.h>
+#endif
+],[struct utmp u; u.ut_host[0] = 0;], AC_DEFINE(UTHOST))
+
+
+dnl
+dnl    ****  loadav  ****
+dnl
+AC_CHECKING(for libutil(s))
+test -f /usr/lib/libutils.a && LIBS="$LIBS -lutils"
+test -f /usr/lib/libutil.a && LIBS="$LIBS -lutil"
+
+AC_COMPILE_CHECK(getloadavg, , [getloadavg((double *)0, 0);],
+AC_DEFINE(LOADAV_GETLOADAVG) load=1,
+if test -f /usr/lib/libkvm.a ; then
+olibs="$LIBS"
+LIBS="$LIBS -lkvm"
+AC_COMPILE_CHECK(getloadavg with -lkvm, , [getloadavg((double *)0, 0);],
+AC_DEFINE(LOADAV_GETLOADAVG) load=1, LIBS="$olibs")
+fi
+)
+
+if test -z "$load" ; then
+AC_PROGRAM_EGREP(yes,
+[#if defined(NeXT) || defined(apollo) || defined(linux)
+  yes
+#endif
+], load=1)
+fi
+if test -z "$load" ; then
+AC_CHECKING(for kernelfile)
+for core in /unix /vmunix /dynix /hp-ux /xelos /386bsd /kernel/unix /unicos /mach /stand/vmunix; do
+  if test -f $core ; then
+    break
+  fi
+done
+if test ! -f $core ; then
+  AC_NOTE(- no kernelfile found)
+else
+  AC_NOTE(- using kernelfile '$core')
+  AC_DEFINE_UNQUOTED(LOADAV_UNIX,\"$core\")
+  AC_HEADER_CHECK(nlist.h,
+    [AC_DEFINE(NLIST_STRUCT)
+     AC_COMPILE_CHECK(n_un in struct nlist, [#include <nlist.h>],
+       [struct nlist n; n.n_un.n_name = 0;],
+        AC_DEFINE(NLIST_NAME_UNION))])
+
+  AC_CHECKING(for nlist declaration)
+  AC_PROGRAM_EGREP([nlist(( |	)( |	)*.*\(|\()],[
+#ifdef NLIST_STRUCT
+# include <nlist.h>
+#else
+# include <a.out.h>
+#endif
+],AC_DEFINE(NLIST_DECLARED))
+
+  AC_CHECKING(for avenrun symbol)
+  for av in avenrun _avenrun _Loadavg ; do
+  AC_TEST_PROGRAM([
+#include <sys/types.h>
+#ifdef NLIST_STRUCT
+#include <nlist.h>
+#else
+#include <a.out.h>
+#endif
+
+#ifdef __sgi
+# if _MIPS_SZLONG == 64
+#  define nlist nlist64
+# endif
+#endif
+
+struct nlist nl[2];
+
+main()
+{
+#if !defined(_AUX_SOURCE) && !defined(AUX)
+# ifdef NLIST_NAME_UNION
+  nl[0].n_un.n_name = "$av";
+# else
+  nl[0].n_name = "$av";
+# endif
+#else
+  strncpy(nl[0].n_name, "$av", sizeof(nl[0].n_name));
+#endif
+  nlist(LOADAV_UNIX, nl);
+  if (nl[0].n_value == 0)
+    exit(1);
+  exit(0);
+}
+  ],avensym=$av;break)
+  done
+  if test -z "$avensym" ; then
+    AC_NOTE(- no avenrun symbol found)
+  else
+    AC_NOTE(- using avenrun symbol '$avensym')
+    AC_DEFINE_UNQUOTED(LOADAV_AVENRUN,\"$avensym\")
+    load=1
+  fi
+fi
+fi
+
+AC_PROGRAM_SOURCE([
+#include <sys/types.h>
+#include <sys/param.h>
+],[
+#if ((defined(hp300) && !defined(__hpux)) || defined(sun) || (defined(ultrix) && defined(mips)) || defined(_SEQUENT_) || defined(sgi) || defined(SVR4) || defined(sony_news) || defined(__alpha) || defined(_IBMR2) || defined(_AUX_SOURCE) || defined(AUX) || defined(m88k))
+loadtype=long
+# if defined(apollo) || defined(_IBMR2) || defined(_AUX_SOURCE) || defined(AUX)
+loadscale=65536
+# else
+#  if defined(FSCALE) && !defined(__osf__)
+#   undef FSCALE
+loadscale=FSCALE
+#  else
+#   ifdef sgi
+loadscale=1024
+loadtype=int
+#   else
+#    if defined(MIPS) || defined(SVR4) || defined(m88k)
+loadscale=256
+#    else /* not MIPS */
+loadscale=1000 	/* our default value */
+#    endif /* MIPS */
+#   endif /* sgi */
+#  endif /* not FSCALE */
+# endif /* not apollo */
+#else
+loadtype=double
+loadscale=1
+#endif
+#ifdef alliant
+loadnum=4
+#else
+loadnum=3
+#endif
+])
+
+if test -n "$load" ; then AC_DEFINE(LOADAV) fi
+if test -n "$loadtype" ; then AC_DEFINE_UNQUOTED(LOADAV_TYPE,$loadtype) fi
+if test -n "$loadnum" ; then AC_DEFINE_UNQUOTED(LOADAV_NUM,$loadnum) fi
+if test -n "$loadscale" ; then AC_DEFINE_UNQUOTED(LOADAV_SCALE,$loadscale) fi
+
+
+dnl
+dnl    ****  signal handling  ****
+dnl
+if test -n "$posix" ; then
+
+dnl POSIX has reliable signals with void return type.
+AC_NOTE(assuming posix signal definition)
+AC_DEFINE(SIGVOID)
+
+else
+
+AC_COMPILE_CHECK([return type of signal handlers],
+[#include <sys/types.h>
+#include <signal.h>
+#ifdef signal
+#undef signal
+#endif
+extern void (*signal ()) ();], [int i;], AC_DEFINE(SIGVOID))
+AC_COMPILE_CHECK(sigset, [
+#include <sys/types.h>
+#include <signal.h>
+], [
+#ifdef SIGVOID
+sigset(0, (void (*)())0);
+#else
+sigset(0, (int (*)())0);
+#endif
+], AC_DEFINE(USESIGSET))
+AC_CHECKING(signal implementation)
+AC_TEST_PROGRAM([
+#include <sys/types.h>
+#include <signal.h>
+
+#ifndef SIGCLD
+#define SIGCLD SIGCHLD
+#endif
+#ifdef USESIGSET
+#define signal sigset
+#endif
+
+int got;
+
+#ifdef SIGVOID
+void
+#endif
+hand()
+{
+  got++;
+}
+
+main()
+{
+  /* on hpux we use sigvec to get bsd signals */
+#ifdef __hpux
+  (void)signal(SIGCLD, hand);
+  kill(getpid(), SIGCLD);
+  kill(getpid(), SIGCLD);
+  if (got < 2)
+    exit(1);
+#endif
+  exit(0);
+}
+],,AC_DEFINE(SYSVSIGS))
+
+fi
+
+dnl
+dnl    ****  libraries  ****
+dnl
+
+AC_CHECKING(for crypt and sec libraries)
+test -f /lib/libcrypt_d.a || test -f /usr/lib/libcrypt_d.a && LIBS="$LIBS -lcrypt_d"
+test -f /lib/libcrypt.a || test -f /usr/lib/libcrypt.a && LIBS="$LIBS -lcrypt"
+test -f /lib/libsec.a || test -f /usr/lib/libsec.a && LIBS="$LIBS -lsec"
+test -f /lib/libshadow.a || test -f /usr/lib/libshadow.a && LIBS="$LIBS -lshadow"
+
+oldlibs="$LIBS"
+LIBS="$LIBS -lsun"
+AC_COMPILE_CHECK(IRIX sun library,,,,LIBS="$oldlibs")
+
+
+dnl
+dnl    ****  misc things  ****
+dnl
+AC_COMPILE_CHECK(wait union,[#include <sys/types.h>
+#include <sys/wait.h>
+],[
+  union wait x;
+  int y;
+#ifdef WEXITSTATUS
+  y = WEXITSTATUS(x);
+#endif
+],AC_DEFINE(BSDWAIT))
+
+if test -z "$butterfly"; then
+AC_CHECKING(for termio or termios)
+AC_TEST_CPP([#include <termio.h>], AC_DEFINE(TERMIO),
+if test -n "$posix"; then
+AC_TEST_CPP([#include <termios.h>], AC_DEFINE(TERMIO))
+fi
+)
+fi
+
+dnl AC_HEADER_CHECK(shadow.h, AC_DEFINE(SHADOWPW))
+AC_COMPILE_CHECK(getspnam, [#include <shadow.h>], [getspnam("x");],
+		 AC_DEFINE(SHADOWPW))
+
+AC_COMPILE_CHECK(getttyent, , [getttyent();], AC_DEFINE(GETTTYENT))
+
+AC_CHECKING(whether memcpy/memmove/bcopy handles overlapping arguments)
+AC_TEST_PROGRAM([
+main() {
+  char buf[10];
+  strcpy(buf, "abcdefghi");
+  bcopy(buf, buf + 2, 3);
+  if (strncmp(buf, "ababcf", 6))
+    exit(1);
+  strcpy(buf, "abcdefghi");
+  bcopy(buf + 2, buf, 3);
+  if (strncmp(buf, "cdedef", 6))
+    exit(1);
+  exit(0); /* libc version works properly.  */
+}], AC_DEFINE(USEBCOPY))
+
+AC_TEST_PROGRAM([
+#define bcopy(s,d,l) memmove(d,s,l)
+main() {
+  char buf[10];
+  strcpy(buf, "abcdefghi");
+  bcopy(buf, buf + 2, 3);
+  if (strncmp(buf, "ababcf", 6))
+    exit(1);
+  strcpy(buf, "abcdefghi");
+  bcopy(buf + 2, buf, 3);
+  if (strncmp(buf, "cdedef", 6))
+    exit(1);
+  exit(0); /* libc version works properly.  */
+}], AC_DEFINE(USEMEMMOVE))
+
+
+AC_TEST_PROGRAM([
+#define bcopy(s,d,l) memcpy(d,s,l)
+main() {
+  char buf[10];
+  strcpy(buf, "abcdefghi");
+  bcopy(buf, buf + 2, 3);
+  if (strncmp(buf, "ababcf", 6))
+    exit(1);
+  strcpy(buf, "abcdefghi");
+  bcopy(buf + 2, buf, 3);
+  if (strncmp(buf, "cdedef", 6))
+    exit(1);
+  exit(0); /* libc version works properly.  */
+}], AC_DEFINE(USEMEMCPY))
+
+AC_CHECKING(for long file names)
+(echo 1 > /tmp/conftest9012345) 2>/dev/null
+(echo 2 > /tmp/conftest9012346) 2>/dev/null
+val=`cat /tmp/conftest9012345 2>/dev/null`
+if test -f /tmp/conftest9012345 && test "$val" = 1; then :
+else AC_DEFINE(NAME_MAX, 14)
+fi
+rm -f /tmp/conftest*
+
+AC_COMPILE_CHECK(vsprintf, [#include <varargs.h>
+#include <stdio.h>], [vsprintf();], AC_DEFINE(USEVARARGS))
+
+AC_DIR_HEADER
+AC_XENIX_DIR
+
+AC_COMPILE_CHECK(setenv, , [setenv((char *)0,(char *)0);unsetenv((char *)0);], AC_DEFINE(USESETENV),
+AC_COMPILE_CHECK(putenv, , [putenv((char *)0);unsetenv((char *)0);], ,
+AC_DEFINE(NEEDPUTENV)
+))
+
+AC_COMPILE_CHECK(rename, ,  [rename(0,0);], , AC_DEFINE(NEED_RENAME))
+AC_COMPILE_CHECK(_exit, ,   [_exit(0);],    AC_DEFINE(HAVE__EXIT))
+AC_COMPILE_CHECK(lstat, ,   [lstat(0,0);],  AC_DEFINE(HAVE_LSTAT))
+AC_COMPILE_CHECK(strerror, ,[strerror(0);], AC_DEFINE(HAVE_STRERROR))
+
+dnl
+dnl    ****  the end  ****
+dnl
+dnl Ptx bug workaround -- insert -lc after -ltermcap
+test -n "$seqptx" && LIBS="-ltermcap -lc -lsocket -linet -lsec -lseq"
+
+AC_TEST_PROGRAM(main(){exit(0);},,AC_ERROR(Can't run the compiler - internal error. Sorry.))
+if test -n "$prefix"; then
+AC_DEFINE_UNQUOTED(ETCSCREENRC,\"$prefix/etc/screenrc\")
+fi
+
+AC_OUTPUT(Makefile doc/Makefile)
+
+# a hook for preserving undef directive in config.h
+if test -z "$no_create" ; then
+mv config.h conftest
+sed -e 's@^\(.*\)defin.\( .*\) .*/\*\(.*KEEP_UNDEF_HERE\)@\1undef\2	/\*\3@' < conftest > config.h
+rm -f conftest
+fi
+cat >> config.status << EOF
+mv config.h conftest
+sed -e 's@^\(.*\)defin.\( .*\) .*/\*\(.*KEEP_UNDEF_HERE\)@\1undef\2	/\*\3@' < conftest > config.h
+rm -f conftest
+EOF
+
+echo ""
+if test -z "$AWK"; then
+echo "!!! Since you have no awk you must copy the files 'comm.h.dist'"
+echo "!!! and 'term.h.dist' to 'comm.h' and 'term.h'."
+echo "!!! Do _not_ change the user configuration section in config.h!"
+echo "Please check the pathnames in the Makefile."
+else
+echo "Now please check the pathnames in the Makefile and the user"
+echo "configuration section in config.h."
+fi
+echo "Then type 'make' to make screen. Good luck."
+echo ""

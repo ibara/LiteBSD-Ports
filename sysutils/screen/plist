@@ -1,0 +1,5 @@
+Terminal multiplexer from the GNU project.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2+
+###
+bin/screen

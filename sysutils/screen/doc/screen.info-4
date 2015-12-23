@@ -1,0 +1,375 @@
+This is Info file screen.info, produced by Makeinfo-1.55 from the input
+file ./screen.texinfo.
+
+   This file documents the `Screen' virtual terminal manager.
+
+   Copyright (c) 1993 Free Software Foundation, Inc.
+
+   Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+   Permission is granted to copy and distribute modified versions of
+this manual under the conditions for verbatim copying, provided that
+the entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+   Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Foundation.
+
+
+File: screen.info,  Node: Reporting Bugs,  Next: Availability,  Prev: Known Bugs,  Up: Bugs
+
+Reporting Bugs
+==============
+
+   If you find a bug in `Screen', please send electronic mail to
+`screen@uni-erlangen.de', and also to `bug-gnu-utils@prep.ai.mit.edu'.
+Include the version number of `Screen' which you are using.  Also
+include in your message the hardware and operating system, the compiler
+used to compile, a description of the bug behavior, and the conditions
+that triggered the bug. Please recompile `screen' with the `-DDEBUG
+-DTMPTEST' options enabled, reproduce the bug, and have a look at the
+debug output written to the directory `/tmp/debug'. If necessary quote
+suspect passages from the debug output and show the contents of your
+`config.h' if it matters.
+
+
+File: screen.info,  Node: Availability,  Prev: Reporting Bugs,  Up: Bugs
+
+Availability
+============
+
+   `Screen' is available under the `GNU' copyleft.
+
+   The latest official release of `screen' available via anonymous ftp
+from `prep.ai.mit.edu', `nic.funet.fi' or any other `GNU' distribution
+site.  The latest beta testing release of `screen' is available from
+`ftp.uni-erlangen.de (131.188.1.43)', in the directory
+`pub/utilities/screen'.
+
+
+File: screen.info,  Node: Installation,  Next: Concept Index,  Prev: Bugs,  Up: Top
+
+Installation
+************
+
+   Since `screen' uses pseudo-ttys, the select system call, and
+UNIX-domain sockets/named pipes, it will not run under a system that
+does not include these features of 4.2 and 4.3 BSD UNIX.
+
+* Menu:
+
+* Socket Directory::		Where screen stores its handle.
+* Compiling Screen::
+
+
+File: screen.info,  Node: Socket Directory,  Next: Compiling Screen,  Up: Installation
+
+Socket Directory
+================
+
+   The socket directory defaults either to `$HOME/.screen' or simply to
+`/tmp/screens' or preferably to `/usr/local/screens' chosen at
+compile-time. If `screen' is installed setuid root, then the
+administrator should compile screen with an adequate (not NFS mounted)
+`SOCKDIR'. If `screen' is not running setuid-root, the user can specify
+any mode 777 directory in the environment variable `$SCREENDIR'.
+
+
+File: screen.info,  Node: Compiling Screen,  Prev: Socket Directory,  Up: Installation
+
+Compiling Screen
+================
+
+   To compile and install screen:
+
+   The `screen' package comes with a `GNU Autoconf' configuration
+script. Before you compile the package run
+
+                           `sh ./configure'
+
+   This will create a `config.h' and `Makefile' for your machine.  If
+`configure' fails for some reason, then look at the examples and
+comments found in the `Makefile.in' and `config.h.in' templates.
+Rename `config.status' to `config.status.MACHINE' when you want to keep
+configuration data for multiple architectures. Running `sh
+./config.status.MACHINE' recreates your configuration significantly
+faster than rerunning `configure'.
+Read through the "User Configuration" section of `config.h', and verify
+that it suits your needs.  A comment near the top of this section
+explains why it's best to install screen setuid to root.  Check for the
+place for the global `screenrc'-file and for the socket directory.
+Check the compiler used in `Makefile', the prefix path where to install
+`screen'. Then run
+
+                                `make'
+
+   If `make' fails to produce one of the files `term.h', `comm.h' or
+`tty.c', then use `FILENAME.X.dist' instead.  For additional
+information about installation of `screen' refer to the file
+`INSTALLATION', coming with this package.
+
+
+File: screen.info,  Node: Concept Index,  Next: Command Index,  Prev: Installation,  Up: Top
+
+Concept Index
+*************
+
+* Menu:
+
+* .screenrc:                            Startup Files.
+* availability:                         Availability.
+* binding:                              Key Binding.
+* bug report:                           Reporting Bugs.
+* bugs:                                 Bugs.
+* capabilities:                         Special Capabilities.
+* command line options:                 Invoking Screen.
+* command summary:                      Command Summary.
+* compiling screen:                     Compiling Screen.
+* control sequences:                    Control Sequences.
+* copy and paste:                       Copy and Paste.
+* customization:                        Customization.
+* environment:                          Environment.
+* files:                                Files.
+* flow control:                         Flow Control.
+* input translation:                    Input Translation.
+* installation:                         Installation.
+* introduction:                         Getting Started.
+* invoking:                             Invoking Screen.
+* key binding:                          Key Binding.
+* marking:                              Copy.
+* message line:                         Message Line.
+* multiuser session:                    Multiuser Session.
+* options:                              Invoking Screen.
+* overview:                             Overview.
+* screenrc:                             Startup Files.
+* scrollback:                           Copy.
+* socket directory:                     Socket Directory.
+* terminal capabilities:                Special Capabilities.
+* title:                                Naming Windows.
+
+
+File: screen.info,  Node: Command Index,  Next: Keystroke Index,  Prev: Concept Index,  Up: Top
+
+Command Index
+*************
+
+   This is a list of all the commands supported by `screen'.
+
+* Menu:
+
+* acladd:                               Acladd.
+* aclchg:                               Aclchg.
+* acldel:                               Acldel.
+* activity:                             Monitor.
+* allpartial:                           Redisplay.
+* at:                                   At.
+* autodetach:                           Detach.
+* autonuke:                             Autonuke.
+* bell_msg:                             Bell.
+* bind:                                 Bind.
+* bindkey:                              Bindkey.
+* break:                                Break.
+* bufferfile:                           Screen-Exchange.
+* c1:                                   Character Processing.
+* charset:                              Character Processing.
+* chdir:                                Chdir.
+* clear:                                Clear.
+* colon:                                Colon.
+* command:                              Command Character.
+* console:                              Console.
+* copy:                                 Copy.
+* copy_reg:                             Registers.
+* crlf:                                 Line Termination.
+* debug:                                Debug.
+* defautonuke:                          Autonuke.
+* defc1:                                Character Processing.
+* defcharset:                           Character Processing.
+* defescape:                            Command Character.
+* defflow:                              Flow.
+* defgr:                                Character Processing.
+* defhstatus:                           Hardstatus.
+* defkanji:                             Character Processing.
+* deflogin:                             Login.
+* defmode:                              Mode.
+* defmonitor:                           Monitor.
+* defobuflimit:                         Obuflimit.
+* defscrollback:                        Scrollback.
+* defwrap:                              Wrap.
+* defwritelock:                         Writelock.
+* defzombie:                            Zombie.
+* detach:                               Detach.
+* digraph:                              Digraph.
+* dumptermcap:                          Dump Termcap.
+* echo:                                 echo.
+* escape:                               Command Character.
+* exec:                                 Exec.
+* flow:                                 Flow.
+* gr:                                   Character Processing.
+* hardcopy:                             Hardcopy.
+* hardcopydir:                          Hardcopy.
+* hardcopy_append:                      Hardcopy.
+* hardstatus:                           Hardware Status Line.
+* height:                               Window Size.
+* help:                                 Help.
+* history:                              History.
+* info:                                 Info.
+* ins_reg:                              Registers.
+* kanji:                                Character Processing.
+* kill:                                 Kill.
+* lastmsg:                              Last Message.
+* license:                              License.
+* lockscreen:                           Lock.
+* log:                                  Log.
+* logfile:                              Log.
+* login:                                Login.
+* mapdefault:                           Bindkey Control.
+* mapnotnext:                           Bindkey Control.
+* maptimeout:                           Bindkey Control.
+* markkeys:                             Copy Mode Keys.
+* meta:                                 Command Character.
+* monitor:                              Monitor.
+* msgminwait:                           Message Wait.
+* msgwait:                              Message Wait.
+* multiuser:                            Multiuser.
+* nethack:                              Nethack.
+* next:                                 Next and Previous.
+* number:                               Number.
+* obuflimit:                            Obuflimit.
+* other:                                Other Window.
+* partial:                              Redisplay.
+* password:                             Detach.
+* paste:                                Paste.
+* pastefont:                            Paste.
+* pow_break:                            Break.
+* pow_detach:                           Power Detach.
+* pow_detach_msg:                       Power Detach.
+* prev:                                 Next and Previous.
+* printcmd:                             Printcmd.
+* process:                              Registers.
+* quit:                                 Quit.
+* readbuf:                              Screen-Exchange.
+* readreg:                              Paste.
+* redisplay:                            Redisplay.
+* register:                             Registers.
+* removebuf:                            Screen-Exchange.
+* reset:                                Reset.
+* screen:                               Screen Command.
+* scrollback:                           Scrollback.
+* select:                               Select.
+* sessionname:                          Session Name.
+* setenv:                               Setenv.
+* shell:                                Shell.
+* shelltitle:                           Shell.
+* silence:                              Silence.
+* silencewait:                          Silence.
+* sleep:                                sleep.
+* slowpaste:                            Paste.
+* sorendition:                          Sorendition.
+* startup_message:                      Startup Message.
+* stuff:                                Registers.
+* suspend:                              Suspend.
+* term:                                 Term.
+* termcap:                              Termcap Syntax.
+* termcapinfo:                          Termcap Syntax.
+* terminfo:                             Termcap Syntax.
+* time:                                 Time.
+* title:                                Title Command.
+* unsetenv:                             Setenv.
+* vbell:                                Bell.
+* vbellwait:                            Bell.
+* vbell_msg:                            Bell.
+* version:                              Version.
+* wall:                                 Wall.
+* width:                                Window Size.
+* windows:                              Windows.
+* wrap:                                 Wrap.
+* writebuf:                             Screen-Exchange.
+* writelock:                            Writelock.
+* xoff:                                 XON/XOFF.
+* xon:                                  XON/XOFF.
+* zombie:                               Zombie.
+
+
+File: screen.info,  Node: Keystroke Index,  Prev: Command Index,  Up: Top
+
+Keystroke Index
+***************
+
+   This is a list of the default key bindings.
+
+   The leading escape character (*note Command Character::.) has been
+omitted from the key sequences, since it is the same for all bindings.
+
+* Menu:
+
+* ":                                    Select.
+* ':                                    Select.
+* .:                                    Dump Termcap.
+* 0...9:                                Select.
+* ::                                    Colon.
+* <:                                    Screen-Exchange.
+* =:                                    Screen-Exchange.
+* >:                                    Screen-Exchange.
+* ?:                                    Help.
+* {:                                    History.
+* a:                                    Command Character.
+* A:                                    Title Command.
+* c:                                    Screen Command.
+* C:                                    Clear.
+* C-a:                                  Other Window.
+* C-c:                                  Screen Command.
+* C-d:                                  Detach.
+* C-f:                                  Flow.
+* C-g:                                  Bell.
+* C-h:                                  Hardcopy.
+* C-i:                                  Info.
+* C-k:                                  Kill.
+* C-l:                                  Redisplay.
+* C-m:                                  Last Message.
+* C-n:                                  Next and Previous.
+* C-p:                                  Next and Previous.
+* C-q:                                  XON/XOFF.
+* C-r:                                  Wrap.
+* C-s:                                  XON/XOFF.
+* C-t:                                  Time.
+* C-v:                                  Digraph.
+* C-w:                                  Windows.
+* C-x:                                  Lock.
+* C-z:                                  Suspend.
+* C-[:                                  Copy.
+* C-\:                                  Quit.
+* C-]:                                  Paste.
+* D:                                    Power Detach.
+* d:                                    Detach.
+* ESC:                                  Copy.
+* f:                                    Flow.
+* H:                                    Log.
+* h:                                    Hardcopy.
+* i:                                    Info.
+* k:                                    Kill.
+* L:                                    Login.
+* l:                                    Redisplay.
+* m:                                    Last Message.
+* M:                                    Monitor.
+* N:                                    Number.
+* n:                                    Next and Previous.
+* p:                                    Next and Previous.
+* q:                                    XON/XOFF.
+* r:                                    Wrap.
+* s:                                    XON/XOFF.
+* SPC:                                  Next and Previous.
+* t:                                    Time.
+* v:                                    Version.
+* w:                                    Windows.
+* W:                                    Window Size.
+* x:                                    Lock.
+* Z:                                    Reset.
+* z:                                    Suspend.
+* [:                                    Copy.
+* ]:                                    Paste.
+
+
