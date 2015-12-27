@@ -1,0 +1,6 @@
+Fast interpreter for the AWK programming language.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2 only
+###
+bin/mawk
+man/man1/mawk.0

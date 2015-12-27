@@ -1,0 +1,158 @@
+dnl $MawkId: configure.in,v 1.58 2015/05/03 22:39:11 tom Exp $
+dnl configure.in for mawk
+dnl ###########################################################################
+dnl configure.in
+dnl copyright 2008-2014,2015, Thomas E. Dickey
+dnl copyright 1991-1994,1995, Michael D. Brennan
+dnl
+dnl This is a source file for mawk, an implementation of
+dnl the AWK programming language.
+dnl
+dnl Mawk is distributed without warranty under the terms of
+dnl the GNU General Public License, version 2, 1991.
+dnl ###########################################################################
+dnl
+dnl @Log: configure.in,v @
+dnl Revision 1.13  1995/10/16  12:25:00  mike
+dnl configure cleanup
+dnl
+dnl Revision 1.12  1995/04/20  20:26:51  mike
+dnl beta improvements from Carl Mascott
+dnl
+dnl Revision 1.11  1995/01/09  01:22:30  mike
+dnl check sig handler ret type to make fpe_check.c more robust
+dnl
+dnl Revision 1.10  1994/12/18  20:46:24  mike
+dnl fpe_check -> ./fpe_check
+dnl
+dnl Revision 1.9  1994/12/14  14:42:55  mike
+dnl more explicit that "   " MATHLIB means none
+dnl
+dnl Revision 1.8  1994/12/11  21:26:25  mike
+dnl tweak egrep for [fs]printf prototypes
+dnl
+dnl Revision 1.7  1994/10/16  18:38:23  mike
+dnl use sed on defines.out
+dnl
+dnl Revision 1.6  1994/10/11  02:49:06  mike
+dnl systemVr4 siginfo
+dnl
+dnl Revision 1.5  1994/10/11  00:39:25  mike
+dnl fpe check stuff
+dnl
+dnl
+dnl
+AC_PREREQ(2.52.20011201)
+AC_INIT(mawk.h)
+
+AC_CONFIG_HEADER(config.h:config_h.in)
+CF_CHECK_CACHE
+
+AC_ARG_PROGRAM
+
+CF_PROG_CC
+AC_PROG_MAKE_SET
+CF_MAKEFLAGS
+AC_PROG_CPP
+AC_PROG_INSTALL
+
+CF_HELP_MESSAGE(Cross-compiling)
+CF_BUILD_CC
+
+CF_MAWK_MATHLIB
+
+CF_HELP_MESSAGE(Miscellaneous options)
+CF_DISABLE_ECHO
+CF_ENABLE_WARNINGS
+CF_WITH_MAN2HTML
+
+###############################################################################
+AC_MSG_CHECKING(if you want to use mawk's own regular-expressions engine)
+AC_ARG_WITH([builtin-regex],
+[  --without-builtin-regex do not use mawk's own regular-expressions engine],
+[
+	with_builtin_regex=$withval
+])
+if test "x${with_builtin_regex}" != xno; then
+	with_builtin_regex=yes
+    CPPFLAGS="$CPPFLAGS -DLOCAL_REGEXP"
+fi
+AC_MSG_RESULT($with_builtin_regex)
+
+if test "x${with_builtin_regex}" = xno; then
+    CF_REGEX
+fi
+
+###############################################################################
+AC_MSG_CHECKING(if you want to use mawk's own srand/rand functions)
+CF_ARG_ENABLE([builtin-srand],
+[  --enable-builtin-srand  use mawk's own srand/rand functions],
+	[with_builtin_srand=yes],
+	[with_builtin_srand=no])
+if test "x${with_builtin_srand}" != xno; then
+	with_builtin_srand=yes
+fi
+AC_MSG_RESULT($with_builtin_srand)
+
+if test "x${with_builtin_srand}" = xno; then
+    CF_SRAND(mawk_)
+	AC_DEFINE_UNQUOTED(NAME_RANDOM, "$cf_cv_srand_func")
+fi
+###############################################################################
+AC_MSG_CHECKING(if you want mawk to initialize random numbers at startup)
+CF_ARG_DISABLE([init-srand],
+[  --disable-init-srand    suppress automatic initialization of random numbers],
+	[with_init_srand=no],
+	[with_init_srand=yes])
+if test "x${with_init_srand}" != xno; then
+	with_init_srand=yes
+else
+    CPPFLAGS="$CPPFLAGS -DNO_INIT_SRAND"
+fi
+AC_MSG_RESULT($with_init_srand)
+
+###############################################################################
+
+AC_PROG_YACC
+CF_PROG_LINT
+CF_MAKE_TAGS
+CF_XOPEN_SOURCE
+CF_LARGEFILE
+
+CF_HELP_MESSAGE(Testing-options)
+CF_DISABLE_LEAKS
+
+CF_ENABLE_TRACE
+
+if test "x$with_trace" = xyes
+then
+	EXTRAOBJS="$EXTRAOBJS trace\$o"
+fi
+AC_SUBST(EXTRAOBJS)
+
+CF_MAWK_FIND_SIZE_T
+CF_LOCALE
+CF_CHECK_ENVIRON(environ)
+
+AC_CHECK_FUNCS(fork gettimeofday matherr mktime pipe strftime tdestroy tsearch wait)
+
+###	Checks for libraries.
+case $cf_cv_system_name in
+(*mingw32*)
+	CPPFLAGS="$CPPFLAGS -DWINVER=0x0501"
+#	LIBS=" -lpsapi $LIBS"
+	;;
+esac
+
+test "$ac_cv_func_fork" = yes && \
+test "$ac_cv_func_pipe" = yes && \
+test "$ac_cv_func_wait" = yes && \
+AC_DEFINE(HAVE_REAL_PIPES,1,[Define to 1 if we have functions needed to setup Unix pipes])
+
+AC_CHECK_HEADERS(errno.h fcntl.h unistd.h sys/wait.h)
+
+CF_SET_MATH_LIB_VERSION
+CF_MAWK_FIND_MAX_INT
+CF_MAWK_RUN_FPE_TESTS
+
+AC_OUTPUT(Makefile man/Makefile)

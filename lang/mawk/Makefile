@@ -1,0 +1,170 @@
+# $MawkId: Makefile.in,v 1.47 2015/05/03 23:20:19 tom Exp $
+# Makefile-template for MAWK
+###############################################################################
+# copyright 2009-2014,2015 Thomas E. Dickey
+# copyright 2010, Guido Berhoerster
+# copyright 2009, Jonathan Nieder
+# copyright 2005, Aleksey Cheusov
+# copyright 1996, Michael D. Brennan
+#
+# This is a source file for mawk, an implementation of
+# the AWK programming language.
+#
+# Mawk is distributed without warranty under the terms of
+# the GNU General Public License, version 2, 1991.
+###############################################################################
+V=	1.3.4
+PORT=	mawk
+SHELL=/bin/sh
+
+####################################
+
+srcdir		= .
+srcdir_sl	= ./
+
+
+x               = 
+o               = .o
+
+srcdir		= .
+
+CPPFLAGS	+= -I. -I$(srcdir) -DHAVE_CONFIG_H  -DLOCAL_REGEXP -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 
+CFLAGS          += -ffunction-sections -fdata-sections
+LIBS            = -lm -lc -lgcc
+
+BUILD_CC	= gcc
+BUILD_CFLAGS	= 
+BUILD_CPPFLAGS	= -I. -I$(srcdir) -DHAVE_CONFIG_H ${CPPFLAGS}
+BUILD_LDFLAGS	=
+BUILD_LIBS	= ${LIBS}
+BUILD_EXEEXT	= $x
+BUILD_OBJEXT	= o
+
+MAKE_RECUR	=  prefix=$(prefix) DESTDIR=$(DESTDIR)
+
+YACC            = bison -y
+
+CTAGS		= ctags
+ETAGS		= etags
+
+LINT		= 
+LINTOPTS	= 
+
+INSTALL         = /usr/bin/install -c
+INSTALL_PROGRAM = ${INSTALL}
+INSTALL_DATA    = ${INSTALL} -m 644
+transform	= s,x,x,
+
+# where to put mawk
+
+# where to put the man pages
+MAN1		= mawk.0
+
+#######################################
+
+actual_PROG  = mawk
+binary_PROG  = $(actual_PROG)
+
+OBJS = parse$o scan$o memory$o main$o hash$o execute$o code$o \
+  da$o error$o init$o bi_vars$o cast$o print$o bi_funct$o \
+  kw$o jmp$o array$o field$o split$o re_cmpl$o regexp$o zmalloc$o \
+  fin$o files$o scancode$o matherr$o fcall$o version$o 
+
+.SUFFIXES: .c .i $o
+
+.c.i :
+	
+	$(CPP) -C $(CPPFLAGS) $< >$@
+.c$o :
+	
+	$(CC) -c $(CPPFLAGS) $(CFLAGS) $<
+
+all :	mawk
+
+check :  mawk_test fpe_test
+
+mawk : $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+	${MAKE} manpages
+
+CHECK	= MAWK=`pwd`/$(PROG); export MAWK; cd $(srcdir)/test; echo "** $@"
+
+mawk_test :  $(PROG)  # test that we have a sane mawk
+	@sh -c '$(CHECK); ./mawktest'
+
+fpe_test :  $(PROG) # test FPEs are handled OK
+	@sh -c '$(CHECK); ./fpe_test'
+
+parse.c  : parse.y
+	@echo  expect 4 shift/reduce conflicts
+	$(YACC) -d parse.y
+	sed -e '/^#line/s%"y.tab.c"%"parse.c"%' y.tab.c >parse.c
+	rm -f y.tab.c
+	-if cmp -s y.tab.h parse.h ;\
+	   then rm y.tab.h ;\
+	   else mv y.tab.h parse.h ; fi
+
+NOIDENT = sed -e 's/[$$]MawkId\([^$$]*\)[$$]/@MawkId\1@/'
+
+array.c : array.w
+	-@rm -f $@
+	notangle -R'"array.c"' array.w | $(NOIDENT) | cpif array.c
+
+array.h : array.w
+	-@rm -f $@
+	notangle -R'"array.h"' array.w | $(NOIDENT) | cpif array.h
+
+scancode.c :  $(srcdir)/makescan.c  scancode.h nstd.h config.h
+	$(BUILD_CC) $(BUILD_CFLAGS) $(BUILD_CPPFLAGS) -o makescan$x $(srcdir)/makescan.c
+	rm -f scancode.c
+	./makescan$x > scancode.c
+	rm makescan$x
+
+MAWK_BIN = $(BINDIR)/$(binary_PROG)
+MAWK_MAN = $(MANDIR)/$(actual_PROG)1
+
+afterinstall :  mawk
+	install -d ${DESTDIR}${PREFIX}/bin
+	$(INSTALL_PROGRAM) mawk $(DESTDIR)$(BINDIR)
+
+tags :
+	$(CTAGS) *.[ch] */*.[ch]
+
+TAGS :
+	$(ETAGS) *.[ch] */*.[ch]
+
+$(BINDIR) \
+$(MANDIR) :
+	mkdir -p "$@"
+
+# output from makedeps.sh
+array.o : array.h bi_vars.h config.h field.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+bi_funct.o : array.h bi_funct.h bi_vars.h config.h field.h files.h fin.h init.h mawk.h memory.h nstd.h regexp.h repl.h sizes.h symtype.h types.h zmalloc.h
+bi_vars.o : array.h bi_vars.h config.h field.h init.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+cast.o : array.h config.h field.h mawk.h memory.h nstd.h parse.h repl.h scan.h scancode.h sizes.h symtype.h types.h zmalloc.h
+code.o : array.h code.h config.h field.h init.h jmp.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+da.o : array.h bi_funct.h code.h config.h field.h mawk.h memory.h nstd.h repl.h sizes.h symtype.h types.h zmalloc.h
+error.o : array.h bi_vars.h config.h mawk.h nstd.h parse.h scan.h scancode.h sizes.h symtype.h types.h
+execute.o : array.h bi_funct.h bi_vars.h code.h config.h field.h fin.h mawk.h memory.h nstd.h regexp.h repl.h sizes.h symtype.h types.h zmalloc.h
+fcall.o : array.h code.h config.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+field.o : array.h bi_vars.h config.h field.h init.h mawk.h memory.h nstd.h parse.h regexp.h repl.h scan.h scancode.h sizes.h symtype.h types.h zmalloc.h
+files.o : array.h config.h files.h fin.h init.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+fin.o : array.h bi_vars.h config.h field.h fin.h mawk.h memory.h nstd.h parse.h scan.h scancode.h sizes.h symtype.h types.h zmalloc.h
+hash.o : array.h config.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+init.o : array.h bi_vars.h code.h config.h field.h init.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+jmp.o : array.h code.h config.h init.h jmp.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+kw.o : array.h config.h init.h mawk.h nstd.h parse.h sizes.h symtype.h types.h
+main.o : array.h code.h config.h files.h init.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+makescan.o : config.h nstd.h scancode.h
+matherr.o : array.h config.h init.h mawk.h nstd.h sizes.h symtype.h types.h
+memory.o : config.h mawk.h memory.h nstd.h sizes.h types.h zmalloc.h
+parse.o : array.h bi_funct.h bi_vars.h code.h config.h field.h files.h jmp.h mawk.h memory.h nstd.h sizes.h symtype.h types.h zmalloc.h
+print.o : array.h bi_funct.h bi_vars.h config.h field.h files.h mawk.h memory.h nstd.h parse.h scan.h scancode.h sizes.h symtype.h types.h zmalloc.h
+re_cmpl.o : array.h config.h mawk.h memory.h nstd.h parse.h regexp.h repl.h scan.h scancode.h sizes.h symtype.h types.h zmalloc.h
+scan.o : array.h code.h config.h field.h files.h fin.h init.h mawk.h memory.h nstd.h parse.h repl.h scan.h scancode.h sizes.h symtype.h types.h zmalloc.h
+split.o : array.h bi_funct.h bi_vars.h config.h field.h mawk.h memory.h nstd.h parse.h regexp.h repl.h scan.h scancode.h sizes.h symtype.h types.h zmalloc.h
+version.o : array.h config.h init.h mawk.h nstd.h patchlev.h sizes.h symtype.h types.h
+zmalloc.o : config.h mawk.h nstd.h sizes.h types.h zmalloc.h
+regexp.o : rexpdb.c rexp4.c rexp2.c regexp_system.c sizes.h mawk.h rexp0.c rexp1.c config.h rexp.h regexp.h nstd.h rexp3.c rexp.c field.h
+
+.include <bsd.port.mk>

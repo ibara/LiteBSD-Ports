@@ -1,6 +1,9 @@
+#
 # LiteBSD Ports Makefile
+#
 
-V=	# Must have a value!
+V=	1.0		# Must have a value!
+PORT=	myprogram	# Must have a value!
 PROG=	myprogram
 SRCS=	source1.c source2.c \
 	source3.c source4.c

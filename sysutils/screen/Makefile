@@ -6,6 +6,7 @@
 #
 V=	3.7.1
 PROG=	screen
+PORT=	screen
 NOMAN=	1
 
 srcdir = .

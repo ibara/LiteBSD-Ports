@@ -1,0 +1,168 @@
+MANIFEST for mawk-1.3.4-20150503, version t20150503
+--------------------------------------------------------------------------------
+MANIFEST                        this file
+ACKNOWLEDGMENT                  acknowledgements
+CHANGES                         change-log for mawk
+COPYING                         GNU General Public License, version 2
+INSTALL                         installation instructions
+Makefile.in                     template for makefile
+README                          description of mawk
+aclocal.m4                      mawk-specific macros for autoconf
+array.c                         array functions (C source)
+array.h                         array functions (C header)
+array.w                         array functions (noweb)
+bi_funct.c                      mawk built-in functions
+bi_funct.h                      mawk built-in functions header
+bi_vars.c                       mawk predefined variables
+bi_vars.h                       mawk predefined variables header
+cast.c                          mawk type-conversions
+code.c                          machine opcode functions
+code.h                          machine opcodes header
+config.guess                    configure-script
+config.sub                      configure-script
+config_h.in                     template for config.h
+configure                       Configuration script for UNIX
+configure.in                    template for autoconf script
+da.c                            disassemble mawk-code
+error.c                         error-reporting functions
+execute.c                       command-interpreter
+fcall.c                         utilities for function-calls
+field.c                         field- and cell-utilities
+field.h                         field- and cell utilities headers
+files.c                         file- and pipe-functions
+files.h                         file- and pipe-functions header
+fin.c                           file-input functions
+fin.h                           file-input functions header
+fpe_check.c                     configure-utility for floating-point checks
+hash.c                          symbol table hashing/lookup
+init.c                          interpreter initialization functions
+init.h                          interpreter initialization functions header
+install-sh                      configure-script
+jmp.c                           byte-code jumps/branches
+jmp.h                           byte-code jumps/branches header
+kw.c                            keyword table and lookup functions
+main.c                          main program
+makedeps.sh                     script to regenerate object-dependencies for Makefile.in
+makescan.c                      utility which builds scancode.c
+matherr.c                       catch/report math-errors
+mawk.h                          main header file for mawk
+memory.c                        string-allocation functions
+memory.h                        string-allocation functions header
+nstd.h                          header for missing.c
+parse.c                         generated C parser
+parse.h                         generated C parser header
+parse.y                         mawk grammar
+patchlev.h                      patch-level (see version.c)
+print.c                         printf- and sprintf-functions for interpreter
+re_cmpl.c                       compile regular expressions
+regexp.c                        regular expressions (main)
+regexp.h                        interface to main regular expressions
+regexp_system.c                 wrapper for system's regular expressions
+repl.h                          header for re_cmpl.c
+rexp.c                          regular expressions
+rexp.h                          regular expression details header
+rexp0.c                         built-in regular expression parsing
+rexp1.c                         built-in regular expression operations
+rexp2.c                         built-in regular expressions matching functions
+rexp3.c                         built-in regular expressions matching - main
+rexp4.c                         regular expressions utility functions
+rexpdb.c                        debugging utilities for regular expressions
+scan.c                          program file-management
+scan.h                          program file-management header
+scancode.h                      list of scan-codes for mawk
+sizes.h                         data-type sizes header
+split.c                         functions for splitting field, strings, etc.
+split.h                         prototypes for split.c
+symtype.h                       types related to symbols are defined here
+trace.c                         mawk trace-functions
+types.h                         mawk datatypes header
+version.c                       print mawk's version string
+vs6.mak                         makefile for Visual Studio 6
+zmalloc.c                       memory allocation functions
+zmalloc.h                       memory allocation functions header
+examples                        subdirectory
+examples/ct_length.awk          change length to length()
+examples/decl.awk               parse a C declaration by recursive descent
+examples/deps.awk               find include dependencies in C source
+examples/eatc.awk               another program to remove comments
+examples/gdecl.awk              parse a C declaration by recursive descent
+examples/hcal                   Bob's latest
+examples/hical                  calendar program by Bob Stockler
+examples/nocomment.awk          remove C comments  from a list of files
+examples/primes.awk             find all primes between 2 and STOP (parameter)
+examples/qsort.awk              qsort text files
+icons                           subdirectory
+icons/mawk144.png               artwork for my webpage
+icons/mawk48.png                artwork for my webpage
+icons/mawk48.svg                a suitable icon for mawk
+man                             subdirectory
+man/Makefile.in                 makefile for alternate doc-formats
+man/TODO                        to-do list (update to conform with POSIX-1003.1-2004)
+man/array.pdf                   generated documentation for array.w
+man/mawk.1                      troff source for unix style man pages
+man/mawk.doc                    ascii man pages
+msdos                           subdirectory
+msdos/dosexec.c                 system() and pipes() for DOS
+msdos/examples                  subdirectory
+msdos/examples/add_cr.awk       convert files from Unix to Dos line-endings
+msdos/examples/doslist.awk      print truncated DOS file names
+msdos/examples/objstat.awk      Sum up sizes of OBJ files in current directory
+msdos/examples/shell.awk        Test pipes under DOS
+msdos/examples/srcstat.awk      show sizes (line, char) of files
+msdos/examples/srcstat2.awk     show sizes (line, char) of files
+msdos/examples/texttest.awk     print contents of quoted #include's
+msdos/examples/winexe.awk       sum segment-sizes of exe's in current directory
+msdos/examples/winobj.awk       sum sizes of obj's in current directory
+msdos                           subdirectory
+msdos/vs2008.h                  definitions for building with Visual Studio 2008
+msdos/vs2008.mak                nmakefile for building with Visual Studio 2008
+package/debian                  subdirectory
+package/debian/changelog        start working on debian package
+package/debian/compat           debian build-script
+package/debian/control          debian build-script
+package/debian/copyright        debian build-script
+package/debian/docs             debian build-script
+package/debian/postinst         debian build-script
+package/debian/postrm           post-removal script
+package/debian/preinst          debian build script
+package/debian/prerm            debian build-script
+package/debian/rules            debian build-script
+package/debian/source           subdirectory
+package/debian/source/format    debian build script
+package/debian                  subdirectory
+package/debian/watch            debian build-script
+package                         subdirectory
+package/mawk.spec               RPM script for mawk
+test                            subdirectory
+test/decl-awk.out               reference for test using decl.awk
+test/fpe_test                   scripts to test if fpe handling compiled OK
+test/fpe_test.bat               scripts to test if fpe handling compiled OK
+test/fpetest1.awk               test exception for divide-by-zero
+test/fpetest2.awk               test exception for floating point overflow
+test/fpetest3.awk               test exception for domain error
+test/full-awk.dat               test-data for /dev/full
+test/mawknull.dat               test-file for embedded nulls
+test/mawktest                   scripts to test mawk compiled OK
+test/mawktest.bat               scripts to test mawk compiled OK
+test/mawktest.dat               input data for the test
+test/nextfile.awk               script for testing nextfile
+test/nextfile.out               reference data for nextfile test
+test/noloop.awk                 test-script from gawk
+test/null-rs.awk                test-script for setting RS to explicit null
+test/null-rs.dat                input-data for null-rs.awk
+test/null-rs.out                reference for null-rs.awk
+test/nulls.out                  output from nulls0.awk
+test/nulls0.awk                 script for testing FS containing nulls
+test/reg-awk.out                reference for testing regular expressions
+test/reg0.awk                   test simple pattern matching
+test/reg1.awk                   test pattern with "|" OR
+test/reg2.awk                   test pattern with ranges
+test/reg3.awk                   testcase for pattern
+test/reg4.awk                   test-case for square-brackets and embedded "/" or "]"
+test/reg5.awk                   test-case for character-classes
+test/reg6.awk                   testcase for J2C machine state
+test/reg7.awk                   test-script for gsub
+test/wc-awk.out                 reference for wc.awk
+test/wc.awk                     test-script which counts words
+test/wfrq-awk.out               reference for wfrq0.awk
+test/wfrq0.awk                  test-script which counts word-frequencies
