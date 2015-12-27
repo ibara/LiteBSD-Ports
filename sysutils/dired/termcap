@@ -1,0 +1,76 @@
+Mu|sun|Sun Microsystems Workstation console:\
+	:am:bs:km:mi:ms:pt:li#34:co#80:cl=^L:cm=\E[%i%d;%dH:\
+	:ce=\E[K:cd=\E[J:so=\E[7m:se=\E[m:rs=\E[s:\
+	        :dl=\E[M:im=:ei=:ic=\E[@:dc=\E[P:\
+	:up=\E[A:nd=\E[C:ku=\E[A:kd=\E[B:kr=\E[C:kl=\E[D:\
+	:k1=\E[224z:k2=\E[225z:k3=\E[226z:k4=\E[227z:k5=\E[228z:\
+	:k6=\E[229z:k7=\E[230z:k8=\E[231z:k9=\E[232z:
+# modified by mike@yetti.UUCP to do smooth scroll
+d0|vt100-80ss|vt100ss|vt100 with 80 columns - smooth scroll:\
+        :co#80:li#24:cl=50\E[;H\E[J:\
+        :do=2\ED:le=^H:bs:am:cm=45\E[%i%d;%dH:nd=2\E[C:up=2\E[A:\
+        :ce=45\E[K:cd=50\E[J:so=5\E[7m:se=5\E[m:us=5\E[4m:ue=5\E[m:\
+        :md=\E[1m:mr=\E[7m:mb=\E[5m:me=\E[m:\
+        :ks=\E=:ke=\E>:\
+        :kl=2\E[D:kr=2\E[C:ku=2\E[A:kd=2\E[B:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:\
+        :ho=25\E[H:pt:sr=95\EM:sf=95\ED:vt#3:xn:\
+        :sc=\E7:rc=\E8:cs=55\E[%i%d;%dr:
+#Note: this is not really a generic vt200 entry, since vt240's need lots
+#of padding and vt220's don't (see below)
+d0|vt200-80ss|vt220-80ss|VT200 series with 80 columns - smooth scroll:\
+        :im=\E[4h:ei=\E[4l:ip=3:mi:dc=\E[P:dm=:ed=:al=4\E[L:dl=4\E[M:\
+        :ce=\E[K:cl=\E[H\E[J:cd=\E[J:cm=\E[%i%d;%dH:nd=\E[C:up=\E[A:\
+        :AL=1*\E[%dL:DL=1*\E[%dM:DC=\E[%dP:\
+        :tc=vt100-80ss:
+# original entries from Jeff Siegal
+#From: Jeff Siegal <JBS%DEEP-THOUGHT%EDDIE.MIT.EDU@harvunxt.BITNET>
+#Subject: Much-improved Termcap Entries
+#Optimized termcap entries for common DEC terminals follow.  Replace
+#the top of your EMACSVAR_TERMCAP file and watch your terminal do
+#magic.
+#For some reason, the entries for 132 column mode don't seem to work--I
+#think it may be an Emacs bug, but I haven't tested with the termcap
+#entries from Harvard.
+## For VMS, make sure not to use \n or ^J for nl or anything else.
+#
+d0|vt100-80|vt100|vt100 with 80 columns:\
+        :co#80:li#24:cl=50\E[;H\E[J:\
+        :do=2\ED:le=^H:bs:am:cm=5\E[%i%d;%dH:nd=2\E[C:up=2\E[A:\
+        :ce=3\E[K:cd=50\E[J:so=\E[7m:se=\E[m:us=\E[4m:ue=\E[m:\
+        :md=\E[1m:mr=\E[7m:mb=\E[5m:me=\E[m:\
+        :ks=\E=:ke=\E>:\
+        :kl=\E[D:kr=\E[C:ku=\E[A:kd=\E[B:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:\
+        :ho=\E[H:pt:sr=5\EM:sf=\ED:vt#3:xn:\
+        :sc=\E7:rc=\E8:cs=\E[%i%d;%dr:
+#Note: this is not really a generic vt200 entry, since vt240's need lots
+#of padding and vt220's don't (see below)
+d0|vt200-80|vt220-80|VT200 series with 80 columns:\
+        :im=\E[4h:ei=\E[4l:ip=3:mi:dc=\E[P:dm=:ed=:al=4\E[L:dl=4\E[M:\
+        :ce=\E[K:cl=\E[H\E[J:cd=\E[J:cm=\E[%i%d;%dH:nd=\E[C:up=\E[A:\
+        :AL=1*\E[%dL:DL=1*\E[%dM:DC=\E[%dP:\
+        :tc=vt100-80:
+d0|vt200-132|vt220-132|vt200 with 132 columns:\
+        :co#132:tc=vt200-80:
+d3|vt132-80|vt102-80|vt240-80|vt100avo-80|vt series plus avo 80col:\
+        :al=99\E[L:dl=99\E[M:\
+        :ei=\E[4l:im=\E[4h:ip=7:dc=7\E[P:tc=vt100-80:
+d3|vt132-132|vt102-132|vt240-132|vt100avo-132|vt series plus avo, 132col:\
+        :co#132:tc=vt132-80:
+## For VMS, make sure not to use \n for nl or anything else.
+## The entry for vt200-80 disables sr and sf, they don't
+## seem for work right.l
+d0|vt200-80|vt100-80|vt125-80|VT 200/100/125 with 80 columns:\
+        :co#80:li#24:am:bs:pt:xn:cl=45\E[H\E[2J:\
+        :cm=%i\E[%d;%dH:nd=\E[C:up=\EM:ho=\E[H:ce=2\E[K:cd=2*\E[J:\
+        :nl=\E[B:cr=\r:s-r=10\EM:s-f=10\ED:\
+        :sc=\E7:rc=\E8:cs=\E[%i%d;%dr:so=\E[7m:se=\E[m:us=\E[4m:ue=\E[m:LC:\
+        :kl=\E[D:kr=\E[C:ku=\E[A:kd=\E[B:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:\
+        :ks=\E=:ke=\E>:
+d0|vt200-132|vt100-132|vt125-132|VT 200/100/125 with 132 columns:\
+        :co#132:li#24:am:bs:pt:xn:cl=45\E[H\E[2J:\
+        :cm=%i\E[%d;%dH:nd=\E[C:up=\EM:ho=\E[H:ce=2\E[K:cd=2*\E[J:\
+        :nl=\E[B:cr=\r:sr=5\EM:sf=30\E7\E[200H\ED\E8:\
+        :sc=\E7:rc=\E8:cs=\E[%i%d;%dr:so=\E[7m:se=\E[m:us=\E[4m:ue=\E[m:LC:\
+        :kl=\E[D:kr=\E[C:ku=\E[A:kd=\E[B:k1=\EOP:k2=\EOQ:k3=\EOR:k4=\EOS:
+dz|aixterm:\
+        :co#132:tc=vt100:

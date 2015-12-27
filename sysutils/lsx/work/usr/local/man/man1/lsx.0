@@ -1,0 +1,12 @@
+LSX(1)                    BSD General Commands Manual                   LSX(1)
+
+NNAAMMEE
+     llssxx —
+
+SSYYNNOOPPSSIISS
+     llssxx [--vv] [_d_i_r_e_c_t_o_r_y _._._.]
+
+DDEESSCCRRIIPPTTIIOONN
+     The llssxx utility lists all the executables in a directory.
+
+                               December 22, 2015

@@ -1,0 +1,174 @@
+%% /u/sy/beebe/src/dired/ChangeLog, Thu Jun 22 10:13:50 1995
+%% Edit by Nelson H. F. Beebe <beebe@plot79.math.utah.edu>
+
+------------------------------------------------------------------------
+Release version 2.01:
+
+Sat Jun 24 10:53:09 1995  Nelson H. F. Beebe  <beebe@sunrise>
+
+	* Makefile (sun-solaris): In machine-specific targets, make
+	$(TARGETS) instead of all.  Add new flags, and new sun-solaris-gcc
+	target with extensive GCCFLAGS settings for maximal error checking. 
+
+	* dired.c: Add ARGS() macro and Standard C prototypes for all
+	functions. Change many char* pointers to const char*.  Do some
+	local variable renaming to reduce shadowing of global variables.
+	Add explicit typing of all function arguments.  Use HAVE_xxx
+	preprocessor symbols to control inclusion of header files or
+	features that are not universally available.  Rename TRUE/FALSE to
+	True/False to avoid redefinition clashes with symbols in curses.h
+	on several platforms.  Remove unused, and conflicting, typedef of
+	bool.  Include additional header files for library function
+	prototypes.   Make all file-local variables and functions static
+	to reduce global name space pollution.  Change types of members
+	lnl and lnum in struct lbuf from short to unsigned long, because
+	modern file systems require that, and reorder the members to
+	improve memory alignment.  Change non-standard varargs use of
+	telluser() to fixed two-argument form.  Parenthesize some
+	complicated expressions to improve readability.  Change dired's
+	exit code to errcode, instead of 0.  Revise to make dirent-style
+	directory processing the default, since most machines have it now.
+	Capitalize a few function names (Getcap, Getch, Readdir, Rmdir,
+	Select) to avoid conflicts with library functions in system header
+	files.   Fix some printf() format items and arguments to remove
+	length mismatches.   Add wait_arg_t generalization for NeXT systems.
+
+	* cshsystem.c: Add wait_arg_t generalization for NeXT systems.
+
+------------------------------------------------------------------------
+Release version 2.00:
+
+Thu Jun 22 10:14:28 1995  Nelson H. F. Beebe  <beebe@plot79.math.utah.edu>
+
+	* regexpr.c: include string.h for function prototypes
+
+	* dired.c (main()): allow empty regular expression in search to
+	mean re-use last one.
+
+	* dired.c (main()): add VERSION and -v option.
+
+Wed Jun 21 17:36:11 1995  Nelson H. F. Beebe  <beebe@alfred.math.utah.edu>
+
+	* dired.c (getfullpath()): make temp[] static, because its
+	address is returned (gcc 2.6.3 with -O4 caught this long-standing
+	bug). 
+
+Wed Jun 21 12:36:32 1995  Nelson H. F. Beebe  <beebe@alfred.math.utah.edu>
+
+	* Makefile: Put quotes around $(OPT) to allow embedded spaces.
+	
+	* Makefile: Add -DV4P2 for sun.
+
+	* Makefile: Add regexpr.* files.
+
+	* dired.c (getline()): Recognize CR (\r) as end of line too; HP-UX
+	returns \r instead of \n.
+
+	* dired.c (main()): Reduce returned screen length by 1 to avoid
+	use of status line on 25-line displays (e.g. in kermit,
+	only the upper 24 are cleared).
+
+	* dired.c (main()): Add input mappings of common ESCape sequences for
+	arrow, PageUp, and PageDown keys.
+
+	* dired.c (match()): Revise to use re_exec(), and add call to
+	re_comp() in main() after /pattern has been collected.  This
+	restores the long-missing filename pattern search capability in
+	dired.
+
+	* dired.c (getfullpath()): Try getenv() for "PWD" and "cwd" before
+	calling getwd().
+
+	* regexpr.c, regexpr.h: Add these new files to provide a portable
+	solution to regular-expression parsing.
+
+	* regexpr.c: In Standard C environment, include stdlib.h instead
+	of using explicit declarations of library functions.
+
+	* regexpr.c (re_compile_pattern()) : Add one typecast in
+	comparison of int with unsigned char.
+
+
+% /u/sy/beebe/src/dired/CHANGELOG, Fri Jan  6 23:46:31 1995
+% Edit by Nelson H. F. Beebe <beebe@eve.math.utah.edu>
+
+Add support for sorting by creation date.  Correct off-by-one
+error that made half-screen divider line wrap because it was too long.
+Make some minor typographical corrections in dired.1, and clarify
+some if-then-else blocks in dired.c.
+
+% /usr/local/src/dired/dired/CHANGELOG, Sat Nov  6 11:27:21 1993
+% Edit by Nelson H. F. Beebe <beebe@sunrise>
+
+Add support for ~, #, D, and U commands.  Correct grammar in help
+file.  Remove a useless declaration in dired.c.
+
+% /usr/local/src/dired/CHANGELOG, Tue Mar  2 08:29:27 1993
+% Edit by Nelson H. F. Beebe <beebe@plot79.math.utah.edu>
+
+Reduce full-screen display size by 1 to avoid loss of line
+at top of screen.
+
+% /usr/local/src/dired/CHANGELOG, Wed Jan  6 16:44:34 1993
+% Edit by Nelson H. F. Beebe <beebe@plot79.math.utah.edu>
+
+Add Makefile support for DEC Alpha AXP OSF/1.
+Add OPT flag to all $(MAKE) lines in Makefile.
+
+% /usr/local/src/dired/CHANGELOG, Tue Jan  5 17:18:39 1993
+% Edit by Nelson H. F. Beebe <beebe@plot79.math.utah.edu>
+
+Increase size of userbuf[] in dired.c, so that long lines in
+/etc/passwd do not clobber data outside userbu[] in getname().
+
+% /u2/mth/mthnhb/src/dired/CHANGELOG, Tue Dec 29 14:20:52 1992
+% Edit by Nelson H.F. Beebe <mthnhb@snow.usi.utah.edu>
+
+Add support for compilation on IBM PS/2 and IBM 370 AIX systems.
+New convenience targets: aixps2 aix370.
+
+% /usr/local/src/dired/CHANGELOG, Tue Dec 29 13:00:24 1992
+% Edit by Nelson H. F. Beebe <beebe@eros.math.utah.edu>
+
+Add support for compilation under ANSI/ISO Standard C and POSIX
+terminal interface when BSD sgtty interface is unavailable, or
+incomplete (e.g. for Silicon Graphics).  New convenience targets:
+fips posix sgi stdc xpg3.
+
+The Berkeley-style signal() returns the address of the current signal
+handler which is used in cshsystem() to restore signal handling; the
+ANSI/ISO Standard C and POSIX signal() does not return a value.
+
+The choice between the two terminal interfaces is determined by the
+HAVE_TERMIOS_H symbol; when it is defined, ANSI/ISO Standard C and
+POSIX code (<termio.h>) will be used.  Otherwise, the Berkeley style
+(<sys/sgtty.h>) will be used.
+
+% /usr/local/src/dired/CHANGELOG, Sun Apr 19 10:49:29 1992
+% Edit by Nelson H. F. Beebe <beebe@solitude.math.utah.edu>
+
+Revise to make MOREPGM settable at compile time, as well as
+at run time from PAGER environment variable.
+
+% /usr/local/src/dired/CHANGELOG, Fri Apr 17 17:32:35 1992
+% Edit by Nelson H. F. Beebe <beebe@magna.math.utah.edu>
+
+Merge in separate IBM RS/6000 version into master sources.
+Cleanup Makefile and add convenience targets for specific
+systems.
+Add Convex C1 and C2 support.
+Put code under RCS control.
+
+% /u/sy/beebe/src/dired/CHANGELOG, Tue Oct 22 12:58:05 1991
+% Edit by Nelson H. F. Beebe <beebe@glab5.math.utah.edu>
+
+Modify dired.c to reduce the screen height and width under DECstation
+ULTRIX by 1 to avoid screen wrapping, and scrolling in full-window
+mode.
+
+/home/csc-sun/a/sy/beebe/src/dired/CHANGELOG, Fri Jun  7 15:47:48 1991
+Edit by Nelson H.F. Beebe <beebe@glab1.math.utah.edu>
+
+Add code in dired.c to use ioctl(...TIOCGWINSZ...) to try to get the
+true window size; tgetent("li") returns the termcap setting on some
+systems (e.g. ULTRIX), instead of the true current window size.

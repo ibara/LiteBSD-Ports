@@ -1,0 +1,21 @@
+To compile dired 3.05 under linux, deposit in a tmp directory
+the archive sources dired.1, dired.c, regexpr.c, Makefile.
+
+Creation of "dired":
+        "make linux"
+
+Installation:
+        "make install"                       (standard directories)
+
+Custom install:                              (rescue or CD only)
+
+        "mv ./dired /bin"
+        "mv ./dired.man.gz /var/man/cat1/dired.1.gz"      (Slackware)
+or
+        "mv ./dired.man.gz /var/catman/cat1/dired.1.gz"   (RedHat)
+
+The directory /bin is chosen because of its uniform appearance in boot
+configurations that use floppies or a CD rom with live file system. The
+file dired.man.gz is NOT a gzipped version of dired.man; it is CAT
+format as created by groff. This file has value if groff is not present
+on the system.

@@ -1,0 +1,1320 @@
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+NNAAMMEE
+       dired - directory tree navigator and program launcher
+
+SSYYNNOOPPSSIISS
+       ddiirreedd [ _o_p_t_i_o_n_s ] [ _l_i_s_t _o_f _d_i_r_e_c_t_o_r_i_e_s _a_n_d _f_i_l_e_s ]
+
+DDEESSCCRRIIPPTTIIOONN
+       ddiirreedd  is  an  acronym  for  ddiirreeccttoorryy eeddiittoorr.  It is pro-
+       nounced like DDEEAARR EEDD.  The main function of ddiirreedd is navi-
+       gation and program launching within large directory struc-
+       tures present in unix systems. The original  program  cre-
+       ated  in  1980  had only the basic navigation function and
+       the ability to ttaagg a file or an entire directory tree,  to
+       be  deleted  later  by  launching the program 'rm' on each
+       tagged file. The efficiency of the ttaagg  aanndd  ddeelleettee  llaatteerr
+       design  proved  itself,  by eliminating the typing of long
+       file names, and by abandoning the  use  of  wildcard  file
+       names in delete commands.
+
+       The  program  ddiirreedd  includes some common unix maintenance
+       commands, such as navigation through the directory  struc-
+       ture, viewing file contents, cleaning up a directory, mov-
+       ing files, changing file protections, making archives  and
+       creating  backups. It is ideal for tagging a collection of
+       files and then systematically launching a program on  each
+       file.
+
+
+TTHHEE SSCCRREEEENN
+       The ddiirreedd screen is split into an upper screen and a lower
+       screen. The upper screen is a  long-form  llss(1)  directory
+       listing  containing information about each file, including
+       the size, date, protection and owner.   The  lower  screen
+       consists of three information lines, plus an area in which
+       to display file contents, on demand.
+
+
+IIMMPPOORRTTAANNTT KKEEYYBBOOAARRDD CCOOMMMMAANNDDSS
+       The keyboard commands are single keys, each  with  a  spe-
+       cific,  succinct action, related to ddiirreedd''ss basic philoso-
+       phy of minimizing keyboard input  and  eliminating  typing
+       errors.   The  most important keys are ee and mm.  The first
+       key, ee, invokes your favorite editor (eg,  emacs)  on  the
+       file,  unless the file happens to be a directory, in which
+       case ddiirreedd is  suspended  and  a  new  copy  of  ddiirreedd  is
+       launched  on  that  directory. The second key, mm, launches
+       the system PAGER on the file entry, in  order  to  display
+       the file contents.
+
+       To exit ddiirreedd press either qq or CCttrrll--CC.
+
+
+DDIIRREEDD aanndd tthhee GGNNUU LLEESSSS pprrooggrraamm
+       The default PAGER is normally set to the GNU program lleessss.
+
+
+
+Version 3.05              3 January 1997                        1
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       This program is a replacement for the standard  unix  pro-
+       gram  mmoorree.  The program lleessss adds backward scrolling.  If
+       lleessss is configured to use script lleessssppiippee..sshh,  then  files
+       of  type  zziipp,,  ttaarr,, ttaarr..ZZ,, ttggzz,, aarrcc,, zzoooo,, ggzz,, and mmaann are
+       processed automatically. In particular, the index listings
+       of ttaarr and zziipp sources are displayed instead of the binary
+       contents.
+
+
+CCOOLLOORR RREEQQUUIIRREEMMEENNTTSS
+       Color features and highlighting require ANSI 6429  compli-
+       ance, that is, escape codes of the form EESSCC [[ 0011;;3300;;4466mm to
+       add color to the text and EESSCC [[mm to defeat color and high-
+       lighting. Most modern terminal emulators and indeed termi-
+       nals, especially Xterm under X-windows, accept these codes
+       or  else  silently  disregard  them. Terminals that do not
+       support ANSI 6429 will display in  plain  text.  To  force
+       plain  text, see the command oo and the command line option
+       --oo..
+
+
+CCOOMMMMAANNDD LLIINNEE FFIILLEESS aanndd DDIIRREECCTTOORRIIEESS
+       ddiirreedd can be invoked with a single directory on  the  com-
+       mand  line  or  a  wildcard  list of file names, including
+       directory names.  An empty command line is  equivalent  to
+       entering  the connected directory. In the case of just one
+       name, ddiirreedd will treat it as a single file name,  or  else
+       as a directory name, in which case the name is expanded to
+       all files in that directory. In all other cases, the  com-
+       mand  line entries are interpreted as names and ddiirreedd dis-
+       plays just these names, without expansion of  directories.
+       To display the files, ssttaatt(2) calls are required to obtain
+       file information. Progress in this sometimes slow  process
+       is  reported  by the display RReeaaddiinngg......  where each period
+       (.)  represents 20 files.  An interrupt  with  key  CCttrrll--CC
+       will  cause an immediate exit during the read phase. After
+       the read completes, the terminal is  put  into  a  special
+       mode  which causes Ctrl-C to be equivalent to the standard
+       exit command qq.  The terminal is restored  when  you  quit
+       the program or suspend the program using the unix standard
+       key _C_t_r_l_-_z_.
+
+
+SSCCRREEEENN FFOORRMMAATT
+       The format of the screen is as follows: each  line  repre-
+       sents  a  file (or directory), the name of which is right-
+       most.  From left the fields are: mode, link count,  owner,
+       size,  write  date  and  name, much like the format of the
+       unix command llss --ll.  The format can be  reset  to  display
+       different fields (see F below), including inodes and block
+       counts. The cursor moves up and down  the  column  immedi-
+       ately  left  of  the filename, where ddiirreedd accepts single-
+       letter commands. The bottom half of the screen is used for
+       file  display  via  the tt command or the paging command mm,
+
+
+
+Version 3.05              3 January 1997                        2
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       which generally uses GNU lleessss.   The  upper  half  of  the
+       screen  shows one of possibly many windows used to display
+       all the files.  The last two  screen  lines  are  used  as
+       `echo'  lines  for  displaying  messages and reading argu-
+       ments.
+
+       The mode and  link  field,  which  appears  first  in  the
+       default  long  format, has a leading flag character, which
+       codes the file type as follows:
+
+        Flag  Stat Description           Example
+        -------------------------------------------------------
+        '-'   S_IFREG:  A file          /usr/bin/gcc
+        'd'   S_IFDIR:  A directory     /usr/include/sys
+        'l'   S_IFLNK:  A link          /dev/modem -> /dev/cua0
+        'p'   S_IFIFO:  A named pipe    ./out
+        's'   S_IFSOCK: A socket        /dev/printer
+        'b'   S_IFBLK:  A block device  /dev/fd0
+        'c'   S_IFCHR:  A char device   /dev/console
+        -------------------------------------------------------
+
+       The  symbols  used  here   are   defined   in   the   file
+       /usr/include/sys/stat.h.   The  file  entry  /dev/modem is
+       created by a utility like llnn(1L).  The device /dev/fd0  is
+       a  floppy disk drive. The file ./out is user created using
+       a utility like GNU mmkkffiiffoo(1L).
+
+
+LLIINNEEAARR IINNDDIICCAATTOORR
+       When in split screen mode, the divider serves  also  as  a
+       `linear  indicator'  showing  where  the current window is
+       relative to the entire list of files.  The indicator  con-
+       sists  of a line of minus sign characters with letters ''oo''
+       superimposed to show the percentage of the total  consumed
+       by  the  current screenful of files.  A single `o' is used
+       to represent the window when the window size is small com-
+       pared to the total number of files.
+
+
+CCOOMMMMAANNDD KKEEYY TTUUTTOORR
+       The command hh causes the lower screen to be used as a com-
+       mand key tutor. The lines are of the form
+
+                       ff     :: ::FFoorrwwaarrdd oonnee ppaaggee..
+
+       The cursor blinks between the successive  colons,  waiting
+       for  a  command.  The keys which actually do something are
+       EEsscc--EEsscc and EEsscc--RReettuurrnn..  The command  EEsscc--EEsscc  causes  the
+       tutor  to  end. The command EEsscc--RReettuurrnn exits the tutor and
+       executes the command described on the  current  line,  eg,
+       ffoorrwwaarrdd  oonnee ppaaggee for the illustration above.  Other keys,
+       including control keys and function keys,  serve  to  move
+       the  cursor.   The  tutor  acts  as  a reminder of the key
+       assignments  for  seasoned  users  of  the  program.   For
+
+
+
+Version 3.05              3 January 1997                        3
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       novices, it shows what the keys do, by hitting keys on the
+       keyboard. Duplicate  keys  are  displayed  on  the  bottom
+       screen line.
+
+       Hitting keys is a useful way to discover the duplicate key
+       assignments, especially function keys. Most function  keys
+       do  nothing (a bell sounds) or else have a self-documented
+       effect.
+
+
+CCOOMMMMAANNDD LLIINNEE OOPPTTIIOONNSS
+       Command-line options, which  are  inherited  by  recursive
+       invocations of ddiirreedd, are:
+
+       --hh,, --vv Displays  a brief message about the version and the
+              command line options.
+
+       --CC225500  Set the initial file ccaappaacciittyy to  250  files.  This
+              determines  the  minimum  amount  of memory used by
+              ddiirreedd during its runtime. The actual capacity  used
+              is  an  integer  multiple of this amount (250, 500,
+              750, etc).  The number 250 is the default;  it  can
+              be  replaced by any reasonable count from 1 to over
+              1000. All forked copies of ddiirreedd will inherit  this
+              setting.
+
+       --FFmmssdd  Set  the  initial  screen format to print the modes
+              and links, size in bytes, date and file  name.  The
+              string msd can be replaced by any string (no spaces
+              or punctuation) taken from the  letters  iibbmmgguussddppllnn
+              according  to the following plan: _i_=_i_n_o_d_e, _b_=_b_l_o_c_k,
+              _m_=_m_o_d_e_s _a_n_d _l_i_n_k_s,  _g_=_g_r_o_u_p  _I_d  _(_g_i_d_),  _u_=_u_s_e_r  _I_D
+              _(_u_i_d_),  _s_=_s_i_z_e,  _d_=_d_a_t_e, _p_=_p_a_t_h_n_a_m_e, _l_=_l_o_n_g _'_l_s _-_l_'
+              _f_o_r_m_a_t, or _n_=_n_o_n_e _.   The  default  format  is  ''ll''
+              which  matches  the usual llss -- ll format, with minor
+              variations:
+              "-rw-r--r--  1 root        106233 Jan 29 11:39   dired.c"
+              See also the interactive command  FF  to  reset  the
+              format while ddiirreedd is running. The 'F' command also
+              sets the number of screen lines interactively.  See
+              the  command  line  switches --wwhh, --wwff and --ww2200 plus
+              the environment variable DDIIRREEDDSSEETT for a way to cus-
+              tomize the settings.
+
+       --ssnn    Sort  forward  by  file name. The sort kkeeyy directly
+              after --ss is one of _n, _e, _s, _r, _w, _c, _i or  _u,  fol-
+              lowing  this  scheme:  _n_=_n_a_m_e, _e_=_e_x_t_e_n_s_i_o_n, _s_=_s_i_z_e,
+              _r_=_r_e_a_d _d_a_t_e, _w_=_w_r_i_t_e _d_a_t_e, _c_=_c_r_e_a_t_i_o_n _d_a_t_e, _i_=_i_n_o_d_e
+              and  _u_=_u_s_e_r.   A normal forward sort on the name is
+              the default. For sorts by size, the largest size is
+              first.  For  date  sorts,  the  most recent date is
+              first.
+
+       --ss     Unsorted disk order.  This  is  a  special  command
+
+
+
+Version 3.05              3 January 1997                        4
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+              line argument which leaves the files in disk order,
+              unsorted. This option is not available after  ddiirreedd
+              starts,  because  the disk order is not remembered.
+              However, the sort command --rrii is a very close  sub-
+              stitute on most unix systems.
+
+       --rrnn    Reverse  sort by file name.  Reverse date sorts are
+              common, where --rrnn is replaced by  --rrrr,--rrww  or  --rrcc.
+              The  allowed  keys  are  exactly  those  allowed as
+              replacements in --ssnn.  See also the interactive com-
+              mands  ss  and  rr,  which prompt for the sort key at
+              runtime.
+
+       --ww1166   Use  1166  lines  for  the  directory  index  window,
+              reserving  the  remaining lines for quick file dis-
+              play and information messages.
+
+       --wwff    Full screen. As many files  as  possible  are  dis-
+              played  in  the  upper  screen. The lower screen is
+              minimized.
+
+       --wwhh    Half screen mode, also called 'split screen'.  This
+              is the default, in which the upper screen and lower
+              screen are the same size. A linear  indicator  line
+              separates the two screens. See the interactive com-
+              mand FF for setup of the screen height  during  run-
+              time. The settings of the command line switches can
+              be duplicated interactively.
+
+       --SS     Invokes a nnoo SSttaatt mode in which ssttaatt(2)  calls  are
+              done only on demand. For example, 1200 files can be
+              read from the directory in under  one  second,  but
+              the stat() calls to obtain further information like
+              file size and file dates can be 12 times longer. In
+              this  mode,  stat()  calls  are  done to update the
+              screen. The only time in which there is a  slowdown
+              is  prior  to  the  first  sort  involving sizes or
+              dates, because a stat() is required on each of  the
+              remaining  unprocessed  files.  There  may  be some
+              blank file lines in this mode,  because  of  incom-
+              plete  directory information. The default name sort
+              keeps directories in alphabetical  order  with  the
+              files,  instead  of being first (a stat() call dis-
+              tinguishes directories from files).  See  also  the
+              interactive command SS which toggles the mode inter-
+              actively.
+
+       --OO     Toggles OFF the display of pathname,  file  number,
+              total  files,  tagged  file  counts  and percentage
+              through the file  list.  The  default  is  ON.  See
+              interactive command OO.
+
+
+       --oo     Toggles  OFF  the  display of color filenames.  The
+
+
+
+Version 3.05              3 January 1997                        5
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+              default, if compiled with this option, is  ON.  The
+              option  can  be  followed by a number to choose the
+              color map.  The options are --oo  (colors  off),  --oo11
+              (LS_COLORS  environment  variable  color  map), --oo22
+              (Internal default color map), --oo33 (Internal default
+              monochrome  map).   With  color  maps compiled, the
+              default is --oo11..  See also interactive command oo.
+
+
+       --pp     Turns ON pausing before and after system  commands.
+              This  option  changes the OFF default. See also the
+              DIREDSET environment variable,  where  this  option
+              can be preset, and the interactive command ++, which
+              toggles the pause mode ON/OFF at runtime.
+
+
+       --DD     Define an aliased shell command using syntax  --DDxx==ss
+              where xx is the key (must be one character) and ss is
+              the command text, which can contain  the  substitu-
+              tion  tokens  %n,  %f, %d, %p, %% used respectively
+              for the full pathname of the current file, just the
+              file  name  stripped  of  directory components, the
+              directory component only, a prompt for  a  destina-
+              tion (a string), or the percent character itself.
+
+       Also  include  with this option is the syntax --DDxxxx==ss which
+       uses a two-character string xx and a shell command s. This
+       option  replaces internal builtins attached to the various
+       commands. The defaults:
+
+       --DDCCPP==ccpp --pp --ii ((CCooppyy ccoommmmaanndd)))),,
+
+       --DDMMVV==mmvv --ii ((MMoovvee ccoommmmaanndd)),,
+
+       --DDRRMM==rrmm --rrff ((RReemmoovvee ccoommmmaanndd )),,
+
+       --DDGGRR==ggrrooffff --ss --pp --tt --ee --TTaasscciiii --mmaannddoocc ((GGrrooffff ccoommmmaanndd )),,
+
+       --DDCCHH==cchhmmoodd --ff ((cchhmmoodd ccoommmmaanndd )),,
+
+       --DDPPRR==llpprr ((pprriinntt ccoommmmaanndd ))..
+
+       The only allowed two character strings are CP, MV, RM, GR,
+       CH,  PR  because these correspond to internal variables of
+       the program, not aliased shell commands.  The  definitions
+       should not contain the substitution tokens %n, %f, %d, %p,
+       %%. This feature exists to replace the builtins by private
+       or  custom  commands. For example, you might want to print
+       files not with lpr but with a shell  script  that  smartly
+       handles  the  various  file types available on the system,
+       eg, postscript and DVI files  get  handled  by  the  shell
+       script automatically.
+
+
+
+
+
+Version 3.05              3 January 1997                        6
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+EENNVVIIRROONNMMEENNTT VVAARRIIAABBLLEE DDIIRREEDDSSEETT
+       The  variable  DDIIRREEDDSSEETT can be defined to set certain com-
+       mand line options. This variable is used before any actual
+       command line arguments are processed. Common settings usu-
+       ally read on login:
+
+                setenv DIREDSET '-wf -sw -O -Fmsd -C200'
+                     export DIREDSET='-S -s -Fisdp'
+
+RREESSOOUURRCCEE FFIILLEE $$HHOOMMEE//..ddiirreeddsseett
+       The resource file $$HHOOMMEE//..ddiirreeddsseett sets options before  the
+       environment  variable DIREDSET is processed, and therefore
+       also before command line arguments are processed. The file
+       format  is  one  option  per line, identical to the syntax
+       used for the command line, except  that  shell  protection
+       instruments like quotes must be removed. An example:
+
+       File ~/.diredset has format one option per line.
+       Options start with minus! Other lines are ignored.
+       -wf
+       -sw
+       -O
+       -Fmsd
+       -DC=cd %d;cp -p -i %f %p
+       -Dr=rm -i %n
+       -DRM=rm -rf -v
+
+
+       The  above example sets full screen mode (-wf), sorting by
+       write date (-sw), pathname display off (-O), screen format
+       with  modes,  size, date (-Fmsd), then defines two aliased
+       commands with keys "C" and "r" followed by a  redefinition
+       of the remove command RM (an internal). The syntax differs
+       slightly from command line  syntax,  because  of  possible
+       expansion  and  tokenizing  by  the  shell.  For  example,
+       -D'RM=rm -rf -v' is the entry  at  the  command  line,  in
+       order  to  keep the shell from breaking the string "rm -rf
+       -v" into tokens.
+
+KKEEYYBBOOAARRDD CCOOMMMMAANNDDSS
+       Commands consist of single characters, with any  necessary
+       arguments  prompted  for,  and displayed in the echo line.
+       Several commands take  an  optional  non-negative  integer
+       count argument, as in vvii(1).
+
+       Here  are  the keyboard commands that control ddiirreedd, orga-
+       nized into several categories.
+
+
+HHeellpp
+       ??  Display the manual page ddiirreedd..11 using the unix  command
+          mmaann ddiirreedd.
+
+
+
+
+
+Version 3.05              3 January 1997                        7
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       hh  Help. Command key tutor. In this mode, the lower screen
+          is used. Cursor keys and their duplicates may  be  used
+          to  position  the  cursor on an item.  The key sequence
+          EEsscc--EEsscc quits. The key sequence  EEsscc--RReettuurrnn  exits  the
+          tutor  and  executes  the  command  on the cursor line.
+          Other keys cause a jump to a description of  that  key,
+          ie, they move the cursor only.  The most useful feature
+          of the tutor is hitting keys to find out what they  do,
+          without the danger of actually invoking the command.
+
+
+QQuuiittttiinngg ddiirreedd
+       aa  Abort  out  of the current copy of ddiirreedd..  No deletions
+          are done. Does not affect previously invoked copies  of
+          ddiirreedd..
+
+
+       AA      Abort  completely  out of all copies of ddiirreedd.  All
+              tags 'D' in all copies of ddiirreedd are ignored.
+
+       qq      Exit ddiirreedd.  Files tagged 'D' are presented with  a
+              delete  query.   Confirmation  is  required for any
+              delete.  If no confirmation is given  (typing  any-
+              thing  other  than  _y),  then  ddiirreedd  prompts for a
+              return to the program. If the  return  is  refused,
+              then  an  interactive session is invoked for selec-
+              tively deleting the tagged files.
+
+       QQ      Exit all levels of ddiirreedd,, and PUSHD to  the  direc-
+              tory  of  the  current file. A subsequent POPD will
+              return to the directory where the first  ddiirreedd  was
+              launched.
+
+       zz      Suspend  the current ddiirreedd,, and PUSHD to the direc-
+              tory of the current file. A  subsequent  POPD  will
+              return  to  the directory where the first ddiirreedd was
+              launched.  A foreground command ffgg will  return  to
+              the  currently suspended ddiirreedd..  See also ^^ZZ,, which
+              suspends the current ddiirreedd into the default  direc-
+              tory  maintained by the shell. See also the similar
+              command QQ described above.
+
+
+NNAAVVIIGGAATTIIOONN
+       DDoowwnn AArrrrooww ,,
+          CCttrrll--JJ, CCttrrll--NN, jj, RReettuurrnn.  Step to the next file.   If
+          this crosses a window boundary, the next window is dis-
+          played with a one-line overlap.  May be preceded  by  a
+          count.
+
+       UUpp AArrrrooww ,,
+          ^^((ccaarreett)),  kk,  CCttrrll--HH,  CCttrrll--pp.  Step to previous file.
+          If this crosses a window boundary, the previous  window
+          is  displayed with a one-line overlap.  May be preceded
+
+
+
+Version 3.05              3 January 1997                        8
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+          by a count. When getting options at the bottom  of  the
+          screen,  in  a  dialog,  the up arrow is used to recall
+          previously entered shell commands.
+
+       PPggDDoowwnn ,,
+          RRiigghhtt AArrrrooww, ff, CCttrrll--vv, SSPPAACCEE.  Go  forward  a  window,
+          leaving  a  one-line  overlap.   May  be  preceded by a
+          count.
+
+       PPggUUpp ,,
+          LLeefftt AArrrrooww, bb, EESSCC--vv.  Go backward a window, leaving  a
+          one-line overlap.  May be preceded by a count.
+
+       [[ ,,
+          ((,  <<,  {{,  EESSCC  <<.   Go to the start of the file list.
+          With an argument _n, go _n_/_1_0 of the way from the  start.
+
+       ]] ,,
+          >>,  )), }}, EESSCC >>.  Go to the end of the file list.  With
+          an integer argument _n, go _n_/_1_0 of the way from the end.
+
+       ee  Launch a new copy of ddiirreedd on the target directory. The
+          old copy of ddiirreedd  is  suspended  until  the  new  copy
+          exits. If the entry is not a directory, then the action
+          is _e_d_i_t _, which is explained below.
+
+       EE  Launch a new copy of ddiirreedd on  the  next  higher  level
+          directory,  as  determined from the path of the current
+          entry. The old copy of ddiirreedd  remains  suspended  until
+          the new copy exits.
+
+       VV  Prompt  for a directory string and launch a new copy of
+          ddiirreedd on the string.  The old  copy  of  ddiirreedd  remains
+          suspended until the new copy exits.  This option allows
+          jumps to new directory structures apart from  the  cur-
+          rent tree.
+
+       GG  Go  to  the  file  number given by the preceding count.
+          With no count, go to the last file as in vvii(1).
+
+       BB  Bookmark for the current position.  If  too  many  book
+          marks  are  requested,  then  the oldest 25 percent are
+          lost.
+
+       JJ  Restore the position to the last bookmark (see B).
+
+       LL  Restore the historical position before the last  search
+          or  gross  cursor  move.   Single moves with the UP and
+          DOWN keys are not recorded. About 2000 positions can be
+          saved.  This command displays past history positions in
+          reverse chronological order.  If  too  many  historical
+          positions  are recorded, then the oldest 25 percent are
+          lost in order to save the most recent positions.
+
+
+
+
+Version 3.05              3 January 1997                        9
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+AAlliiaasseess aanndd SShheellll CCoommmmaannddss
+       xx,, !!
+          Prompt for a shell command.  Duplicate keys are  CCttrrll--XX
+          and EESSCC--xx.  Enter the single character ??  to get online
+          help that summarizes what appears below.  Enter a  sin-
+          gle  letter  (alias  letter) to invoke an aliased shell
+          command. One-letter unix shell commands  are  rare;  if
+          you  need  one,  then enter a space bar followed by the
+          letter. Anything longer than one letter is considered a
+          new  shell  command.  A  prompt appears so that you can
+          give it an alias, if desired.
+
+       To pass the full pathname of the file  use  token  %%nn,,  to
+       pass just the trailing filename component, less all direc-
+       tory components, use the token %%ff,, to pass just the direc-
+       tory, use token %%dd,, to prompt at runtime for a destination
+       filename use token %%pp,, and to pass the percent character %
+       itself to the shell without translation, use token %%%%..
+
+       If  no ** tags appear, then the scope of the system command
+       is the current  file  entry.  Otherwise,  the  command  is
+       applied successively to all tagged files. Commands without
+       the special  escapes  are  executed  as  written,  without
+       application  to files displayed by dired, eg, !!llss --ll gives
+       a long directory listing of the connected directory.
+
+       HISTORY LIST. The command lines are  saved  in  a  history
+       list.  Recall  a previous command by using the UP and DOWN
+       cursor keys (eg, ESC OA and ESC  OB).  The  command  lines
+       recalled  can  be  edited,  but at present no text editing
+       features exist except for  backspace,  delete,  quote  and
+       kill. This simplistic interface is appropriate most of the
+       time, because the command lines  tend  to  be  short.  The
+       quote feature can be used to identify function keys: press
+       Ctrl-Q or a duplicate (like the INS key "ESC  Op"  on  the
+       application  keypad) and then a function key to insert the
+       key sequence into the command line buffer. Similarly, con-
+       trol  characters  like  ESC, which do not self-insert, are
+       inserted by pressing INS and then  the  control  key.  The
+       terminal  KILL_CHAR  is  used  to erase the entire command
+       line; usually this key is mapped to Ctrl-U.
+
+       ALIASES. Commands that are  saved  in  this  list  can  be
+       mapped  to  an  alias key. In the dialog you will be asked
+       for a single letter by which to invoke  the  alias  (shell
+       command). A RETURN skips assignment.
+
+       Examination  of the alias list is possible by pressing the
+       special key ??  instead of entering an alias or shell  com-
+       mand.
+
+       Aliases  can  be  loaded  at startup from $HOME/.diredset,
+       variable DIREDSET or on the command line using the  format
+       --DDxx==ss  where  xx  is  the key to be assigned to the command
+
+
+
+Version 3.05              3 January 1997                       10
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       text and ss is the command text itself. For example, --DDcc==ccdd
+       %%dd;;ccpp  --pp  --ii %%ff %%pp defines an alias for the shell command
+       that can be invoked by pressing the key sequence xxcc  (that
+       is,  press  xx and then cc to invoke the shell command). The
+       command text is ccdd %%dd;;ccpp --pp --ii %%ff %%pp which means:  connect
+       to  the  directory  %%dd,,  copy  the given file %%ff from that
+       directory and prompt for the destination %%pp%%  file,  using
+       the  same  date  (-p) with overwrite protection (-i).  The
+       standard aliases that you get for free on startup  are  as
+       follows: cc==ccpp --pp %%nn %%pp
+
+       rr==rrmm --ff %%nn
+
+       mm==mmvv %%nn %%pp
+
+       uu==ggzziipp --dd %%nn
+
+       zz==ggzziipp %%nn
+
+       ll==llss --ss %%nn %%pp
+
+       LL==llnn %%nn %%pp
+
+       It  is  fair  to  say that almost no one uses command line
+       arguments  except  for  testing.  After  the  argument  is
+       decided, it is placed into the environment variable DIRED-
+       SET or else into the resource file  ~~//..ddiirreeddsseett.   Defini-
+       tions  can  be  removed  by using the same key over again,
+       because duplicate keys cause replacement  of  the  command
+       text.  Alias  list expansion is possible only by insertion
+       of an unused letter.
+
+
+EExxaammpplleess ffoorr mmvv aanndd ccpp
+       ccdd %%dd;;mmvv %%ff ..//bbaacckkuupp//##..oolldd
+               Make backup files.
+
+
+       ccdd %%dd;;ccpp --pp %%ff ..//bbaacckkuupp
+               Copy files to backup directory.
+
+
+       mmccooppyy %%nn aa::
+               Copy files to backup diskette.
+
+
+       ccdd %%dd;;zziipp ffoooo..zziipp %%ff
+               Make a ZIP archive.
+
+
+       ccdd %%dd;;ttaarr --xxzzff %%ff
+               Untar a TAR archive.
+
+
+
+
+
+Version 3.05              3 January 1997                       11
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       eecchhoo %%nn >>>> ffoooo..llsstt
+               Make a list of files in foo.lst.
+
+
+       eemmaaccss %%nn
+               Run emacs on each file in the list.
+
+
+
+AAccttiioonnss oonn ffiilleess
+       ..  A period (.) repeats the  previous  !!   shell  command,
+          substituting  the filename for any special chars % or #
+          in the original command. Tag rules for '*'  apply  just
+          as though you had used the 'x' ('!') command.
+
+
+       ee  Launch the default text editor on the current file. The
+          default editor is defined  in  the  _E_D_I_T_O_R  environment
+          variable,  normally defined in the login script for the
+          shell.  If _E_D_I_T_O_R is not defined, vvii(1) is used.   How-
+          ever,  if  the  current  file is a directory, it is not
+          edited, but rather, ddiirreedd forks a copy of  itself  upon
+          that  directory.   Navigation  of the directory tree is
+          effected by this method,  which  suspends  the  current
+          _d_i_r_e_d until the forked copy exits.
+
+
+       mm  Run  the program defined by the _P_A_G_E_R environment vari-
+          able program on the current entry.   If  _P_A_G_E_R  is  not
+          defined, run mmoorree(1).
+
+       PP  Print the current file on the default printer.
+
+       tt  Type the file on the terminal. Response time is consid-
+          erably faster than starting an editor on the file.  The
+          window  is  paused  after each screenful.  The type-out
+          may be interrupted by qq.  Characters less than space in
+          ASCII  value  are printed in prefix form as two charac-
+          ters, eg, ^^CC for Ctrl-C. Characters 127 through 255 are
+          printed  in square brackets with the hex value between,
+          eg, [[88AA]].
+
+
+CCooppyyiinngg aanndd MMoovviinngg FFiilleess
+       cc    The key cc acts on the current file only,  copying  it
+            to a new location, using the default command ccpp --pp --ii
+            %%nn %%pp which  preserves  the  date,  protects  against
+            overwrite  and prompts for the destination file name.
+            The command portion ccpp --pp --ii comes from the  variable
+            CP,  which can be reset on the command line or by the
+            environment variable DIREDSET.  The command aborts if
+            no destination is entered at the prompt.
+
+       MM    The key MM acts on the current file only, moving it to
+
+
+
+Version 3.05              3 January 1997                       12
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+            a new location, using the default command mmvv --ii %%nn %%pp
+            which  protects against overwrite and prompts for the
+            destination file name.  The  command  portion  mmvv  --ii
+            comes from the variable MV, which can be reset on the
+            command line or by the environment variable DIREDSET.
+
+       It  should be mentioned here that upper case MM is bound to
+       this function and not lower case mm, which is used for  the
+       pager  program  (m stands for 'more').  The command aborts
+       if no destination is entered at the prompt.
+
+
+
+TTaaggggiinngg,, DDeelleettiinngg aanndd UUnnttaaggggiinngg
+       TTAABB  The tab key toggles the  '*'  tags  on  files,  which
+            marks files for inclusion in system commands (see 'x'
+            or '!' above). This tag is independent of the tag 'D'
+            (delete)  discussed  below.  After  '*' has been pro-
+            cessed by a system command, then  '%'  replaces  '*',
+            and  '%'  is  harmless (erase all with UU ). To change
+            the '%' tags back to '*' or 'D', apply the change-tag
+            command CC described below.
+
+       **    The  asterisk  key  (*)  is  used  to start a special
+            search for files matching a regular expression.  Upon
+            finding  a  match, the file is tagged '*'.  After the
+            search finishes, you may locate the first  one  using
+            the nn command.
+
+       dd    Tag the current entry, to be deleted later.  Two keys
+            cause the delete to happen: qq and RR.  The first quits
+            the  program  and  the  second reloads the directory.
+            _W_a_r_n_i_n_g_: Full directory trees may be removed!  If the
+            name  is a directory, everything in it and all subdi-
+            rectories of it will be removed (same as rrmm --rr ).
+
+       DD    This key is used to start a special search for  files
+            matching  a regular expression. Upon finding a match,
+            the file is tagged 'D'.  After the  search  finishes,
+            you may locate the ones marked using the dd and NN com-
+            mands.
+
+       KK    Tag _a_l_l files with 'D' (delete later). Undo  it  with
+            the  command  UU.  This command is equivalent to going
+            to the top of the list, [[, followed  by  the  regular
+            expression  search-and-delete  key DD and a period (.)
+            for the search string (briefly, "[D.").
+
+       ~~    Tag files with names ending in ~~ with  the  tag  'D'.
+            Tagged  files  are to be deleted later.  This command
+            is equivalent to the command [[DD~~$$.
+
+       ##    Tag files with names beginning with ##  with  the  tag
+            'D'.  Tagged  files  are  to  be deleted later.  This
+
+
+
+Version 3.05              3 January 1997                       13
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+            command is equivalent to [[DD^^##.
+
+       uu    Untag the current entry. Changes the  tag  to  SPACE.
+            The actual tag used is irrelevant.
+
+       UU    Remove all file tags and replace them with SPACE.
+
+
+       TT    Tag  exchange.  All  matching tags are changed to the
+            new tag. The startup tag is a SPACE (' '). This  rou-
+            tine has no defaults: to specify a space, a space bar
+            must be entered.  Any printable character can be used
+            as  a  tag character, but only two tags have any spe-
+            cial meaning. The characters 'd' and 'D' are  equiva-
+            lent  and  stand for a ddeelleettee ttaagg.  The character '*'
+            stands for a sshheellll ccoommmmaanndd ttaagg,  wherein  a  launched
+            shell command acts on all files with tag '*'. In this
+            context, if no file has tag '*', then only  the  cur-
+            rent  file is used in the shell command.  The charac-
+            ter '?' stands  for  a  wildcard  which  matches  any
+            existing file tag.  Typical changes are replacing all
+            '%' tags by 'D', because shell commands  replace  '*'
+            by  '%'  upon completion. For example, the shell com-
+            mand might make an archive,  so  the  natural  action
+            afterwards  is  to  delete all the files moved to the
+            archive.
+
+
+       CC    Change file protection using  cchhmmoodd(1).   The  string
+            'chmod  -f'  and  the file name are not entered, just
+            the file protection code. It is understood that cchhmmoodd
+            will  be  applied  to  the current file. Examples are
+            given on the first use. On later use, the last  chmod
+            command  is  displayed.  The  last  one  used  can be
+            repeated by entering a PERIOD (.). For details of how
+            cchhmmoodd(1)  works,  see  the  unix  manual  page.  Also
+            described in the manual page is the syntax  for  set-
+            ting  the protection modes; you may use in ddiirreedd your
+            favorite syntax. If you have no favorite, then  mimic
+            the examples given on the prompt line.
+
+       This  command  is useful for changing protections of a few
+       files. The service is a quick fix  for  file  protections,
+       when  it  is discovered that a change is needed.  The sin-
+       gle-file command CC resets the protection bits and  re-dis-
+       plays the file line, without reading the entire directory.
+       The file being considered is marked on the screen with the
+       underline  character,  while you enter the desired protec-
+       tion mode.
+
+       It is more efficient for large groups  of  files  to  mark
+       them and apply the corresponding shell command. After com-
+       pletion, use RR to re-read the directory, otherwise the new
+       protections will not show on the screen.
+
+
+
+Version 3.05              3 January 1997                       14
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+DDiissppllaayy
+       ll      Print  the  directory  path  name  onto  the  lower
+              screen, refresh the  current  line  and  clear  the
+              lower  screen  display area (one or more lines). If
+              the current file is a link instead of a file,  then
+              the  link  is followed and the actual link printed,
+              if possible. Links are indicated by the symbol  -->>.
+              The  same  information is printed by other commands
+              and also by default, so this command is  used  pri-
+              marily to clean up the screen after a file display.
+              If the toggle OO has defeated the display of  infor-
+              mation  lines, then this command reduces to a clear
+              of the lower screen. See also the command pp,,  which
+              always  prints  the  information  lines  (but never
+              clears the lower screen).
+
+
+       OO      Toggle the display of the full pathname (the linked
+              file,  if  this  file  is a link), the current file
+              number, the total number of files,  the  number  of
+              files  tagged  '*' (for shell commands), the number
+              of files tagged 'D' (delete later) and the percent-
+              age  through  the  file  list. Since ddiirreedd displays
+              this information by default, the function  is  used
+              primarily  to  make  the display brief. Full screen
+              mode has no linear indicator, so the command  pp  is
+              used  to  display on demand the pathname and stats,
+              regardless of the setting of the O-toggle. See also
+              the  command line switch --OO which turns the feature
+              OFF on startup.
+
+
+       gg      Display the entry via ggrrooffff as a manual  page.  See
+              also  the  mm  command, which calls the PAGER, often
+              set equal to lleessss.  The related script  lleessssppiippee..sshh
+              may  be invoked automatically by less to accomplish
+              the same thing. This command is useful for cases in
+              which  the PAGER script falsely classifies the file
+              as something other than a  manual  page.   See  the
+              manual page for lleessss for more information about the
+              file lleessssppiippee..sshh.
+
+
+       oo      Toggle the display of colors. There are four  color
+              maps,  labeled  as 0, 1, 2 and 3. Color map 0 is NO
+              COLOR. Color map  1  comes  from  the  user-defined
+              environment  variable LLSS__CCOOLLOORRSS..  Color map 2 comes
+              from an internal color map.  Color map 3 comes from
+              an internal monochrome map.
+
+       The  default internal colors (2) are derived from the dis-
+       tribution colors used by ccoolloorr llss, distributed  with  1995
+       linux _s_l_a_c_k_w_a_r_e _3_._0 _.  The default monochrome map (3) uses
+       highlighting features of  vt100  terminals  to  make  mono
+
+
+
+Version 3.05              3 January 1997                       15
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       displays more interesting.  If the environment variable is
+       undefined, then  the  internal  definition  is  used.   On
+       startup,  a check is made for the environment variable. If
+       it exists, then it is used instead of the default  colors.
+       Each  time  oo  is  used,  the colors alternate between the
+       environment variable to the default, to NO COLORS and back
+       again.  Badly  chosen color combinations can make the dis-
+       play unreadable.
+
+       The command line switch --oo turns the color feature OFF  on
+       startup.   The switch --oo22 turns on color map 2 on startup.
+       The environment  variable  DDIIRREEDDSSEETT  allows  command  line
+       options to be preset for every launch of ddiirreedd.
+
+
+CCOOLLOORR CCOODDEESS
+       The  color  codes are assembled into escape sequences like
+       EESSCC [[0011;;4466;;3311mm.  Only the portion 0011;;4466;;3311 is specified in
+       the  unix  environment  variable  LLSS__CCOOLLOORRSS.  This example
+       stands for bold colors (01),  cyan  background  (46)  with
+       bright  red foreground (31), as explained by the code val-
+       ues below.
+
+
+        Attribute codes:
+          00=none 01=bold 04=underscore 05=blink
+          07=reverse 08=concealed
+        Foreground (Text) color codes:
+          30=black 31=red 32=green 33=yellow 34=blue
+          35=magenta 36=cyan 37=white
+        Background color codes:
+          40=black 41=red 42=green 43=yellow 44=blue
+          45=magenta 46=cyan 47=white
+
+
+       Abbreviations like ddii appearing in the variable  LLSS__CCOOLLOORRSS
+       are explained by the equivalences below, using symbols and
+       descriptions from the file /usr/include/sys/stat.h.
+
+       "no", S_IFREG   /* A regular file or anything else */
+       "fi", S_IFREG   /* A file */
+       "di", S_IFDIR   /* A directory */
+       "ln", S_IFLNK   /* A link */
+       "pi", S_IFIFO   /* A pipe */
+       "so", S_IFSOCK  /* A socket*/
+       "bd", S_IFBLK   /* A block device */
+       "cd", S_IFCHR   /* A char device */
+       "ex", S_IEXEC   /* An executable */
+
+       File extensions, to be marked with a particular color com-
+       bination,  appear  in the environment variable as an entry
+       like ::**..jjppgg==0011;;3322::.  The colons (:)  are  separators.  The
+       entry  means:  _c_o_l_o_r  _a_n_y _f_i_l_e _w_i_t_h _e_x_t_e_n_s_i_o_n ..jjppgg as bold
+       (01) green (32). The  default  internal  color  string  is
+
+
+
+Version 3.05              3 January 1997                       16
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       defined as
+
+       "no=00:fi=00:di=01;34:ln=01;36:pi=40;33:\
+       so=01;35:bd=40;33;01:cd=40;33;01:ex=01;32:\
+       *.sh=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:\
+       *.btm=01;32:*.bat=01;32:*.tar=01;31:*.tgz=01;31:\
+       *.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:\
+       *.z=01;31:*.Z=01;31:*.gz=01;31:*.jpg=01;35:*.gif=01;35:\
+       *.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:";
+
+       In  linux only, the colors are set in the environment by a
+       program ddiirrccoolloorrss, which reads the contents  of  the  file
+       //eettcc//DDIIRR__CCOOLLOORRSS  during  boot.  The file //eettcc//pprrooffiillee con-
+       tains the actual command line. To reset  colors  after  an
+       edit  of  the  source //eettcc//DDIIRR__CCOOLLOORRSS run the same command
+       line that appears in  //eettcc//pprrooffiillee,  something  like  eevvaall
+       ``ddiirrccoolloorrss --bb``.  Please note that back quotes (`) are used
+       in eevvaall, and not the usual quote character (').
+
+
+MMiisscceellllaanneeoouuss
+       ll, CCttrrll--LL
+              Load anew the window size  parameters  and  refresh
+              the  current window.  In X-windows, ddiirreedd automati-
+              cally recognizes  a  window  size  change,  and  it
+              refreshes  the  screen on the next key. However, if
+              ddiirreedd is suspended, then the window  change  signal
+              may  be  lost.  It  is  common  to  have a chain of
+              dired's loaded with all but the last one suspended.
+              Therefore,  exiting  a recently suspended dired may
+              cause a need to press ll  or  CCttrrll--LL,  in  order  to
+              reset  the  terminal size for the next dired in the
+              chain. The manual command ll resets the window  size
+              dynamically  without  signals.  Terminal parameters
+              like cursor motion strings are set at initial start
+              and cannot be changed during runtime.
+
+       pp      Display  the  full  path  name of the current file;
+              embedded control  characters  are  displayed  in  a
+              printable  format.  This  command  works  when  the
+              default pathname and stats are disabled (see --OO and
+              OO ).
+
+
+       EESSCC EESSCC
+              Cancel a count prefix.
+
+
+       ww      Write  the  full list of files, in its current for-
+              mat, to a temporary file in /tmp, having  a  unique
+              name.  This  feature  is used primarily to document
+              the disposition of files during a dired session. It
+              can also be used to create shell scripts.
+
+
+
+
+Version 3.05              3 January 1997                       17
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       RR,,  XX  Reload  the  directory  or file list.  If files are
+              tagged 'D', then ddiirreedd will first ask for confirma-
+              tion  and  then  delete  them  before reloading.  A
+              reload is useful after certain shell escapes  (e.g.
+              cchhmmoodd(1)).
+
+
+        EESSCC //,, AALLTT //
+              Load  a  new  directory;  ddiirreedd will prompt for the
+              directory name (a complete path name).
+
+SSoorrttiinngg
+       rr ,,  ss Sort the file list by various fields: name,  exten-
+              sion,  size,  read  date, write date, creation date
+              and inode.  Only the first letter (e.g.  nn,  ee)  ss,
+              rr,  ww, cc, or ii is required after giving the rr and ss
+              commands. The command ss sorts in increasing  alpha-
+              betic,  decreasing  size,  newest  to  oldest dates
+              while command rr reverses the sense of of the  sort.
+              For  the nn, ee, ss, and ww subcommands, the date field
+              is the write date.  For the rr subcommand, the  date
+              field  is  the read date.  Whenever a sort is done,
+              the position returns to the top  of  the  list.   A
+              sort  can be aborted via EESSCC  EESSCC.  To simulate the
+              unsorted disk order,  use  --rrii  or  for  inodes  in
+              decreasing  order,  --ssii.  The command line ddiirreedd --ss
+              is the only way  to  get  the  true  unsorted  disk
+              order.
+
+
+SSeeaarrcchhiinngg
+       //  Locate  a  file matching the given line of input, which
+          is assumed to be a rreegguullaarr eexxpprreessssiioonn,  as  defined  in
+          rree__ccoommpp(3) and rree__eexxeecc(3).  The input can be aborted by
+          pressing Ctrl-C, but  this  action  is  not  recognized
+          until  a RETURN key is also pressed.  See also the man-
+          ual page mmaann eedd for a  brief  introduction  to  regular
+          expressions.   The  search is in the forward direction.
+          The regular expression is remembered for subsequent use
+          by  the  nn and NN commands.  If the input line is empty,
+          the last one remembered is used.
+
+       \\  Same as the regular  expression  search  //  except  the
+          direction is reversed.
+
+       nn  Find the next instance (forward direction) of the regu-
+          lar expression previously defined by a regular  expres-
+          sion search command _`_/_' _, _'_\_'_, _'_*_' or _'_D_' _.
+
+       NN  Find  the previous instance (backward direction) of the
+          regular expression  previously  defined  by  a  regular
+          expression search command _`_/_' _, _'_*_' or _'_D_' _.
+
+
+
+
+
+Version 3.05              3 January 1997                       18
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+TTEERRMM aanndd TTEERRMMCCAAPP
+       The shell _T_E_R_M variable is expected to be set to something
+       like vvtt110000.  Without _T_E_R_M being set, ddiirreedd will assume the
+       terminal  is 2244 bbyy 8800, vvtt110000, and use its built-in termcap
+       for vt100. The only terminal feature actually required  is
+       cursor  motion  (cm  variable).  If  the  built-in termcap
+       works, then these commands will make ddiirreedd work normally:
+
+        TTEERRMMCCAAPP==''dd44::ccoo##8800::llii##2244::ccmm==\\EE[[%%ii%%dd;;%%ddHH::ccee==\\EE[[KK::ssee==\\EE[[mm::''
+                    eexxppoorrtt TTEERRMMCCAAPP;; eexxppoorrtt TTEERRMM==''dd44''
+
+       If your system uses sseetteennvv instead  of  eexxppoorrtt,,  then  the
+       syntax is
+
+       sseetteennvv TTEERRMMCCAAPP ''dd44::ccoo##8800::llii##2244::ccmm==\\EE[[%%ii%%dd;;%%ddHH::ccee==\\EE[[KK::ssee==\\EE[[mm::''
+                            sseetteennvv TTEERRMM ''dd44''
+
+       In  odd  situations,  a shell script with one set of these
+       lines, plus a launch of ddiirreedd with command line arguments,
+       will  suffice  to  get around the operating system and let
+       the program run normally.
+
+
+FFIILLEESS
+       _/_u_s_r_/_l_o_c_a_l_/_b_i_n_/_d_i_r_e_d Executable program with tutor  built-
+       in. The (optional) manual page is ddiirreedd..11.
+
+       _$_H_O_M_E_/_._d_i_r_e_d_s_e_t
+              Command  line tokens, one per line, used on startup
+              before DIREDSET environment  variable  and  command
+              line arguments.
+
+       _/_u_s_r_/_m_a_n_/_m_a_n_1_/_d_i_r_e_d_._1
+              Manual  page.  Should be installed with the program
+              ddiirreedd because it is used internally as a help file.
+
+
+SSEEEE AALLSSOO
+       ccpp(1L),   eedd(1),   eemmaaccss(1),   ggrrooffff(1),  lleessss(1),  llss(1).
+       mmaann(1), mmoorree(1), mmvv(1L), rree__ccoommpp(3),  rree__eexxeecc(3),  ttaarr(1),
+       vvii(1).  zziipp(1L).
+
+
+DDIIAAGGNNOOSSTTIICCSS
+       The  error  messages and information messages are expected
+       to be complete.  There are no error codes. No  debug  mode
+       exists.  Strange  errors or errors without messages should
+       be regarded as programming bugs: send mail  to  the  main-
+       tainer, address given below, or any of the authors.
+
+AAUUTTHHOORRSS
+       Stuart    Mclure    Cracraft,   original   version   1980,
+       cracraft@ix.netcom.com (1996).
+       Enhancements   by   Jay   Lepreau   <lepreau@cs.utah.edu>,
+
+
+
+Version 3.05              3 January 1997                       19
+
+
+
+
+
+DIRED(1)                                                 DIRED(1)
+
+
+       1980-1983. Email address valid 1996.
+       Fixes  and  enhancements by Charles Hill, 1980-1984. Email
+       address unknown (1996).
+       More fixes and enhancements, and major revisions of the
+       Makefile and manual pages, by Nelson H. F. Beebe
+       <beebe@math.utah.edu>, 1990-1996.
+       Regular-expression support code by Tatu Ylonen
+       <ylo@ngs.fi>. Added to ddiirreedd by Nelson Beebe.
+       Major revision, fixes and enhancements by Grant B.
+       Gustafson <gustafso@math.utah.edu>, 1995-1997.
+
+BBUUGGSS
+       The 'pushd' command invoked by 'Q' in 1984 fails  to  work
+       in  some  versions  of  unix.  Sometimes  the  delete  and
+       backspace keys under unix work more  like  ctrl-U.  Report
+       new  bugs  to Beebe or Gustafson at email addresses listed
+       above (please specify version 3.05).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Version 3.05              3 January 1997                       20
+
+

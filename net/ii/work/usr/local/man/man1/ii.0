@@ -1,0 +1,95 @@
+ii(1)                       General Commands Manual                      ii(1)
+
+
+
+NNAAMMEE
+       ii - irc it or irc improved
+
+
+DDEESSCCRRIIPPTTIIOONN
+       iiii  is a minimalistic FIFO and filesystem based IRC client.  It creates
+       an irc directory tree with server, channel and nick  name  directories.
+       In  every  directory  a  FIFO  file  (in)  and and normal file (out) is
+       placed. This will be for example ~/irc/irc.freenode.net/.  The in  file
+       is  used to communicate with the servers and the out files includes the
+       server messages. For every channel and every nick name  there  will  be
+       new in and out files.  The basic idea of this is to be able to communi‐
+       cate with an IRC server with basic command line tools.  For example  if
+       you  will join a channel just do echo "/j #channel" > in and ii creates
+       a new channel directory with in and out file.
+
+SSYYNNOOPPSSIISS
+       iiii [--ss _s_e_r_v_e_r_n_a_m_e] [--pp _p_o_r_t] [--kk _e_n_v_i_r_o_n_m_e_n_tvariable_] [--ii  _p_r_e_f_i_x]  [--nn
+       _n_i_c_k_n_a_m_e] [--ff _r_e_a_l_n_a_m_e]
+
+
+OOPPTTIIOONNSS
+       --ss _s_e_r_v_e_r_n_a_m_e
+              lets you override the default servername (irc.freenode.net)
+
+       --pp _p_o_r_t
+              lets you override the default port (6667)
+
+       --kk _e_n_v_i_r_o_n_m_e_n_t _v_a_r_i_a_b_l_e
+              lets  you specify an environment variable that contains your IRC
+              password, e.g. IIPASS="foobar" ii -k FOOBAR.  This  is  done  in
+              order to prevent other users from eavesdropping the server pass‐
+              word via the process list.
+
+       --ii _p_r_e_f_i_x
+              lets you override the default irc path (~/irc)
+
+       --nn _n_i_c_k_n_a_m_e
+              lets you override the default nick ($USER)
+
+       --ff _r_e_a_l_n_a_m_e
+              lets you specify your real name associated with your nick
+
+
+DDIIRREECCTTOORRIIEESS
+       _~_/_i_r_c  In this directory the irc tree will be created. In  this  direc‐
+              tory  you  will  find  a  directory  for  your  server (default:
+              irc.freenode.net) in which the FIFO and the output file will  be
+              stored.   If you join a channel a new directory with the name of
+              the channel will be created in the ~/irc/$servername/ directory.
+
+
+CCOOMMMMAANNDDSS
+       _/_a [<message>]
+              mark yourself as away
+
+       _/_j #channel/nickname [<message>]
+              join a channel or open private conversation with user
+
+       _/_l #channel/nickname
+              leave a channel or query
+
+       _/_n nick
+              change the nick name
+
+       _/_t topic
+              set the topic of a channel
+
+       Everything which is not a command will simply be posted into the  chan‐
+       nel or to the server.
+              So  if  you need /who just write /WHO as described in the RFC to
+              the server in FIFO.
+
+       _o_u_t _f_i_l_e _u_s_a_g_e
+              Write wrappers, pagers or use your tools of  choice  to  display
+              the out file contents (loco, multitail, etc.).
+
+CCOONNTTAACCTT
+       Write  to  ii  (at) modprobe (dot) de for suggestions, fixes, 7|-|>< ;)
+       etc.
+
+AAUUTTHHOORRSS
+       Copyright © 2005-2006 by Anselm R. Garbe <garbeam (at) gmail (dot) com>
+       and Copyright © 2005-2008 by Nico Golde <nico (at) ngolde (dot) de>
+
+SSEEEE AALLSSOO
+       eecchhoo(1), ttaaiill(1),
+
+
+
+                                                                         ii(1)

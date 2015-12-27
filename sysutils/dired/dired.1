@@ -1,0 +1,1631 @@
+.TH DIRED 1 "3 January 1997" "Version 3.05"
+.\"=====================================================================
+.SH NAME
+dired \- directory tree navigator and program launcher
+.\"=====================================================================
+.SH SYNOPSIS
+.B dired
+[
+.I options
+]
+[
+.I "list of directories and files"
+]
+.\"=====================================================================
+.SH DESCRIPTION
+.B dired
+is an acronym for
+.BR "directory editor" .
+It is pronounced like
+.BR "DEAR ED".
+The main function of
+.BR dired
+is navigation and program launching within large directory structures
+present in unix systems. The original program created in 1980 had only
+the basic navigation function and the ability to
+.BR tag
+a file or an entire directory tree, to be deleted later by launching the
+program 'rm' on each tagged file. The efficiency of the
+.BR "tag and delete later"
+design proved itself, by eliminating the typing of long file
+names, and by abandoning the use of wildcard file names
+in delete commands.
+.PP
+The program
+.BR dired
+includes some common unix maintenance commands, such as navigation
+through the directory structure, viewing file contents, cleaning up
+a directory, moving files, changing file protections, making archives and
+creating backups. It is ideal for tagging a collection of files and then
+systematically launching a program on each file.
+.PP
+.\"=====================================================================
+.SH THE SCREEN
+The
+.BR dired
+screen is split into an upper screen and a lower screen. The
+upper
+screen is a long-form
+.BR ls (1)
+directory listing containing information about each file, including the
+size, date, protection and owner.
+The lower screen consists of three information lines, plus an area
+in which to display file contents, on demand.
+.PP
+.SH IMPORTANT KEYBOARD COMMANDS
+The keyboard
+commands are single keys, each with a specific, succinct action,
+related to
+.BR dired's
+basic philosophy of minimizing keyboard input and eliminating typing errors.
+The most important keys are
+.BR e
+and
+.BR m .
+The first key,
+.BR e ,
+invokes your favorite editor (eg, emacs) on the file, unless the
+file happens to be a directory, in which case
+.BR dired
+is suspended and a new copy of
+.BR dired
+is launched on that directory. The second key,
+.BR m ,
+launches the system PAGER
+on the file entry, in order to display the file contents.
+.PP
+To exit
+.BR dired
+press either
+.BR q
+or
+.BR Ctrl-C .
+.PP
+.\"=====================================================================
+.SH DIRED and the GNU LESS program
+The default PAGER is normally set to the GNU program
+.BR less .
+This program is a replacement for the standard unix program
+.BR more .
+The program
+.BR less
+adds backward scrolling.
+If
+.BR less
+is configured to use script
+.BR lesspipe.sh ,
+then files of type
+.BR zip,
+.BR tar,
+.BR tar.Z,
+.BR tgz,
+.BR arc,
+.BR zoo,
+.BR gz,
+and
+.BR man
+are processed
+automatically. In particular, the index listings of
+.BR tar
+and
+.BR zip
+sources are displayed instead of the binary contents.
+.PP
+.\"=====================================================================
+.SH COLOR REQUIREMENTS
+Color features and highlighting
+require ANSI 6429 compliance, that is, escape codes of the form
+.BR "ESC [ 01;30;46m"
+to add color to the text and
+.BR "ESC [m"
+to defeat color and highlighting. Most modern terminal emulators and
+indeed terminals, especially Xterm under X-windows, accept these codes
+or else silently disregard them. Terminals that do not support ANSI 6429
+will display in plain text. To force plain text, see the command
+.BR o
+and the command line option
+.BR \-o.
+.PP
+.\"=====================================================================
+.SH COMMAND LINE FILES and DIRECTORIES
+.BR dired
+can be invoked with a
+single directory on the command line or a wildcard list
+of file names, including directory names.
+An empty command line is equivalent to entering the
+connected directory. In the case of just one name,
+.BR dired
+will treat it as a single file name, or else as a directory name, in
+which case the name is expanded to all files in that directory. In all
+other cases, the command line entries are interpreted as names and
+.BR dired
+displays just these names, without expansion of directories. To display
+the files,
+.BR stat (2)
+calls are required to obtain file information. Progress in this
+sometimes slow process is reported
+by the display
+.BR  "Reading..."
+where each period (.)
+represents 20 files.
+An interrupt with key
+.BR "Ctrl-C"
+will cause an immediate exit during the read phase. After the read
+completes, the terminal is put into a special mode which causes Ctrl-C
+to be equivalent to the standard exit command
+.BR q .
+The terminal is restored when you quit the program
+or suspend the program using the unix standard key
+.I "Ctrl-z."
+.PP
+.\"=====================================================================
+.SH SCREEN FORMAT
+The format of the screen is as follows: each line represents a file (or
+directory), the name of which is right-most.  From left the fields
+are: mode, link count, owner, size, write date and name, much like the
+format of the unix command
+.BR "ls -l" .
+The format can be reset
+to display different fields (see F below), including inodes and block
+counts. The cursor moves up and down
+the column immediately left of the filename, where
+.BR dired
+accepts single-letter commands. The bottom
+half of the screen is used for file display via the
+.BR t
+command or the paging command
+.BR m ,
+which generally uses GNU
+.BR less .
+The upper half of the screen shows one of possibly many windows used to
+display all the files.
+The last two screen lines are used as `echo' lines for displaying
+messages and reading arguments.
+.PP
+The mode and link field, which appears first in the default long format,
+has a leading flag character, which codes the file type as follows:
+.PP
+.nf
+ Flag  Stat Description           Example
+ -------------------------------------------------------
+ '-'   S_IFREG:  A file          /usr/bin/gcc
+ 'd'   S_IFDIR:  A directory     /usr/include/sys
+ 'l'   S_IFLNK:  A link          /dev/modem -> /dev/cua0
+ 'p'   S_IFIFO:  A named pipe    ./out
+ 's'   S_IFSOCK: A socket        /dev/printer
+ 'b'   S_IFBLK:  A block device  /dev/fd0
+ 'c'   S_IFCHR:  A char device   /dev/console
+ -------------------------------------------------------
+.fi
+.PP
+The symbols used here are defined in the file /usr/include/sys/stat.h.
+The file entry /dev/modem is created by a utility like
+.BR ln (1L).
+The device /dev/fd0 is a floppy disk drive. The file ./out is user
+created using a utility like GNU
+.BR mkfifo (1L).
+.PP
+.\"=====================================================================
+.SH LINEAR INDICATOR
+When in split screen mode, the divider serves also as a `linear indicator'
+showing where the
+current window is relative to the entire list of files.
+The indicator consists of a line of minus sign characters with letters
+.BR 'o'
+superimposed to show the percentage of the total consumed by the current
+screenful of files.
+A single `o' is used to represent the window when the window size is small
+compared to the total number of
+files.
+.PP
+.\"=====================================================================
+.SH COMMAND KEY TUTOR
+The command
+.BR h
+causes the lower screen to be used as a command key tutor. The lines are
+of the form
+.sp
+.ce 1
+.BR  "f     : :Forward one page."
+.sp
+The cursor blinks between the successive colons, waiting for a command.
+The keys which actually do something are
+.BR "Esc-Esc"
+and
+.BR "Esc-Return."
+The command
+.BR "Esc-Esc"
+causes the tutor to end. The command
+.BR "Esc-Return"
+exits the tutor and executes the command described on the current line,
+eg,
+.BR "forward one page"
+for the illustration above.
+Other keys, including control keys and function keys, serve to move
+the cursor.
+The tutor acts as a reminder of the key assignments for seasoned users
+of the program. For novices, it shows what the keys do, by hitting keys
+on the keyboard. Duplicate keys are displayed on the bottom screen line.
+.PP
+Hitting keys is a useful way to discover the duplicate
+key assignments, especially function keys. Most function keys do nothing
+(a bell sounds) or else have a self-documented effect.
+.PP
+.\"=====================================================================
+.SH COMMAND LINE OPTIONS
+Command-line options, which are inherited by recursive invocations of
+.BR dired ,
+are:
+.\"---------------------------------------------------------------------
+.TP
+.B "\-h, \-v"
+Displays a brief message about the version and the command line options.
+.\"---------------------------------------------------------------------
+.TP
+.B \-C250
+Set the initial file
+.BR capacity
+to 250 files. This determines the minimum amount of memory used by
+.BR dired
+during its runtime. The actual capacity used
+is an integer multiple of this amount (250, 500, 750, etc).
+The number 250 is the default; it can be replaced
+by any reasonable count from 1 to over 1000. All forked copies of
+.BR dired
+will inherit this setting.
+.\"---------------------------------------------------------------------
+.TP
+.B \-Fmsd
+Set the initial screen format to print the modes and links, size in bytes,
+date and file name. The string
+.RB msd
+can be replaced by any string (no spaces or punctuation) taken from the
+letters
+.BR ibmgusdpln
+according to the following plan:
+.IR "i=inode" ,
+.IR "b=block" ,
+.IR "m=modes and links" ,
+.IR "g=group Id (gid)" ,
+.IR "u=user ID (uid)" ,
+.IR "s=size" ,
+.IR "d=date" ,
+.IR "p=pathname" ,
+.IR "l=long 'ls -l' format" ,
+or
+.I "n=none" .
+The default format is
+.BR 'l'
+which matches the usual
+.BR "ls - l"
+format, with minor variations:
+.ce 1
+"-rw-r--r--  1 root        106233 Jan 29 11:39   dired.c"
+See also the interactive command
+.BR F
+to reset the format while
+.BR dired
+is running. The 'F' command also sets the number of screen lines
+interactively. See the command line switches
+.BR \-wh ,
+.BR \-wf
+and
+.BR \-w20
+plus the environment variable
+.BR DIREDSET
+for a way to customize the settings.
+\.\"---------------------------------------------------------------------
+.TP
+.B \-sn
+Sort forward by file name. The sort
+.BR key
+directly after
+.BR \-s
+is one of
+.IR n ,
+.IR e ,
+.IR s ,
+.IR r ,
+.IR w ,
+.IR c ,
+.IR i
+or
+.IR u ,
+following this scheme:
+.IR "n=name" ,
+.IR "e=extension" ,
+.IR "s=size" ,
+.IR "r=read date" ,
+.IR "w=write date" ,
+.IR "c=creation date"  ,
+.IR "i=inode"
+and
+.IR "u=user" .
+A normal forward sort on the name is the default. For sorts by size, the
+largest size is first. For date sorts, the most recent date is first.
+.\"---------------------------------------------------------------------
+.TP
+.B \-s
+Unsorted disk order.
+This is a special command line argument which
+leaves the files in disk order, unsorted. This option is not available
+after
+.BR dired
+starts, because the disk order is not remembered. However, the sort command
+.BR "\-ri"
+is a very close substitute on most unix systems.
+.\"---------------------------------------------------------------------
+.TP
+.B \-rn
+Reverse sort by file name.
+Reverse date sorts are common,
+where
+.BR "\-rn"
+is replaced by
+.BR "\-rr" , "\-rw"
+or
+.BR "\-rc" .
+The allowed keys are exactly those allowed as replacements in
+.BR "\-sn".
+See also the interactive commands
+.BR s
+and
+.BR r ,
+which prompt for the sort key at runtime.
+.\"---------------------------------------------------------------------
+.TP
+.B \-w16
+Use
+.BR 16
+lines for the directory index window, reserving the remaining lines for quick
+file display and information messages.
+.\"---------------------------------------------------------------------
+.TP
+.B \-wf
+Full screen. As many files as possible are displayed in the upper
+screen. The lower screen is minimized.
+.\"---------------------------------------------------------------------
+.TP
+.B \-wh
+Half screen mode, also called 'split screen'. This is the default, in
+which the upper screen and lower screen are the same size. A linear
+indicator line separates the two screens. See the interactive command
+.BR F
+for setup of the screen height during runtime. The settings of the
+command line switches can be duplicated interactively.
+.\"---------------------------------------------------------------------
+.TP
+.B \-S
+Invokes a
+.BR "no Stat"
+mode in which
+.BR stat (2)
+calls are done only on demand. For example, 1200
+files can be read from the directory in under one second, but the stat()
+calls to obtain further information like file size and file dates can
+be 12 times longer. In this mode, stat() calls are done to update
+the screen. The only time in which there is a slowdown is prior to the
+first sort involving sizes or dates, because a stat() is required on each
+of the remaining unprocessed files. There may be some blank file lines in
+this mode, because of incomplete directory information. The default name
+sort keeps directories in alphabetical order with the files, instead of
+being first (a stat() call distinguishes directories from files). See also
+the interactive command
+.BR S
+which toggles the mode interactively.
+.\"---------------------------------------------------------------------
+.TP
+.B \-O
+Toggles OFF the display of pathname, file number, total files,
+tagged file counts and percentage through the file list. The default
+is ON. See interactive command
+.BR O .
+.PP
+.\"---------------------------------------------------------------------
+.TP
+.B \-o
+Toggles OFF the display of color filenames.
+The default, if compiled with this option,
+is ON. The option can be followed by a number to choose
+the color map.
+The options are
+.BR \-o
+(colors off),
+.BR \-o1
+(LS_COLORS environment variable color map),
+.BR \-o2
+(Internal default color map),
+.BR \-o3
+(Internal default monochrome map).
+With color maps compiled, the default is
+.BR \-o1.
+See also interactive command
+.BR o .
+.PP
+.\"---------------------------------------------------------------------
+.TP
+.B \-p
+Turns ON pausing before and after system commands. This option
+changes the OFF default. See also the DIREDSET environment variable,
+where this option can be preset, and the interactive command
+.BR "+",
+which toggles the pause mode ON/OFF at runtime.
+.PP
+.\"---------------------------------------------------------------------
+.TP
+.B \-D
+Define an aliased shell command using syntax
+.B "-Dx=s"
+where
+.BR "x"
+is the key (must be one character) and
+.BR "s"
+is the command text, which can contain the substitution tokens
+%n, %f, %d, %p, %% used respectively for the full pathname of the current file,
+just the file name stripped of directory components, the directory
+component only, a prompt for a destination (a string), or the percent
+character itself.
+.PP
+Also include with this option is the syntax
+.B "-Dxx=s"
+which uses a two-character string xx and a shell command s. This option
+replaces internal builtins attached to the various commands. The
+defaults:
+.TP
+.B "-DCP=cp -p -i"             (Copy command)),
+.TP
+.B "-DMV=mv -i"                (Move command),
+.TP
+.B "-DRM=rm -rf"               (Remove command ),
+.TP
+.B "-DGR=groff -s -p -t -e -Tascii -mandoc"    (Groff command ),
+.TP
+.B "-DCH=chmod -f"             (chmod command ),
+.TP
+.B "-DPR=lpr"                  (print command ).
+.PP
+The only allowed two character strings are CP, MV, RM, GR, CH, PR because
+these correspond to internal variables of the program, not aliased shell
+commands. The definitions should not contain the substitution
+tokens %n, %f, %d, %p, %%. This feature exists to replace the builtins
+by private or custom commands. For example, you might want to print
+files not with lpr but with a shell script that smartly handles the
+various file types available on the system, eg, postscript and DVI files
+get handled by the shell script automatically.
+
+.PP
+.\"=====================================================================
+.SH "ENVIRONMENT VARIABLE DIREDSET"
+.PP
+The variable
+.BR DIREDSET
+can be defined to set certain command line options. This variable is used
+before any actual command line arguments are processed. Common settings
+usually read on login:
+.PP
+.ce 2
+setenv DIREDSET '-wf -sw -O -Fmsd -C200'
+export DIREDSET='-S -s -Fisdp'
+.\"=====================================================================
+.SH "RESOURCE FILE $HOME/.diredset"
+.PP
+The resource file
+.B "$HOME/.diredset"
+sets options before the environment variable DIREDSET is processed, and
+therefore also before command line arguments are processed. The file
+format is one option per line, identical to the syntax used for the
+command line, except that shell protection instruments like quotes must
+be removed. An example:
+.PP
+.nf
+File ~/.diredset has format one option per line.
+Options start with minus! Other lines are ignored.
+\-wf
+\-sw
+\-O
+\-Fmsd
+\-DC=cd %d;cp -p -i %f %p
+\-Dr=rm -i %n
+\-DRM=rm -rf -v
+.fi
+.PP
+
+The above example sets full screen mode (\-wf), sorting by write date
+(\-sw), pathname display off (\-O), screen format with modes, size, date
+(\-Fmsd), then defines two aliased commands with keys "C" and "r"
+followed by a redefinition of the remove command RM (an internal). The
+syntax differs slightly from command line syntax, because of possible
+expansion and tokenizing by the shell. For example, \-D'RM=rm -rf -v' is
+the entry at the command line, in order to keep the shell from breaking
+the string "rm -rf -v" into tokens.
+.\"=====================================================================
+.SH "KEYBOARD COMMANDS"
+.PP
+Commands consist of single characters, with any necessary arguments
+prompted for, and displayed in the echo line.  Several commands take
+an optional non-negative integer count argument, as in
+.BR vi (1).
+.PP
+Here are the keyboard commands that control
+.BR dired ,
+organized into several categories.
+.\"*********************************************************************
+.RE
+.PP
+.SP
+.SH "Help"
+.SP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.B  "?"
+Display the manual page
+.BR "dired.1"
+using the unix command
+.BR "man dired".
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.B  "h"
+Help. Command key tutor. In this mode, the lower screen is used. Cursor
+keys and their duplicates may be used to position the cursor on an item.
+The key sequence
+.BR "Esc-Esc"
+quits. The key sequence
+.BR "Esc-Return"
+exits the tutor and executes the command on the cursor line. Other keys
+cause a jump to a description of that key, ie, they move the cursor only.
+The most useful feature of the tutor is hitting keys to find out what
+they do, without the danger of actually invoking the command.
+.RE
+.\"*********************************************************************
+.PP
+.SP
+.SH "Quitting dired"
+.PP
+.SP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.B a
+Abort out of the current copy of
+.BR dired.
+No deletions are done. Does not affect previously invoked
+copies of
+.BR dired.
+.PP
+.\"---------------------------------------------------------------------
+.TP
+.B A
+Abort completely out of all copies of
+.BR dired .
+All tags 'D' in all copies of
+.BR dired
+are ignored.
+.\"---------------------------------------------------------------------
+.TP
+.B q
+Exit
+.BR dired .
+Files tagged 'D' are presented with a delete query.
+Confirmation is required for any delete.
+If no confirmation is given (typing anything other
+than
+.IR y ),
+then
+.B dired
+prompts for a return to the program. If the return is
+refused, then an interactive session is invoked for
+selectively
+deleting
+the tagged
+files.
+.\"---------------------------------------------------------------------
+.TP
+.B Q
+Exit all levels of
+.BR dired,
+and PUSHD to the directory of the current file. A subsequent POPD will
+return to the directory where the first
+.BR dired
+was launched.
+.\"---------------------------------------------------------------------
+.TP
+.B z
+Suspend the current
+.BR dired,
+and PUSHD to the directory of the current file. A subsequent POPD will
+return to the directory where the first
+.BR dired
+was launched.
+A foreground command
+.BR fg
+will return to the currently suspended
+.BR dired.
+See also
+.BR ^Z,
+which suspends the current
+.BR dired
+into the default directory maintained by the shell. See also the
+similar command
+.BR Q
+described above.
+.PP
+.\"*********************************************************************
+.SP
+.SH "NAVIGATION"
+.SP
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.B "Down Arrow" ,
+.BR "Ctrl-J" ,
+.BR "Ctrl-N" ,
+.BR "j" ,
+.BR "Return" .
+Step to the next file.  If this crosses a window boundary, the next
+window is displayed with a one-line overlap.  May be preceded by a
+count.
+.\"---------------------------------------------------------------------
+.TP
+.B "Up Arrow" ,
+.BR "^(caret)" ,
+.BR "k" ,
+.BR "Ctrl-H" ,
+.BR "Ctrl-p" .
+Step to previous file.  If this crosses a window boundary, the
+previous window is displayed with a one-line overlap.  May be preceded by
+a count. When getting options at the bottom of the screen, in a dialog,
+the up arrow is used to recall previously entered shell commands.
+.\"---------------------------------------------------------------------
+.TP
+.B "PgDown" ,
+.BR "Right Arrow" ,
+.BR "f" ,
+.BR "Ctrl-v" ,
+.BR SPACE .
+Go forward a window, leaving a one-line overlap.  May be preceded by a
+count.
+.\"---------------------------------------------------------------------
+.TP
+.B "PgUp" ,
+.BR "Left Arrow" ,
+.BR "b" ,
+.BR "ESC-v" .
+Go backward a window, leaving a one-line overlap.  May be preceded by a
+count.
+.\"---------------------------------------------------------------------
+.TP
+.B "[" ,
+.BR "(" ,
+.BR "<" ,
+.BR "{" ,
+.BR "ESC <" .
+Go to the start of the file list.  With an argument
+.IR n ,
+go
+.I n/10
+of the way from the start.
+.\"---------------------------------------------------------------------
+.TP
+.B "]" ,
+.BR ">" ,
+.BR ")" ,
+.BR "}" ,
+.BR "ESC >" .
+Go to the end of the file list.  With an integer argument
+.IR n ,
+go
+.I n/10
+of the way from the end.
+.\"---------------------------------------------------------------------
+.TP
+.B e
+Launch a new copy of
+.BR dired
+on the target directory. The old copy of
+.BR dired
+is suspended until the new copy exits. If the entry is not a directory,
+then the action is
+.I "edit",
+which is explained below.
+.\"---------------------------------------------------------------------
+.TP
+.B E
+Launch a new copy of
+.BR dired
+on the next higher level directory, as determined from the path
+of the current entry. The old copy of
+.BR dired
+remains suspended until the new copy exits.
+.\"---------------------------------------------------------------------
+.TP
+.B V
+Prompt for a directory string and launch a new copy of
+.BR dired
+on the string.
+The old copy of
+.BR dired
+remains suspended until the new copy exits.
+This option allows jumps to new directory structures apart from the
+current tree.
+.\"---------------------------------------------------------------------
+.TP
+.B G
+Go to the file number given by the preceding count.  With no count,
+go to the last file as in
+.BR vi (1).
+.\"---------------------------------------------------------------------
+.TP
+.B B
+Bookmark for the current position.
+If too many book marks are requested, then the oldest 25 percent
+are lost.
+.\"---------------------------------------------------------------------
+.TP
+.B J
+Restore the position to the last bookmark (see B).
+.\"---------------------------------------------------------------------
+.TP
+.B L
+Restore the historical position before the last search or gross cursor move.
+Single moves with the UP and DOWN keys are not recorded. About 2000
+positions can be saved. This command
+displays past history positions in reverse chronological order.
+If too many historical positions are recorded, then the oldest 25
+percent are lost in order to save the most recent positions.
+.PP
+
+.\"*********************************************************************
+.RE
+.PP
+.SH "Aliases and Shell Commands"
+.SP.PP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.B "x, !"
+Prompt for a shell command.
+Duplicate keys are
+.BR "Ctrl\-X"
+and
+.BR "ESC\-x" .
+Enter the single character
+.BR "?"
+to get online help that summarizes what appears below.
+Enter a single letter (alias letter) to invoke an aliased shell
+command. One-letter unix shell commands are rare; if you need one,
+then enter a space bar followed by the letter. Anything longer than
+one letter is considered a new shell command. A prompt appears
+so that you can give it an alias, if desired.
+.PP
+To pass the full pathname of the file use token
+.BR %n,
+to pass just the trailing filename component, less
+all directory components, use the token
+.BR %f,
+to pass just the directory, use token
+.BR %d,
+to prompt at runtime for a destination filename use token
+.BR %p,
+and to pass the percent character % itself to the shell without
+translation, use token
+.BR %%.
+.PP
+If no
+.BR *
+tags appear, then the scope of the system
+command is the current file entry. Otherwise, the command is applied
+successively to all tagged files. Commands without the special escapes
+are executed as written, without application to files displayed by dired,
+eg,
+.BR "!ls -l"
+gives a long directory listing of the connected directory.
+.PP
+.SP
+HISTORY LIST. The command lines are saved in a history list. Recall a
+previous command by using the UP and DOWN cursor keys (eg, ESC OA and
+ESC OB). The command lines recalled can be edited, but at present no
+text editing features exist except for backspace, delete, quote and
+kill. This simplistic interface is appropriate most of the time, because
+the command lines tend to be short. The quote feature can be used to
+identify function keys: press Ctrl-Q or a duplicate (like the INS key
+"ESC Op" on the application keypad) and then a function key to insert
+the key sequence into the command line buffer. Similarly, control
+characters like ESC, which do not self-insert, are inserted by pressing
+INS and then the control key. The terminal KILL_CHAR is used to erase
+the entire command line; usually this key is mapped to Ctrl-U.
+.PP
+ALIASES. Commands that are saved in this list can be mapped to an alias
+key. In the dialog you will be asked for a single letter by which to
+invoke the alias (shell command). A RETURN skips assignment.
+.PP
+Examination of the alias list is possible by
+pressing the special key
+.BR ?
+instead of entering an alias or shell command.
+.PP
+Aliases can be loaded at startup from
+$HOME/.diredset, variable DIREDSET or on the command line using the
+format
+.BR "-Dx=s"
+where
+.BR x
+is the key to be assigned to the command text and
+.BR s
+is the command text itself. For example,
+.BR "-Dc=cd %d;cp -p -i %f %p"
+defines an alias for the shell command that can be invoked by pressing
+the key sequence
+.BR "xc"
+(that is, press
+.BR "x"
+and then
+.BR "c"
+to invoke the shell command). The command text is
+.BR "cd %d;cp -p -i %f %p"
+which means: connect to the directory
+.BR %d,
+copy the given file
+.BR "%f"
+from that directory
+and prompt for the destination
+.BR "%p%
+file, using the same date (\-p) with overwrite protection (\-i).
+The standard aliases that you get for free on startup are as follows:
+.BR "c=cp -p %n %p"
+.PP
+.BR "r=rm -f %n"
+.PP
+.BR "m=mv %n %p"
+.PP
+.BR "u=gzip -d %n"
+.PP
+.BR "z=gzip %n"
+.PP
+.BR "l=ls -s %n %p"
+.PP
+.BR "L=ln %n %p"
+.PP
+It is fair to say that almost no one uses command line arguments except
+for testing. After the argument is decided, it is placed into the
+environment variable DIREDSET or else into the resource file
+.BR "~/.diredset" .
+Definitions can be removed by using the same key over again, because
+duplicate keys cause replacement of the command text. Alias list expansion
+is possible only by insertion of an unused letter.
+.PP
+.SH "Examples for mv and cp"
+.SP
+.TP \w'......'u+2n
+.B "cd %d;mv %f ./backup/#.old"
+Make backup files.
+.PP
+.SP
+.TP \w'......'u+2n
+.B "cd %d;cp -p %f ./backup"
+Copy files to backup directory.
+.PP
+.SP
+.TP \w'......'u+2n
+.B "mcopy %n a:"
+Copy files to backup diskette.
+.PP
+.SP
+.TP \w'......'u+2n
+.B "cd %d;zip foo.zip %f"
+Make a ZIP archive.
+.PP
+.SP
+.TP \w'......'u+2n
+.B "cd %d;tar -xzf %f"
+Untar a TAR archive.
+.PP
+.SP
+.TP \w'......'u+2n
+.B "echo %n >> foo.lst"
+Make a list of files in foo.lst.
+.PP
+.SP
+.TP \w'......'u+2n
+.B "emacs %n"
+Run emacs on each file in the list.
+.PP
+.\"*********************************************************************
+.RE
+.PP
+.SH "Actions on files"
+.SP.PP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.B .
+A period (.) repeats the previous
+.BR !
+shell command, substituting the filename for any special chars % or # in
+the original command. Tag rules for '*' apply just as though you had
+used the 'x' ('!') command.
+.PP
+.SP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.B e
+Launch the default text editor on the current file. The default editor
+is defined in the
+.IR EDITOR
+environment variable, normally defined in the login script for the shell.
+If
+.IR EDITOR
+is not defined,
+.BR vi (1)
+is used.
+However, if the current
+file is a directory, it is not edited, but rather,
+.B dired
+forks a copy of itself upon that directory.
+Navigation of the directory tree is effected by this method, which
+suspends the current
+.IR dired
+until the forked copy exits.
+.PP
+.SP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.B m
+Run the program defined by the
+.IR PAGER
+environment variable program on the current entry.  If
+.IR PAGER
+is not defined, run
+.BR more (1).
+.\"---------------------------------------------------------------------
+.TP
+.B P
+Print the current file on the default printer.
+.\"---------------------------------------------------------------------
+.TP
+.B t
+Type the file on the terminal. Response time is considerably faster than
+starting an editor on the file.  The window
+is paused after each screenful.  The type-out may be
+interrupted by
+.BR q .
+Characters less than space in ASCII value are printed in prefix form as
+two characters, eg,
+.BR "^C"
+for Ctrl-C. Characters 127 through 255 are
+printed in square brackets with the hex value between, eg,
+.BR "[8A]".
+.\"*********************************************************************
+.PP
+.SP
+.SH "Copying and Moving Files"
+.SP
+.PP
+.SP
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B "c"
+The key
+.BR c
+acts on the current file only, copying it to a new location, using the
+default command
+.BR "cp -p -i %n %p"
+which preserves the date, protects against overwrite and prompts for the
+destination file name. The command portion
+.BR "cp -p -i"
+comes from the variable CP, which can be reset on the command line or
+by the environment variable DIREDSET.
+The command aborts if no destination is entered at the prompt.
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B "M"
+The key
+.BR M
+acts on the current file only, moving it to a new location, using the
+default command
+.BR "mv -i %n %p"
+which protects against overwrite and prompts for the
+destination file name. The command portion
+.BR "mv -i"
+comes from the variable MV, which can be reset on the command line or
+by the environment variable DIREDSET.
+.PP
+It should be mentioned here that
+upper case
+.BR M
+is bound to this function and not lower case
+.BR m ,
+which is used for the pager program (m stands for 'more').
+The command aborts if no destination is entered at the prompt.
+
+.\"*********************************************************************
+.PP
+.SP
+.SH "Tagging, Deleting and Untagging"
+.SP
+.PP
+.SP
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B "TAB"
+The tab key toggles the '*' tags on files, which marks
+files for inclusion in system commands (see 'x' or '!' above). This tag
+is
+independent of the tag 'D' (delete) discussed below. After '*' has been
+processed by a system command, then '%' replaces '*', and '%' is
+harmless (erase all with
+.BR U
+). To change the '%' tags back to '*' or 'D', apply
+the change-tag command
+.BR C
+described below.
+.TP \w'...'u+2n
+.B *
+The asterisk key (*) is used to start a special search for files matching a
+regular expression. Upon finding a match, the file is tagged '*'.
+After the search finishes, you may locate the
+first one using the
+.BR n
+command.
+.TP \w'...'u+2n
+.B d
+Tag the current entry, to be deleted later.  Two keys cause the delete
+to happen:
+.BR q
+and
+.BR R .
+The first quits the program and the second reloads the directory.
+.I Warning:
+Full directory trees may be removed!
+If the name is a directory, everything in it and all subdirectories of
+it will be removed (same as
+.BR "rm -r"
+).
+.TP \w'...'u+2n
+.B D
+This key is used to start a special search for files matching a
+regular expression. Upon finding a match, the file is tagged 'D'.
+After the search finishes, you may locate the
+ones marked using the
+.BR d
+and
+.BR N
+commands.
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B K
+Tag
+.I all
+files with 'D' (delete later). Undo it with the command
+.BR U .
+This command is equivalent to going to the top of the list,
+.BR [ ,
+followed by the regular expression search-and-delete key
+.BR D
+and a period (.) for the search string (briefly, "[D.").
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B ~
+Tag files with names ending in
+.BR ~
+with the tag 'D'. Tagged files are to be deleted later.
+This command is equivalent to the command
+.BR "[D~$" .
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B #
+Tag files with names beginning with
+.BR #
+with the tag 'D'. Tagged files are to be deleted later.
+This command is equivalent to
+.BR "[D^#" .
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B u
+Untag the current entry. Changes the tag to SPACE. The actual tag used
+is irrelevant.
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B U
+Remove all file tags and replace them with SPACE.
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B T
+Tag exchange. All matching tags are changed to the new tag. The startup tag
+is a SPACE (' '). This routine has
+no defaults: to specify a space, a space bar must be entered.
+Any printable character can be used as a tag character, but only two
+tags have any special meaning. The characters 'd' and 'D' are equivalent
+and stand for a
+.BR "delete tag" .
+The character '*' stands for a
+.BR "shell command tag" ,
+wherein a launched shell
+command acts on all files with tag '*'. In this context, if no
+file has tag '*', then only the current file is used in the shell command.
+The character '?' stands for a wildcard which matches any existing file tag.
+Typical changes are replacing all '%' tags by 'D', because shell
+commands replace '*' by '%' upon completion. For example, the shell
+command might make an archive, so the natural action afterwards is to
+delete all the files moved to the archive.
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'...'u+2n
+.B C
+Change file protection using
+.BR chmod (1).
+The string 'chmod -f' and the file name are not entered, just the file
+protection code. It is understood that
+.BR chmod
+will be applied to the current file. Examples are given on the first
+use. On later use, the last chmod command is displayed. The last one
+used can be repeated by entering a PERIOD (.). For details of how
+.BR chmod (1)
+works, see the unix manual page. Also described in the manual page is
+the syntax for setting the protection modes;
+you may use in
+.BR dired
+your favorite syntax. If you have no favorite, then mimic the examples
+given on the prompt line.
+.PP
+This command is useful for changing protections of a few files. The service
+is a quick fix for file protections, when it is discovered that
+a change is needed.
+The single-file command
+.BR C
+resets the protection bits and re-displays the file line, without reading
+the entire directory. The file being considered is marked on the screen
+with the underline character, while you enter the desired protection mode.
+.PP
+It is
+more efficient for large groups of files to mark them and apply the
+corresponding shell command. After completion, use
+.BR R
+to re-read the directory, otherwise the new protections will not show on
+the screen.
+.PP
+.\"*********************************************************************
+.SP
+.SH "Display"
+.SP
+.\"---------------------------------------------------------------------
+.TP \w'.....'u+2n
+.B l
+Print the directory path name onto the lower screen, refresh the current
+line and clear the lower screen display area (one or more lines). If
+the current file is a link instead of a file, then the link is followed
+and the actual link printed, if possible. Links are indicated by the
+symbol
+.BR "\->".
+The same information is printed by other commands and also by default,
+so this command is used primarily to clean up the screen after a file
+display. If the toggle
+.BR O
+has defeated the display of information lines, then this command reduces
+to a clear of the lower screen. See also the command
+.BR p,
+which always prints the information lines (but never clears the lower
+screen).
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'.....'u+2n
+.B O
+Toggle the display of
+the full pathname (the linked file, if this file is a link),
+the current file number, the total number of files, the number of
+files tagged '*' (for shell commands), the number of files tagged 'D'
+(delete later) and the percentage through the file list. Since
+.BR dired
+displays this information by default, the function is used primarily to
+make the display brief. Full screen mode has no linear indicator, so the
+command
+.BR p
+is used to display on demand the pathname and stats, regardless of the
+setting of the O-toggle. See also the command line switch
+.BR \-O
+which turns the feature OFF on startup.
+.PP
+.\"---------------------------------------------------------------------
+.SP
+.TP \w'.....'u+2n
+.B g
+Display the entry via
+.B groff
+as a manual page. See also the
+.B m
+command,
+which calls the PAGER, often set equal to
+.BR less .
+The related script
+.BR "lesspipe.sh"
+may be invoked automatically by less to accomplish the
+same thing. This command is useful for cases in which the PAGER script
+falsely classifies the file as something other than a manual page.
+See the manual page for
+.B less
+for more information about the file
+.BR "lesspipe.sh" .
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'.....'u+2n
+.B o
+Toggle the display of colors. There are four color maps, labeled as 0,
+1, 2 and 3. Color map 0 is NO COLOR. Color map 1 comes from the
+user-defined environment variable
+.BR LS_COLORS.
+Color map 2 comes from an internal color map.
+Color map 3 comes from an internal monochrome map.
+.PP
+The default internal colors (2) are derived from
+the distribution colors used by
+.BR "color ls",
+distributed with 1995 linux
+.I "slackware 3.0".
+The default monochrome map (3) uses highlighting features of vt100 terminals
+to make mono displays more interesting.
+If the environment variable is undefined, then the internal definition
+is used.
+On startup, a check is made for the environment variable. If it exists,
+then it is used instead of the default colors. Each time
+.BR o
+is used, the colors alternate between the environment variable to the
+default, to NO COLORS and back again. Badly chosen color combinations
+can make the display unreadable.
+.PP
+The command line switch
+.BR \-o
+turns the color feature OFF on startup.
+The switch
+.BR "\-o2"
+turns on color map 2 on startup. The environment variable
+.BR DIREDSET
+allows command line options to be preset for every launch of
+.BR dired .
+.PP
+.SH COLOR CODES
+The color codes are assembled into escape sequences like
+.BR "ESC [01;46;31m" .
+Only the portion
+.BR "01;46;31"
+is specified in the unix environment variable
+.BR LS_COLORS .
+This example stands for bold colors (01), cyan background (46) with
+bright red foreground (31), as explained by the code values below.
+.PP
+.sp
+.nf
+ Attribute codes:
+   00=none 01=bold 04=underscore 05=blink
+   07=reverse 08=concealed
+ Foreground (Text) color codes:
+   30=black 31=red 32=green 33=yellow 34=blue
+   35=magenta 36=cyan 37=white
+ Background color codes:
+   40=black 41=red 42=green 43=yellow 44=blue
+   45=magenta 46=cyan 47=white
+.fi
+.sp
+.PP
+Abbreviations like
+.BR "di"
+appearing in the variable
+.BR LS_COLORS
+are explained by the equivalences below, using symbols and descriptions
+from the file /usr/include/sys/stat.h.
+.PP
+.nf
+"no", S_IFREG   /* A regular file or anything else */
+"fi", S_IFREG   /* A file */
+"di", S_IFDIR   /* A directory */
+"ln", S_IFLNK   /* A link */
+"pi", S_IFIFO   /* A pipe */
+"so", S_IFSOCK  /* A socket*/
+"bd", S_IFBLK   /* A block device */
+"cd", S_IFCHR   /* A char device */
+"ex", S_IEXEC   /* An executable */
+.fi
+.PP
+File extensions, to be marked with a particular color combination, appear
+in the environment variable as an entry like
+.BR ":*.jpg=01;32:" .
+The colons (:) are separators. The entry means:
+.I "color any file with extension"
+.BR ".jpg"
+as bold (01) green (32). The default internal color string is defined as
+.PP
+.nf
+"no=00:fi=00:di=01;34:ln=01;36:pi=40;33:\\
+so=01;35:bd=40;33;01:cd=40;33;01:ex=01;32:\\
+*.sh=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:\\
+*.btm=01;32:*.bat=01;32:*.tar=01;31:*.tgz=01;31:\\
+*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:\\
+*.z=01;31:*.Z=01;31:*.gz=01;31:*.jpg=01;35:*.gif=01;35:\\
+*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:";
+.fi
+.PP
+In linux only, the colors are set in the environment by a program
+.BR dircolors ,
+which reads the contents of the file
+.BR "/etc/DIR_COLORS"
+during boot. The file
+.BR "/etc/profile"
+contains the actual command line. To reset colors after an edit of the
+source
+.BR "/etc/DIR_COLORS"
+run the same command line that appears in
+.BR "/etc/profile",
+something like
+.BR "eval `dircolors -b`" .
+Please note that back quotes (`) are used in
+.BR eval ,
+and not the usual quote character (').
+.PP
+.\"---------------------------------------------------------------------
+.SH Miscellaneous
+.TP \w'.....'u+2n
+.BR l , " Ctrl-L"
+Load anew the window size parameters and refresh the current window.
+In X-windows,
+.B dired
+automatically recognizes a window size change, and it refreshes the
+screen on the next key. However, if
+.BR dired
+is suspended, then the window change signal may be lost. It is common to
+have a chain of dired's loaded with all but the last one suspended.
+Therefore, exiting a recently suspended dired may cause a need to press
+.BR l
+or
+.BR "Ctrl-L" ,
+in order to reset the terminal size for the next dired in
+the chain. The manual command
+.BR l
+resets the window size dynamically
+without signals. Terminal parameters like cursor motion strings are set
+at initial start and cannot be changed during runtime.
+.\"---------------------------------------------------------------------
+.TP \w'.....'u+2n
+.B p
+Display the full path name of the current file; embedded control
+characters are displayed in a printable format. This command works
+when the default pathname and stats are disabled (see
+.BR "\-O"
+and
+.BR O
+).
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'.....'u+2n
+.B "ESC ESC"
+Cancel a count prefix.
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'.....'u+2n
+.B w
+Write the full list of files, in its current format, to a temporary file
+in /tmp, having a unique name. This feature is used primarily to
+document the disposition of files during a dired session. It can also be
+used to create shell scripts.
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'.....'u+2n
+.B R, " X"
+Reload the directory or file list.  If files are tagged 'D', then
+.B dired
+will first ask for confirmation and then delete them before reloading.
+A reload is useful after certain shell escapes (e.g.
+.BR chmod (1)).
+.PP
+.\"---------------------------------------------------------------------
+.TP \w'.....'u+2n
+.B " ESC /, ALT /"
+Load a new directory;
+.B dired
+will prompt for the directory name (a complete path name).
+.\"---------------------------------------------------------------------
+.SH Sorting
+.TP \w'.....'u+2n
+.B r , " s"
+Sort the file list by various fields:
+name, extension, size, read date, write date, creation date and inode.
+Only the first letter (e.g.
+.BR n ,
+.BR e )
+.BR s ,
+.BR r ,
+.BR w ,
+.BR c ,
+or
+.BR i
+is required after
+giving the
+.BR r
+and
+.BR s
+commands. The command
+.BR s
+sorts in increasing alphabetic, decreasing
+size, newest to oldest dates while command
+.BR r
+reverses the sense of
+of the sort.
+For the
+.BR n ,
+.BR e ,
+.BR s ,
+and
+.BR w
+subcommands, the date field is the write date.
+For the
+.BR r
+subcommand, the date field is the read date.  Whenever a sort
+is done, the position returns to the top of the list.
+A sort can be aborted via
+.BR "ESC  ESC" .
+To simulate the unsorted disk order, use
+.BR "\-ri"
+or for inodes in decreasing order,
+.BR "\-si" .
+The command line
+.BR "dired \-s"
+is the only way to get the true unsorted disk order.
+.PP
+.\"*********************************************************************
+.SP
+.SH "Searching"
+.SP
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.BR /
+Locate a file matching the given line of input, which is assumed to be a
+.BR "regular expression" ,
+as defined in
+.BR re_comp (3)
+and
+.BR re_exec (3).
+The input can be aborted by pressing Ctrl-C, but this action is not recognized
+until a RETURN key is also pressed.
+See also the manual page
+.BR "man ed"
+for a brief introduction to regular expressions.
+The search is in the forward direction.  The regular expression is
+remembered for subsequent use by the
+.B n
+and
+.B N
+commands.  If the input line is empty, the last one remembered
+is used.
+.\"---------------------------------------------------------------------
+.TP \w'.'u+2n
+.BR \e
+Same as the regular expression search
+.B /
+except the direction is reversed.
+.\"---------------------------------------------------------------------
+.TP
+.B n
+Find the next instance (forward direction) of the regular
+expression previously defined by a regular expression search command
+.I `/' ,
+.I '\e',
+.I '*'
+or
+.I 'D' .
+.\"---------------------------------------------------------------------
+.TP
+.B N
+Find the previous instance (backward direction) of the regular
+expression previously defined by a regular expression search command
+.I `/' ,
+.I '*'
+or
+.I 'D' .
+.PP
+.SP
+.\"=====================================================================
+.SH TERM and TERMCAP
+The shell
+.I TERM
+variable is expected to be set to something like
+.BR vt100 .
+Without
+.I TERM
+being set,
+.BR dired
+will assume the terminal is
+.BR "24 by 80",
+.BR "vt100",
+and use its built-in termcap for vt100. The only terminal feature
+actually required is cursor motion (cm variable). If the built-in
+termcap works, then these commands will make
+.BR dired
+work normally:
+.sp
+.ce 2
+.BR "TERMCAP='d4:co#80:li#24:cm=\eE[%i%d;%dH:ce=\eE[K:se=\eE[m:'"
+.BR "export TERMCAP; export TERM='d4'"
+.sp
+If your system uses
+.BR setenv
+instead of
+.BR export,
+then the syntax is
+.sp
+.ce 2
+.BR "setenv TERMCAP 'd4:co#80:li#24:cm=\eE[%i%d;%dH:ce=\eE[K:se=\eE[m:'"
+.BR "setenv TERM 'd4'"
+.sp
+In odd situations, a shell script with one set of these lines, plus
+a launch of
+.BR dired
+with command line arguments, will suffice to get around the operating
+system and let the program run normally.
+.PP
+.SP
+.\"=====================================================================
+.SH FILES
+.I /usr/local/bin/dired
+Executable program with tutor built-in. The (optional) manual page is
+.BR "dired.1" .
+.TP
+.I $HOME/.diredset
+Command line tokens, one per line, used on startup before DIREDSET
+environment variable and command line arguments.
+.TP
+.I /usr/man/man1/dired.1
+Manual page. Should be
+installed with the program
+.BR dired
+because it is used internally as a help file.
+.PP
+.SP
+.\"=====================================================================
+.SH "SEE ALSO"
+.BR cp (1L),
+.BR ed (1),
+.BR emacs (1),
+.BR groff (1),
+.BR less (1),
+.BR ls (1).
+.BR man (1),
+.BR more (1),
+.BR mv (1L),
+.BR re_comp (3),
+.BR re_exec (3),
+.BR tar (1),
+.BR vi (1).
+.BR zip (1L).
+.PP
+.SP
+.\"=====================================================================
+.SH DIAGNOSTICS
+The error messages and information messages are expected to be complete.
+There are no error codes. No debug mode exists. Strange errors or
+errors without messages should be regarded as programming bugs: send
+mail to the maintainer, address given below, or any of the authors.
+.\"=====================================================================
+.SH AUTHORS
+Stuart Mclure Cracraft, original version 1980, cracraft@ix.netcom.com (1996).
+.br
+Enhancements by Jay Lepreau <lepreau@cs.utah.edu>, 1980-1983. Email
+address valid 1996.
+.br
+Fixes and enhancements by Charles Hill, 1980-1984. Email address unknown (1996).
+.br
+.na
+More fixes and enhancements, and major revisions of the Makefile and
+manual pages, by Nelson H. F. Beebe <beebe@math.utah.edu>, 1990-1996.
+.br
+.na
+Regular-expression support code by Tatu Ylonen <ylo@ngs.fi>. Added
+to
+.BR dired
+by Nelson Beebe.
+.br
+.na
+Major revision, fixes and enhancements by Grant B. Gustafson
+<gustafso@math.utah.edu>, 1995-1997.
+.ad
+.\"=====================================================================
+.SH BUGS
+The 'pushd' command invoked by 'Q' in 1984 fails to work in some
+versions of unix. Sometimes the delete and backspace keys under unix
+work more like ctrl-U. Report new bugs to Beebe or Gustafson at email
+addresses listed above (please specify version 3.05).

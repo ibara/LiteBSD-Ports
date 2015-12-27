@@ -1,0 +1,60 @@
+3/5/84  4.2 dired
+
+These files represent a version of dired (the interactive directory editing
+program written by Stuart Cracraft and enhanced by Jay Lepreau, posted over a
+year ago) in which I've made a number of enhancements:
+
+1) A command (E) to go UP from any node, including the starting node
+2) "/" command, with reg expr pattern matching
+3) Use of C shell in shell escapes
+4) Ability to quit dired and be "pushd'd" to the current node ("Q").
+5) Commands to print the full pathname of the current file and the current
+   node.  This is also done automatically on startup of any node.
+6) A command to abort all levels at once. ("A").
+7) A visual indication of what fraction of the total files the current
+   window represents.
+8) Command to toggle between full and split screen modes. 
+9) Command to re-read the directory (R).
+10) Can now be used on any terminal with random cursor addressing.
+11) Several bug fixes. 
+12) Some additional minor fixes & enhancements since the version posted
+    by me in November 83.
+
+
+NOTES:
+
+ 0) This version has conditional compilation statements for generating a
+   "standard" version or a 4.2 version.  The supplied makefile will generate
+   the 4.2 version as is. Remove the -DV4P2 in the make to generate a
+   standard version.
+
+ 1) The default shell for escapes is the "c" shell, and the "Q" command
+ generates a "pushd" to the current dir node. If you don't have 4.1 or 4.2,
+ remove the "Q" command", and signals to SIGTSTP.  If you don't have the "c"
+ shell, omit the file "cshsystem.c", and change shell references back to
+ "sh".
+
+
+ 2) It runs best on terminals which have "clear to end of line" and/or "clear
+    to end of page", but will work, albeit poorly,
+    on terminals w/o these functions, as long as the terminals have random
+    cursor addressing. This version, like its predecessor, does not use
+    "curses".
+
+ 3) Some known bugs: ^Z stuff does needs to be improved. Occasionally
+    "t" ing out binary files will mess up the display, but this is less
+    likely than before.
+
+4)  These are some path names embedded in the dired source code
+    (char dirednam and helpfile); modify these to suit local needs (as well
+    as those mentioned in the manual page).
+
+
+Charles Hill
+Philips Labs
+345 Scarborough Rd.
+Briarcliff Manor, N.Y. 10510
+
+[allegra,decvax,sdcsvax]!philabs!crh
+
+@@@ gam Sun Apr  1  7:57:16 PM PST 1984 original version

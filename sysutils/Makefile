@@ -3,6 +3,6 @@
 #
 
 # Hook up all sysutils ports
-SUBDIR=	arch lsx screen
+SUBDIR=	arch dired lsx screen
 
 .include <bsd.subdir.mk>

@@ -1,0 +1,82 @@
+Dired 3.00 (Since Feb 1996) new or changed commands:
+
+  TAB     Tag file '*'. Untag with TAB. Used by command '!' below.
+  SPACE   Next file. Same as Down, j, ^N, RETURN.
+          [2.02: "Clear lower screen. See command 'c' below.]
+  *       Tag '*' on forward search matches for regular expresssion.
+  !, x    Execute a shell command with filename substitution. [Also ^X, ESC-x]
+          The full filename is %n, tail %f, directory %d, percent %%, prompt
+          for string with %p. The % variables apply to the current file
+          if no tags '*' appear, otherwise they apply to all tagged files.
+          [2.02: Applies only to current file. No change without %.]
+  F       Screen format: i=inode, b=block, m=mode+links, u=uid, g=gid,
+                         s=size, d=date, p=path, l=long, n=none
+  +       Toggle pause before and after shell commands.
+  D       Tag 'D' on forward search matches for regular expresssion.
+          [2.02: "Delete all". See 'K' below.]
+  K       Tag all entries 'D' for deletion [Same as "[D."]
+          [2.02: Command D.]
+  T       Change tags. Prompt appears for old and new tag.
+  p       Display full pathname of current file and system stats.
+          [2.02: Display the pathname.]
+  O       Toggle display of pathname and stats.
+  o       Toggle color. Either OFF, LS_COLORS env var, or Internal.
+  l       Refresh current line and blank lower screen.
+          [2.02: Refresh current line.]
+  ^L      Recognize new window size and refresh current window.
+          [2.02: refresh screen.]
+  z       Suspend dired and PUSHD to the current file's directory.
+  s       Forward sort of the file list (7 methods).
+  r       Reverse sort of the file list (7 methods).
+          [3.00: Added sort by extension and inode.]
+  g       Groff current file as a manual page.
+  w       Write the formatted file list to a unique file in /tmp.
+  h       Command key Tutor. Describe command and optionally execute.
+          [2.02: h and ? displayed dired.hlp.]
+  ?       Do command "man dired"
+          [2.02: h and ? displayed dired.hlp.]
+  V       Load files from a new directory (also ESC /)
+  ESC ESC Cancel count prefix.
+          [2.02: ESC did it. Function keys caused two ESC's in 3.00.]
+  Configuration: DIREDSET environment variable.
+
+DIRED 3.02 and 3.03
+  Dired was made internally recursive, no longer creates multiple
+  launches of dired to do its work. Charles Moschel: Color bug fix;
+  added "ESC /" jump to directory. Memory use drastically reduced.
+
+DIRED 3.04
+  Keyboard interface with easy-to-change function key support. Command
+  history. Ctrl-Q for quoted insertion into command lines. Moved screen
+  height ctrl-F into 'F' command. Added 'S', ctrl-F, ctrl-B keys.
+
+DIRED 3.05
+  Added copy and move, cooked shell commands loaded from command line
+  or DIREDSET env variable, improved substitutions %%, %n, %f, %d, %p.
+  Bug fixes in Makefile, Type(). Changed defaults for keys M, c, l. New
+  keys "B", ";" added. Resource file $HOME/.diredset may contain options
+  one option per line. New sort option 'u'.
+
+Command line switch changes.
+  -h, -H, --, -v    All of these print the version and the help
+        message about the command line switches, online help and
+        the existence of the manual page.
+  -C250 Set incremental file capacity. This number determines
+        the minimum memory use of dired and the change in memory
+        use as dired adjusts to larger directory sizes.
+  -S    Stat calls on demand only. Useful for shortening the time
+        required to read in a directory, by a factor of about 12.
+        When browsing large directories, this can be an advantage.
+  -O    Toggle OFF the pathname and stat display in the lower screen.
+  -o    Turn off color highlighting. If using a regular Xterm, then
+        color means underline, inverse video, bold attributes.
+  -p    Turn ON pause before and after system commands. Default OFF.
+  -Fxxx Format selection for the screen. The string xxx is a set of
+        characters, documented in dired.1.
+  -w20  Set window height to 20 lines. -wf and -wh unchanged.
+  -Dx=s Define key x (single char) as shell command s.
+  -Dy=s Define internal variable y (2 chars) as shell command s.
+        Var xx is one of CP, MV, RM, CH, GR, PR.
+
+
+

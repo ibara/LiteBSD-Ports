@@ -1,0 +1,20 @@
+Begin3
+Title: dired
+Version: 3.01
+Entered-date: 17Jun96
+Description: Recursive directory tree navigator and program launching
+Description: tool; a standalone program developed from ideas in GNU
+Description: color-ls and the GNU emacs directory editor 'dired'.
+Keywords: rename delete copy move chmod tag tree termcap curses Xwindows
+Keywords: launch file directory manager shell browser visual ansi color
+Keywords: color-ls LS_COLORS emacs emacs-dired small simple tool
+Author: Stuart Cracraft (1980), Jay Lepreau, Charles Hill, Nelson Beebe,
+Author: Grant Gustafson.
+Maintained-by:  Grant B Gustafson (gustafson@math.utah.edu)
+Primary-site:   sunsite.unc.edu /pub/Linux/utils/file/managers
+Primary-site:   137k dired301.tgz (linux 1.2.8 binary and sources)
+Platforms: Multiple *ix platforms supporting the gnu C compiler.
+Platforms: i386-linux, mips-dec-ultrix, mips-sgi-irix, rs6000-ibm-aix,
+Platforms: sparc-sun-sunos, sparc-sun-solaris
+Copying-policy: GNU Public License
+End

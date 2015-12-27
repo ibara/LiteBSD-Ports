@@ -1,0 +1,26 @@
+Begin3
+Title: dired
+Version: 3.05
+Entered-date: 02Jan97
+Description: Mark files and launch programs on the selections, in color.
+Description: Recursive directory tree navigator and program launching
+Description: tool; a stand-alone program developed from ideas in GNU
+Description: color-ls and the GNU emacs directory editor 'dired'. Version
+Description: 3.04 introduced internal recursion, command history and a new
+Description: keyboard mapping scheme for easy addition of function keys.
+Description: 3.05 fixes bugs and adds copy, move functions, new
+Description: command line options, aliased shell commands, setup file.
+Keywords: rename delete copy move chmod tag tree termcap curses Xwindows
+Keywords: launch file directory manager shell browser visual ansi color
+Keywords: color-ls LS_COLORS command-history function-keys emacs
+Keywords: emacs-dired alias small simple tool
+Author: Stuart Cracraft (1980), Jay Lepreau, Charles Hill, Nelson Beebe,
+Author: Grant Gustafson.
+Maintained-by:  Grant B Gustafson (gustafson@math.utah.edu)
+Primary-site:   sunsite.unc.edu /pub/Linux/utils/file/managers
+Primary-site:   139k dired305.zip (linux 1.2.13 exe and sources)
+Platforms: Multiple *ix platforms with native or gnu C compiler.
+Platforms: i386-linux, mips-dec-ultrix, mips-sgi-irix, rs6000-ibm-aix,
+Platforms: sparc-sun-sunos, sparc-sun-solaris
+Copying-policy: GNU Public License
+End
