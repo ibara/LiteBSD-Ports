@@ -3,6 +3,6 @@
 #
 
 # Hook up all directories
-SUBDIR=	benchmarks lang net shells sysutils
+SUBDIR=	benchmarks devel lang net shells sysutils
 
 .include <bsd.subdir.mk>
