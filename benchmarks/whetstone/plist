@@ -1,0 +1,5 @@
+Updated version of the Whetstone benchmark in C.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD-like
+###
+bin/whetstone

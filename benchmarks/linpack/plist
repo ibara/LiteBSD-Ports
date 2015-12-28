@@ -1,0 +1,5 @@
+Improved version of the LINPACK benchmark program written in C.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Unknown
+###
+bin/linpack
