@@ -1,0 +1,6 @@
+Extremely simple IRC client.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+###
+bin/sic
+man/man1/sic.0

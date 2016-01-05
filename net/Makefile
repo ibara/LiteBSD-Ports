@@ -3,6 +3,6 @@
 #
 
 # Hook up all net ports
-SUBDIR=	ii
+SUBDIR=	ii sic
 
 .include <bsd.subdir.mk>
