@@ -1,0 +1,95 @@
+This file describes the contents of the fpp delivery and some brief 
+instructions on how to build and use fpp.
+
+fpp is a source language preprocessor for FORTRAN 77 and Fortran 90.
+
+Contents:
+---------
+
+The top level directory for the fpp delivery consists of the following
+files:
+
+README          - this file
+fpp_spec        - the specification of fpp
+fpp_license.ps  - the fpp license agreement (PostScript)
+Makefile        - makefile to build fpp
+man             - directory that has the fpp man page
+sparc           - directory where fpp for sparc-Solaris2.x is built
+src             - fpp source code
+
+
+Building fpp:
+-------------
+
+To build fpp run 'make [dir]', where dir is the target architecture under which
+you want to build. For example, 'make sparc ' builds fpp to run on SPARC 
+processors under Solaris 2. To build fpp for a different architecture, follow 
+the Makefile for 'sparc' and create your own target.
+
+Documentation:
+--------------
+
+Two documents for fpp are provided:
+    fpp_spec       is the complete specifications of fpp.
+    man/man1/fpp.1 is the fpp man page.
+
+License:
+-------
+
+The on-line software license agreement to use fpp is in the Postscript file
+fpp_license.ps. Please read that carefully before proceeding to use
+fpp.
+
+Note that you are granted the rights to modify the Software and to
+license and further distribute the modified version. However, you are
+required to post the modified software, in its entirety, to the Internet
+for anonymous FTP access at netlib.
+
+Our intention for this restriction is to preserve the fpp specification
+and have one, common, specification for fpp. However, we are aware of the
+requirement to modify the sources to integrate with your compilation system.
+In such cases you may not be willing to make the changes publicly available
+for fear of exposing your internal interfaces. We are willing to exempt
+you from making such changes available to the public. Please send mail
+to fpp-coordinator@sun.com to seek this exemption.
+
+What's new in release 1.1:
+--------------------------
+
+1. A new flag -c_com={yes|no} has been added. Users now have the option to 
+   prohibit the recognition of C style comments. Default value is yes.
+
+2. A new flag -macro={yes|no_com|no} has been added. By default macros
+   are now expanded within comments. Users can turn off macro expansion
+   in comments or turn it off at all.
+
+3. A new flag -V has been added: fpp -V issues a version number.
+
+4. Some bugs are fixed.
+
+
+Comments:
+---------
+
+Send all comments to fpp-comments@devpro.Eng.sun.com
+
+
+Responses to earlier comments:
+------------------------------
+
+1. Fpp crashes due to attempt to modify a literal constant.
+   Response: fixed.
+
+2. The following line of code causes problems for fpp:
+
+   C  Here is an unpaired quotation mark: '
+
+   Response: not an issue. Fpp doesn't complain if the source is in
+   fixed format. It does complain if the source is in free format
+   where C-style comments are not recognized.
+
+3. Fpp splits all trailing comments off of their original line and onto
+   the following one.
+   Response: fixed.
+
+fpp: v1.1 Mar 18 1997

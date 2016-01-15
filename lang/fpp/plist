@@ -1,0 +1,6 @@
+FORTRAN Preprocessor from Sun.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: May use and distribute freely, but read fpp_license.txt carefully
+###
+bin/fpp
+man/man1/fpp.0

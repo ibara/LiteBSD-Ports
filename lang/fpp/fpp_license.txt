@@ -1,0 +1,122 @@
+
+
+Page 1
+
+SUNSOFT, INC.
+fpp ONLINE SOFTWARE LICENSE AGREEMENT
+
+SUNSOFT IS WILLING TO LICENSE THE FORTRAN PREPROCESSOR ("fpp") SOFTWARE TO YOU
+ONLY UPON THE CONDITION THAT YOU ACCEPT ALL OF THE TERMS CONTAINED IN THIS
+LICENSE AGREEMENT.  READ THE TERMS AND CONDITIONS OF THIS LICENSE CAREFULLY
+BEFORE SELECTING THE "ACCEPT" BUTTON AT THE BOTTOM OF THIS PAGE.  BY SELECTING
+THE "ACCEPT" BUTTON OF THIS AGREEMENT, YOU AGREE TO BE BOUND BY THE TERMS OF
+THIS AGREEMENT.  IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,SELECT
+THE "DO NOT ACCEPT" BUTTON AT THE BOTTOM OF THIS PAGE AND THE INSTALLATION
+PROCESS WILL NOT CONTINUE.
+
+1. License to Use.
+
+a. Customer is granted a non-exclusive and non-transferable license
+("License") to use the machine-readable form of the downloaded software
+programs ("Software" which shall include any accompanying documentation) for
+its own use and for redistribution; provided, however, that if Customer (or
+its licensee) modifies the Software and distributes the resulting modified
+version of the Software, then the license grant set forth in Paragraph 1.b
+below shall apply rather than the grant set forth in this Paragraph 1.a.
+
+b. Customer is granted a non-exclusive and non-transferable license
+("License") to modify the Software and to license and further distribute
+such modified version ("Modified Software"), provided that the following
+conditions are satisfied:
+
+(i)the Customer must post the Modified Software, in its entirety,
+to the Internet for anonymous FTP access and must send an email
+notification to fpp-coordinator@sun.com (or such other address as
+SunSoft may subsequently notify Customer) stating the Internet
+location of the posted change; and
+
+(ii)any party's right to download the Modified Software from the
+Internet must be contingent such party's accepting all the terms of
+this License, including the requirement, for example, that such
+party may itself only license and further distribute the Modified
+Software (and any further modifications thereto) subject to the
+inclusion of all the terms of this License.
+
+2. Restrictions.  Software is copyrighted and title to all copies is
+retained by SunSoft and/or its licensors.  Customer may not delete or remove
+any copyright or other proprietary rights notices or legends from the Software
+(including copies).  Customer may copy the Software only to use or archive
+them.  Except as specifically authorized in Paragraph 1 above or unless
+enforcement of this provision is prohibited by applicable law, Customer
+shall not modify, decompile, disassemble, decrypt, extract, or otherwise
+reverse engineer Software. Software is not designed or licensed for use in online control equipment in hazardous environments such as operation of
+nuclear facilities, aircraft navigation or control, or direct life support
+machines.
+
+Page 2
+
+3. Confidentiality.  Software is confidential and proprietary information of
+SunSoft and/or its licensors. Customer agrees to take adequate steps to
+protect Software from disclosure or use except as authorized pursuant to
+Paragraph 1 above.
+
+4. Disclaimer of Warranty.  SunSoft warrants that the Software is provided "AS
+IS."  All EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES,
+INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE OR NON-INFRINGEMENT, ARE HEREBY EXCLUDED TO THE EXTEXT ALLOWED BY
+APPLICABLE LAW.
+
+5. Limitation of Liability.  IN NO EVENT WILL SUNSOFT OR ITS LICENSORS BE
+LIABLE FOR ANY LOST REVENUE, PROFIT OR DATA, OR FOR SPECIAL, INDIRECT,
+CONSEQUENTIAL, INCIDENTAL OR PUNITIVE DAMAGES HOWEVER CAUSED AND REGARDLESS OF
+THE THEORY OF LIABILITY ARISING OUT OF THE USE OF OR INABILITY TO USE
+SOFTWARE, EVEN IF SUNSOFT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+6. Termination. This License is valid until terminated.  Customers may
+terminate this License at any time by destroying all copies of Software
+including any documentation.  This License will terminate immediately
+without notice from SunSoft if Customer fails to comply with any provision
+of this License.
+
+7.  Export Regulations.  Software, including technical data, is subject to
+U.S. export control laws, including the U.S. Export Administration Act and its
+associated regulations, and may be subject to export or import regulations
+in other countries.  Customer agrees to comply strictly with all such
+regulations and acknowledges that it has the responsibility to obtain licenses
+to export, re-export, or import Software.
+
+8. U.S. Government Restricted Rights. If Customer is acquiring Software
+including accompanying documentation on behalf of the U.S. Government, the
+following provisions apply.  If Software is supplied to the Department of
+Defense ("DOD"), Software is subject to "Restricted Rights",is that term is
+defined in the DOD Supplement to the Federal Acquisition Regulations
+("DFAR") in paragraph 252.227-7013(c) (1).  If Software is supplied to any
+unit or agency of the United States Government other than DOD, the
+Government's rights in Software will be as defined in paragraph 52.227-19(c)
+(2) of the Federal Acquisition Regulations ("FAR").  Use, duplication,
+reproduction or disclosure by the Government is subject to such restrictions
+or successor provisions.  Contractor/Manufacturer is: SunSoft, Inc., 2550
+Garcia Ave., Mountain View, CA 94043.
+
+9. Governing Law.  This Agreement is made under, shall be governed by and
+construed in accordance with the laws of the State of California,
+U.S.A.,excluding its choice of law provisions.
+
+10. Severability.  If any of the above provisions are held to be in
+violation of applicable law, void, or unenforceable in any jurisdiction,
+then such provisions are herewith waived to the extent necessary for the
+License to be otherwise enforceable in such jurisdiction, However, if in
+SunSoft's opinion deletion of any provisions of the License by operation of
+this paragraph unreasonably compromises the rights or liabilities of SunSoft
+or its licensors, SunSoft reserves the right to terminate the License.
+
+Page 3
+
+11. Integration.  This Agreement is the entire agreement between Customer
+and SunSoft relating to Software and:  (i) supersedes all prior or
+contemporaneous oral or written communications, proposals and
+representations with respect to its subject matter; and (ii) prevails over any
+conflicting or additional terms of any quote, order, acknowledgment, or
+similar communication between the parties during the term of this Agreement.
+No modification to the Agreement will be binding, unless in writing and signed
+by a duly authorized representative of each party.

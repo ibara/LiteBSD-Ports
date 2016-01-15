@@ -3,6 +3,6 @@
 #
 
 # Hook up all lang ports
-SUBDIR=	mawk
+SUBDIR=	fpp mawk
 
 .include <bsd.subdir.mk>
