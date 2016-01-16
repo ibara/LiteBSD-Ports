@@ -3,6 +3,6 @@
 #
 
 # Hook up all net ports
-SUBDIR=	ii sic
+SUBDIR=	httpsrv ii sic
 
 .include <bsd.subdir.mk>
