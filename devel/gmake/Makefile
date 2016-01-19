@@ -168,11 +168,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
@@ -180,19 +180,19 @@ am__mv = mv -f
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
-am__v_lt_1 = 
+am__v_lt_1 =
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 AM_V_CC = $(am__v_CC_$(V))
 am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
 am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
+am__v_CC_1 =
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
+am__v_CCLD_1 =
 SOURCES = $(nodist_loadavg_SOURCES) $(make_SOURCES) \
 	$(EXTRA_make_SOURCES)
 DIST_SOURCES = $(am__make_SOURCES_DIST) $(EXTRA_make_SOURCES)
@@ -313,10 +313,10 @@ am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
 ACLOCAL = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config/missing aclocal-1.14
-ALLOCA = 
+ALLOCA =
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AM_LDFLAGS = 
+AM_LDFLAGS =
 AR = ar
 AUTOCONF = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config/missing autoconf
 AUTOHEADER = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config/missing autoheader
@@ -324,40 +324,40 @@ AUTOMAKE = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config
 AWK = mawk
 CCDEPMODE = depmode=gcc3
 CFLAGS += -ffunction-sections -fdata-sections
-CPPFLAGS = 
+CPPFLAGS =
 CYGPATH_W = echo
 DEFS = -DLOCALEDIR=\"$(localedir)\" -DLIBDIR=\"$(libdir)\" -DINCLUDEDIR=\"$(includedir)\" -DHAVE_CONFIG_H
 DEPDIR = .deps
-ECHO_C = 
+ECHO_C =
 ECHO_N = -n
-ECHO_T = 
+ECHO_T =
 EGREP = /bin/grep -E
-EXEEXT = 
-GETLOADAVG_LIBS = 
+EXEEXT =
+GETLOADAVG_LIBS =
 GETTEXT_MACRO_VERSION = 0.18
-GLOBINC = 
-GLOBLIB = 
+GLOBINC =
+GLOBLIB =
 GMSGFMT = :
 GMSGFMT_015 = :
 GREP = /bin/grep
-GUILE_CFLAGS = 
-GUILE_LIBS = 
+GUILE_CFLAGS =
+GUILE_LIBS =
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-INTLLIBS = 
-INTL_MACOSX_LIBS = 
-KMEM_GROUP = 
-LDFLAGS += -Wl,--gc-sections 
+INTLLIBS =
+INTL_MACOSX_LIBS =
+KMEM_GROUP =
+LDFLAGS += -Wl,--gc-sections
 LIBICONV = -liconv
-LIBINTL = 
-LIBOBJS = 
-LIBS = 
+LIBINTL =
+LIBOBJS =
+LIBS =
 LTLIBICONV = -liconv
-LTLIBINTL = 
-LTLIBOBJS = 
+LTLIBINTL =
+LTLIBOBJS =
 MAKEINFO = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config/missing makeinfo
 MAKE_HOST = mipsel-unknown-litebsd
 MKDIR_P = /bin/mkdir -p
@@ -376,33 +376,33 @@ PACKAGE_VERSION = 4.1
 PATH_SEPARATOR = :
 PERL = perl
 PKG_CONFIG = /usr/bin/pkg-config
-PKG_CONFIG_LIBDIR = 
-PKG_CONFIG_PATH = 
-POSUB = 
+PKG_CONFIG_LIBDIR =
+PKG_CONFIG_PATH =
+POSUB =
 RANLIB = ranlib
 REMOTE = stub
-SET_MAKE = 
+SET_MAKE =
 SHELL = /bin/bash
-STRIP = 
+STRIP =
 USE_NLS = no
 VERSION = 4.1
 XGETTEXT = :
 XGETTEXT_015 = :
-XGETTEXT_EXTRA_OPTIONS = 
+XGETTEXT_EXTRA_OPTIONS =
 abs_builddir = /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1
 abs_srcdir = /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1
 abs_top_builddir = /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1
 abs_top_srcdir = /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1
-ac_ct_AR = 
+ac_ct_AR =
 ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
-am__quote = 
+am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
 build = mipsel-unknown-litebsd
-build_alias = 
+build_alias =
 build_cpu = i686
 build_os = linux-gnu
 build_vendor = pc
@@ -413,7 +413,7 @@ docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
 host = mipsel-unknown-litebsd
-host_alias = 
+host_alias =
 host_cpu = mipsel
 host_os = litebsd
 host_vendor = pc
@@ -438,8 +438,8 @@ sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
 sysconfdir = ${prefix}/etc
-target_alias = 
-top_build_prefix = 
+target_alias =
+top_build_prefix =
 top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = 1.8 dist-bzip2 check-news
@@ -499,10 +499,10 @@ inst_setgid = false
 
 # Install make setgid to this group so it can get the load average.
 #
-inst_group = 
+inst_group =
 nodist_loadavg_SOURCES = getloadavg.c
 loadavg_CPPFLAGS = -DTEST
-loadavg_LDADD = 
+loadavg_LDADD =
 
 # > check-regression
 #
@@ -510,8 +510,9 @@ loadavg_LDADD =
 # If we're building outside the tree, we use symlinks to make a local copy of
 # the test suite.  Unfortunately the test suite itself isn't localizable yet.
 #
-MAKETESTFLAGS = 
+MAKETESTFLAGS =
 all: config.h
+	mkdir -p $(DEPDIR)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 	nroff -man make.1 > make.0
 
@@ -559,7 +560,7 @@ config.h: stamp-h1
 stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status config.h
-$(srcdir)/config.h.in:  $(am__configure_deps) 
+$(srcdir)/config.h.in:  $(am__configure_deps)
 	($(am__cd) $(top_srcdir) && $(AUTOHEADER))
 	rm -f stamp-h1
 	touch $@
@@ -620,11 +621,11 @@ clean-binPROGRAMS:
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 
-loadavg$(EXEEXT): $(loadavg_OBJECTS) $(loadavg_DEPENDENCIES) $(EXTRA_loadavg_DEPENDENCIES) 
+loadavg$(EXEEXT): $(loadavg_OBJECTS) $(loadavg_DEPENDENCIES) $(EXTRA_loadavg_DEPENDENCIES)
 	@rm -f loadavg$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(loadavg_OBJECTS) $(loadavg_LDADD) $(LIBS)
 
-make$(EXEEXT): $(make_OBJECTS) $(make_DEPENDENCIES) $(EXTRA_make_DEPENDENCIES) 
+make$(EXEEXT): $(make_OBJECTS) $(make_DEPENDENCIES) $(EXTRA_make_DEPENDENCIES)
 	@rm -f make$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(make_OBJECTS) $(make_LDADD) $(LIBS) -lc -lgcc
 
@@ -634,6 +635,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+.if exists($(DEPDIR)/alloca.Po)
 include $(DEPDIR)/alloca.Po
 include $(DEPDIR)/getloadavg.Po
 include ./$(DEPDIR)/ar.Po
@@ -667,6 +669,7 @@ include ./$(DEPDIR)/variable.Po
 include ./$(DEPDIR)/version.Po
 include ./$(DEPDIR)/vmsjobs.Po
 include ./$(DEPDIR)/vpath.Po
+.endif
 
 .c.o:
 	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

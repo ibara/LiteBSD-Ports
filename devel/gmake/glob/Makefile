@@ -119,7 +119,7 @@ ARFLAGS = cru
 AM_V_AR = $(am__v_AR_$(V))
 am__v_AR_ = $(am__v_AR_$(AM_DEFAULT_VERBOSITY))
 am__v_AR_0 = @echo "  AR      " $@;
-am__v_AR_1 = 
+am__v_AR_1 =
 libglob_a_AR = $(AR) $(ARFLAGS)
 libglob_a_LIBADD =
 am_libglob_a_OBJECTS = glob.$(OBJEXT) fnmatch.$(OBJEXT)
@@ -131,11 +131,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
@@ -145,13 +145,13 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 AM_V_CC = $(am__v_CC_$(V))
 am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
 am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
+am__v_CC_1 =
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
+am__v_CCLD_1 =
 SOURCES = $(libglob_a_SOURCES)
 DIST_SOURCES = $(libglob_a_SOURCES)
 am__can_run_installinfo = \
@@ -180,10 +180,10 @@ ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config/missing aclocal-1.14
-ALLOCA = 
+ALLOCA =
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AM_LDFLAGS = 
+AM_LDFLAGS =
 AR = ar
 AUTOCONF = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config/missing autoconf
 AUTOHEADER = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config/missing autoheader
@@ -193,40 +193,40 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
 CPP = gcc -E
-CPPFLAGS = 
+CPPFLAGS =
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
-ECHO_C = 
+ECHO_C =
 ECHO_N = -n
-ECHO_T = 
+ECHO_T =
 EGREP = /bin/grep -E
-EXEEXT = 
-GETLOADAVG_LIBS = 
+EXEEXT =
+GETLOADAVG_LIBS =
 GETTEXT_MACRO_VERSION = 0.18
-GLOBINC = 
-GLOBLIB = 
+GLOBINC =
+GLOBLIB =
 GMSGFMT = :
 GMSGFMT_015 = :
 GREP = /bin/grep
-GUILE_CFLAGS = 
-GUILE_LIBS = 
+GUILE_CFLAGS =
+GUILE_LIBS =
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-INTLLIBS = 
-INTL_MACOSX_LIBS = 
-KMEM_GROUP = 
-LDFLAGS = 
+INTLLIBS =
+INTL_MACOSX_LIBS =
+KMEM_GROUP =
+LDFLAGS =
 LIBICONV = -liconv
-LIBINTL = 
-LIBOBJS = 
-LIBS = 
+LIBINTL =
+LIBOBJS =
+LIBS =
 LTLIBICONV = -liconv
-LTLIBINTL = 
-LTLIBOBJS = 
+LTLIBINTL =
+LTLIBOBJS =
 MAKEINFO = ${SHELL} /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/config/missing makeinfo
 MAKE_HOST = i686-pc-linux-gnu
 MKDIR_P = /bin/mkdir -p
@@ -245,33 +245,33 @@ PACKAGE_VERSION = 4.1
 PATH_SEPARATOR = :
 PERL = perl
 PKG_CONFIG = /usr/bin/pkg-config
-PKG_CONFIG_LIBDIR = 
-PKG_CONFIG_PATH = 
-POSUB = 
+PKG_CONFIG_LIBDIR =
+PKG_CONFIG_PATH =
+POSUB =
 RANLIB = ranlib
 REMOTE = stub
-SET_MAKE = 
+SET_MAKE =
 SHELL = /bin/bash
-STRIP = 
+STRIP =
 USE_NLS = no
 VERSION = 4.1
 XGETTEXT = :
 XGETTEXT_015 = :
-XGETTEXT_EXTRA_OPTIONS = 
+XGETTEXT_EXTRA_OPTIONS =
 abs_builddir = /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/glob
 abs_srcdir = /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1/glob
 abs_top_builddir = /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1
 abs_top_srcdir = /home/retrobsd/mawk-port/litebsd/ports/devel/make-4.1
-ac_ct_AR = 
+ac_ct_AR =
 ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
-am__quote = 
+am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
 build = i686-pc-linux-gnu
-build_alias = 
+build_alias =
 build_cpu = i686
 build_os = linux-gnu
 build_vendor = pc
@@ -282,7 +282,7 @@ docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
 host = i686-pc-linux-gnu
-host_alias = 
+host_alias =
 host_cpu = i686
 host_os = linux-gnu
 host_vendor = pc
@@ -305,7 +305,7 @@ sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
 sysconfdir = ${prefix}/etc
-target_alias = 
+target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
@@ -355,7 +355,7 @@ $(am__aclocal_m4_deps):
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
 
-libglob.a: $(libglob_a_OBJECTS) $(libglob_a_DEPENDENCIES) $(EXTRA_libglob_a_DEPENDENCIES) 
+libglob.a: $(libglob_a_OBJECTS) $(libglob_a_DEPENDENCIES) $(EXTRA_libglob_a_DEPENDENCIES)
 	$(AM_V_at)-rm -f libglob.a
 	$(AM_V_AR)$(libglob_a_AR) libglob.a $(libglob_a_OBJECTS) $(libglob_a_LIBADD)
 	$(AM_V_at)$(RANLIB) libglob.a
@@ -366,8 +366,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+.if exists($(DEPDIR)/fnmatch.Po)
 include ./$(DEPDIR)/fnmatch.Po
 include ./$(DEPDIR)/glob.Po
+.endif
 
 .c.o:
 	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
