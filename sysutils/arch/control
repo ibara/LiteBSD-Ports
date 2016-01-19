@@ -1,0 +1,7 @@
+Package: arch
+Version: 20151221
+Description: Simple program from OpenBSD that prints the host's CPU architecture.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 77189

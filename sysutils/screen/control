@@ -1,0 +1,7 @@
+Package: screen
+Version: 3.7.1
+Description: Terminal multiplexer from the GNU project.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2+
+Architecture: mipsel
+Installed-Size: 289162

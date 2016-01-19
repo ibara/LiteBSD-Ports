@@ -1,0 +1,7 @@
+Package: sic
+Version: 1.3
+Description: Extremely simple IRC client.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 113813

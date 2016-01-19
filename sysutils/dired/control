@@ -1,0 +1,7 @@
+Package: dired
+Version: 3.05
+Description: Terminal-based directory editor.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Assumed GPLv2 (1997)
+Architecture: mipsel
+Installed-Size: 280693

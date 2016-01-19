@@ -1,0 +1,7 @@
+Package: gmake
+Version: 4.1
+Description: GNU make program
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv3+
+Architecture: mipsel
+Installed-Size: 349474
