@@ -1,0 +1,17 @@
+work
+*.o
+*.Po
+*.0
+benchmarks/dhrystone/dhry
+benchmarks/linpack/linpack
+benchmarks/whetstone/whetstone
+devel/gmake/make
+lang/fpp/fpp
+lang/mawk/mawk
+net/httpsrv/httpsrv
+net/ii/ii
+shells/sash/sash
+sysutils/arch/arch
+sysutils/dired/dired
+sysutils/lsx/lsx
+sysutils/screen/screen

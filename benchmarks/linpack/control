@@ -1,0 +1,6 @@
+Package: linpack
+Version: 19960914
+Description: Improved version of the LINPACK benchmark program written in C.
+Maintainer: Brian Callahan <bcallah@devio.us>
+Architecture: mipsel
+Installed-Size: 83060

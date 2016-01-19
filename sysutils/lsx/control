@@ -1,0 +1,7 @@
+Package: lsx
+Version: 0.1
+Description: Utility that lists the executables in a directory tree.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 47191

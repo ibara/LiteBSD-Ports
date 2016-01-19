@@ -1,0 +1,7 @@
+Package: sash
+Version: 3.8
+Description: A stand-alone shell with many built-in commands.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD-like
+Architecture: mipsel
+Installed-Size: 312665
