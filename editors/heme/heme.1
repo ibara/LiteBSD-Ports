@@ -1,0 +1,170 @@
+.TH heme 1 "Jan 30, 2003" "" "heme User Manual"
+
+.SH NAME
+heme \- console hex editor
+
+.SH SYNOPSIS
+.B heme [ -d, --disable-colors ] [ -c, --config-file CONFIGFILE ] 
+.B [ -n, --no-backup-files ] [ -h, --help ] [ -v, --version ] file
+
+.SH DESCRIPTION
+.B heme 
+is intended to be fast and portable console hex editor
+for unix systems. It has undo support (number of undo operations is only 
+limited by available memory), ability to fill a range of
+addresses with the specified byte, ability to search for a single byte or 
+character string. Offsets can be given in hexadecimal, octal or decimal.
+There are two editing modes: hex and ascii. In hex mode you type hexadecimal
+digits and in ascii mode you type characters. In the ascii mode cursor is automatically
+moved to the next byte after typing a character (this behaviour is configurable for
+hex mode). heme uses curses library for screen and input handling. Colors are supported and
+they may be configured in the configuration file (see below). If the configuration file
+isn't present, heme will use defaults. You may also specify which
+configuration file to use with the 
+.B -c
+command line option. 
+
+.SH OPTIONS
+.IP "-n, --no-backup-files"
+Don't make backup files.
+.IP "-c, --config-file CONFIGFILE"
+Read configuration from CONFIGFILE. If not given, heme will try to read 
+~/.hemerc. If that fails, defaults will be used.
+.IP "-d, --disable-colors"
+Don't use colors.
+.IP "-h, --help"
+Show all available command line options.
+.IP "-v, --version"
+Show heme version.
+
+.SH USAGE
+Keys (all are case-insensitive, except in the ascii mode):
+.TP
+.I left (right)
+Move to previous (next) byte
+.TP
+.I up (down)
+Move to previous (next) line
+.TP
+.I <
+Move to beginning of line
+.TP
+.I >
+Move to end of line
+.TP
+.I page up
+Move 1 page up
+.TP
+.I page down
+Move 1 page down
+.TP
+.I home
+Move to beginning of file
+.TP
+.I end
+Move to end of file
+.TP
+.I h
+Display help screen
+.TP
+.I j
+Jump to offset
+.TP
+.I n (w)
+Search for byte (string)
+.TP
+.I r
+Repeat last search
+.TP
+.I l
+Fill range with byte
+.TP
+.I tab
+Toggle between hex and ascii editing modes
+.TP
+.I u
+Undo
+.TP
+.I s
+Save file
+.TP
+.I q
+Quit
+
+.SH CONFIGURATION
+Configuration file is expected to reside in ~/.hemerc. The syntax is
+very simple:
+
+    # this is a comment
+    option_1 = value 
+    option_2 = "value 2"
+
+Everything beyond the '#' is considered a comment and is ignored to
+the end of that line. Supported options are:
+.TP
+.I use_colors
+Set this to 1 if you want colors, 0 otherwise (default: 1)
+.TP
+.I advance_after_edit
+Set this to 1 if you want to advance to the next byte
+after editing byte at the current offset (default: 1)
+.TP
+.I make_backup_files
+Set this to 1 if you want heme to make backup files, 0 otherwise (default: 1)
+.TP
+.I bg_color
+Background color (default: "blue")
+.TP
+.I fg_color
+Foreground color (default: "white")
+.TP
+.I bg_color_selected
+Background color of selected byte (default: "black")
+.TP
+.I fg_color_selected
+Foreground color of selected byte (default: "green")
+.TP
+.I bg_color_status
+Background color of status lines (default: "cyan")
+.TP
+.I fg_color_status
+Foreground color of status lines (default: "black")
+.P
+Color names are "black", "red", "green", "yellow", "blue", "magenta", "cyan"
+and "white".
+
+.SH EXAMPLE
+# This is sample configuration file.
+.br
+advance_after_edit = 0
+.br
+make_backup_files = 1
+.br
+use_colors = 1
+.br
+bg_color = black
+.br
+fg_color = white
+.br
+bg_color_selected = green
+.br
+fg_color_selected = yellow
+.br
+bg_color_status = blue
+.br
+fg_color_status = white
+
+.SH FILES
+.IP "~/.hemerc"
+User's configuration file.
+
+.SH LICENSE
+heme is distributed under the GNU General Public License. For details
+see the file COPYING included in the source distribution.
+
+.SH BUGS
+Some portability problems, probably. Send bug reports to <pokemon@fly.srk.fer.hr>.
+
+.SH AUTHORS
+.TP
+Ivan Stankovic <pokemon@fly.srk.fer.hr>

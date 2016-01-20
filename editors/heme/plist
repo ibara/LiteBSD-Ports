@@ -1,0 +1,6 @@
+Console hex editor.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+###
+bin/heme
+man/man1/heme.0

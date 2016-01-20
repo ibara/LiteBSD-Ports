@@ -1,0 +1,66 @@
+.\" Process this file with
+.\" groff -man -Tascii dhex.1
+.\"
+.Dd May 12, 2012
+.Os
+.Dt DHEX_MARKERS 5
+.Sh NAME
+.Nm dhex_markers
+.Nd marker file for dhex
+.Sh DESCRIPTION
+Bookmarks for 
+.Xr dhex 1
+are stored in marker files. This manpage describes the format of those marker files.
+.Ss EXAMPLE
+A typical marker file looks like this:
+.
+.br
+.Ql #DHEX MARKERS
+.br
+.Ql #VERSION 0
+.br
+.Ql #lines are all in hex
+.br
+.Ql #relative positions are =, +, -
+.br
+.br
+.Ql =0000000000000000
+.br
+.Ql =0000000000001000
+.br
+.Ql =0000000000002000
+.br
+.Ql +0000000000001000
+.br
+.Ql +0000000000002000
+.br
+.Ql -0000000000001000
+.br
+.Ql -0000000000002000
+.br
+.Ql =00000005334ffeba
+.br
+.Ql =00000000DEADBEEF
+.br
+.Ql +000000000000BABE
+.br
+.
+.Sh OPTIONS
+In the example above, the file has two sections: A comment section, and a bookmark section.
+.Ss Comments
+Comments are indicated with a '#' character. Everything afterwards in a line is being ignored when parsing the file
+.Ss Bookmark section
+Bookmarks can be either absolute or relative. Lines with absolute bookmarks are starting with '=', the relative ones with '+' or '-'. The value is a 64 bit hexadecimal one. 
+.Pp
+There should always be 10 bookmarks per file.
+.Sh BUGS
+Report bugs to 
+.An Aq dettus@dettus.net .
+Make sure to include DHEX somewhere in the subject.
+.Sh AUTHOR
+Written by 
+.An Thomas Dettbarn
+.Sh SEE ALSO
+.Xr dhex 1 ,
+.Xr dhexrc 5 ,
+.Xr dhex_searchlog 5 .

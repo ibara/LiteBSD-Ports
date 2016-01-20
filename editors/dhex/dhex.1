@@ -1,0 +1,284 @@
+.\" Process this file with
+.\" groff -man -Tascii dhex.1
+.\"
+.
+.Dd May 12, 2012
+.Os
+.Dt DHEX 1
+.
+.
+.Sh NAME
+.Nm dhex
+.Nd hex editor with a diff mode
+.
+.
+.Sh SYNOPSIS
+.
+.Nm 
+.Op Fl h
+.Op Fl v
+.Op Fl g
+.Op Fl k
+.Bk -words
+.Op Fl ab ad ah ao Ar base address
+.Ek
+.Bk -words
+.Op Fl f Ar config-file
+.Ek
+.Bk -words
+.Op Fl m Ar marker-file
+.Ek
+.Bk -words
+.Op Fl ob od oh oo Ar offset
+.Ek
+.Bk -words
+.Op Fl r Ar searchlog
+.Ek
+.Bk -words
+.Op Fl sa sab Ar string (ascii)
+.Ek
+.Bk -words
+.Op Fl sh shb Ar string (hex)
+.Ek
+.Bk -words
+.Op Fl w Ar searchlog
+.Ek
+.Op Ar file
+.Nm
+.Op Fl h
+.Op Fl v
+.Op Fl g
+.Op Fl k
+.Bk -words
+.Op Fl a1b a1d a1h a1o Ar base address 1
+.Ek
+.Bk -words
+.Op Fl a2b a2d a2h a2o Ar base address 2
+.Ek
+.Bk -words
+.Op Fl cb 
+.Ek
+.Bk -words
+.Op Fl cd Ar upper-limit
+.Ek
+.Bk -words
+.Op Fl cl 
+.Ek
+.Bk -words
+.Op Fl f Ar config-file
+.Ek
+.Bk -words
+.Op Fl m Ar marker-file
+.Ek
+.Bk -words
+.Op Fl o1b o1d o1h o1o Ar offset1
+.Ek
+.Bk -words
+.Op Fl o2b o2d o2h o2o Ar offset2
+.Ek
+.Bk -words
+.Op Fl r1 Ar searchlog1
+.Ek
+.Bk -words
+.Op Fl r2 Ar searchlog2
+.Ek
+.Bk -words
+.Op Fl s1a s1ab s1h s1hb Ar string (ascii/hex)
+.Ek
+.Bk -words
+.Op Fl s2a s2ab s2h s2hb Ar string (ascii/hex)
+.Ek
+.Bk -words
+.Op Fl w1 Ar searchlog1
+.Ek
+.Bk -words
+.Op Fl w2 Ar searchlog2
+.Ek
+.Bk -words
+.Op Ar file1 file2
+.Ek
+.Sh DESCRIPTION
+.Nm
+is a hex editor. It can be used to alter individual bytes in large files. Since it is a text-mode programm based on ncurses, it can run in numerous scenarios.
+.
+Its special feature is the diff mode: With it, the user has a visual tool for file comparison. This mode is invoked when 
+.Nm
+is called with two instead of one file as parameters.
+.Sh OPTIONS
+All the options are case-insensitive and can be given as either upper- or lowercase characters.
+.Bl -tag -width 10n
+.It Fl ab ad ah ao Ar base address
+After loading a file, every address gets a base address other than 0. With this, it is easier to work on partial memory dumps. The base address can be given as a binary one with
+.Op Fl ab
+, as a decimal one with
+.Op Fl ad
+, as a hexadecimal one with
+.Op Fl ah
+or an octal with
+.Op Fl ao .
+.It Fl a1b a1d a1h a1o Ar base address 1
+.It Fl a2b a2d a2h a2o Ar base address 2
+For the diff mode, it is possible to set two different base addresses. Again, a binary address can be given as
+.Op Fl a1b a2b
+, as decimal one with
+.Op Fl a1d a2d
+, as hexadecimal one with
+.Op Fl a1h a2h
+or an octal one with
+.Op Fl a1o a2o .
+.Pp
+This base address is calculated into the marker files as well as the searchlogs.
+.It Fl cb cl
+Diff mode only: The input files can be correlated from the command line with the best
+.Fl cb
+or longest
+.Fl cl
+match. This is very slow.
+.It Fl cd Ar upper-limit
+Diff mode only: The input files can be correlated from the command line with the minimum difference. To improve the correlation speed, an upper limit can be provided. 
+.It Fl f Ar configfile
+Usually, .dhexrc is being read from the invoker's home directory. With this parameter, any other config file can be loaded. See
+.Xr dhexrc 5
+for a description of its file format.
+.It Fl g
+Shows the license
+.It Fl h 
+Shows the help screen
+.It Fl k
+Starts the keyboard setup manually before any file is being loaded. This is very helpful when calling 
+.Nm
+from an exotic terminal.
+.It Fl m Ar markerfile
+It is possible in 
+.Nm
+to set bookmarks and store them in a markerfile for later use. With this parameter, the markerfile is being read at start time, making it unnecesarry to read them later through the gui. Their file format is described in 
+.Xr dhex_markers 5 .
+.It Fl ob od oh oo Ar offset
+After loading a file, the cursor is set to 0, and the first page of bytes is being shown on the screen. With one of those parameters it is possible to start at any other location in the file. The cursorposition could be given as a binary number with
+.Op Fl ob
+, as a decimal one with
+.Op Fl od
+, as a hexadecimal one with
+.Op Fl oh
+or an octal with
+.Op Fl oo .
+.It Fl o1b o1d o1h o1o Ar offset1
+.It Fl o2b o2d o2h o2o Ar offset2
+For the diff mode, it is possible to set two different cursorpositions at start time. Again, the cursorpositions can be given as a binary number with
+.Op Fl o1b o2b
+, as decimal one with
+.Op Fl o1d o2d
+, as hexadecimal one with
+.Op Fl o1h o2h
+or an octal one with
+.Op Fl o1o o2o .
+.Pp
+This way, the first few bytes in a file can be skipped, and just the rest can be compared.
+.It Fl r Ar searchlog
+When searching from the command line, the offsets are being read from this searchlog. Its format is being decribed in
+.Xr dhex_searchlog 5 .
+.It Fl r1 Ar searchlog1
+.It Fl r2 Ar searchlog2
+When searching in two files simultanously, the offsets can be read from two different searchlogs.
+.It Fl sa sab sh shb Ar string
+Instead of setting the cursor offset to an absolute value, it is possible to search for a specific string from the command line. If there is an additional 
+.Op Fl ob od oh oo Ar offset
+present, the search will start there. It is possible to read and write search logs with 
+.Op Fl r Ar searchlog
+and
+.Op Fl w Ar searchlog
+respectively. With 
+.Op Fl sa Ar string
+is being interpreted as ASCII. 
+.Op Fl sh Ar string
+interprets it as hex. For backwards search, 
+.Op Fl sab Ar string
+or
+.Op Fl shb Ar string
+can be applied.
+.It Fl s1a s1ab s1h s1hb Ar string1
+.It Fl s2a s2ab s2h s2hb Ar string2
+In the diff mode, it is possible to search for two strings in two files simultanously.
+.It Fl v
+Prints out the version of
+.Nm . 
+.It Fl w Ar searchlog
+When searching from the command line, write the results into this searchlog and quit. It is being written in the format described in
+.Xr dhex_searchlog 5.
+.Pp
+.It Fl \&w1 Ar searchlog1
+.It Fl w2 Ar searchlog2
+When searching in two files simultanously, write the results from both searches into those log files.
+.El
+.Sh USER INTERFACE
+.Ss General
+Menus have hotkeys, they are being presented in a different color. To jump from one menu item to the next, the cursor keys or the TAB key can be used.
+.Pp
+Input fields can be closed by pressing ESC, ENTER, or any cursor key. Only pressing ESC will not save the changes made in there.
+.Pp
+.Ss The keyboard setup
+When running 
+.Nm
+for the first time, without any configfile present, or with the parameter -k, the first screen shown is that of the keyboard setup. In this screen, the program asks the user to press certain keys. Which are (in order) ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, BACKSPACE, DEL, ENTER, TAB, UP, DOWN, RIGHT, LEFT, PG UP, PG DOWN, HOME, END. It also tells the user what it intends to do with those keys later. So the user can decide on any alternative he chooses. 
+If he does not want to bind a specific function to a certain key, he can simply press ESCAPE and skip to the next question.
+.Pp
+After pressing all the keys, the user can chose whether or not to write those keys into the config file.
+.Ss The main screen
+The main screen is broken down into three columns: The first column contains the offset within the file for the current line. The second column contains the bytes in the file in hex format. Finally, the third coumn contains the same bytes, but this time in ascii format. If a byte is not printable, it is being substituted with a '.'.
+How many bytes are are being shown in a line depends on the width of the terminal. For example, if the terminal is 80 characters wide, 16 bytes are being shown in each line.
+.Pp
+If no other 
+.Op Fl o 
+or 
+.Op Fl a
+parameter was given at start time, the cursor is being set to offset 0. It is also being shown in the hex column. Here, it can be moved with the cursor keys. When entering a hexadecimal number, the file is being edited. The file can be edited in the ascii column as well, simply by pressing the TAB key (or whichever key was substituted for it in the keyboard setup). Pressing TAB again will return the cursor to the hex column. Pressing F9 (or its substitute) will undo the last of the changes. Changes are being shown in a differnt color. 
+.Pp
+Editing is not possible in the diff mode. Here, pressing the cursor keys will move both files synchronously.
+.Ss The goto screen
+Pressing F1 (or its substitute) will open the Goto... screen. Here, it is possible to jump to a specific address directly, without the need of scrolling there with the cursor keys. The address can be entered in the 'To' field, either absolute or relative (to leap over a specified amount of bytes). An absolute address is being chosen by pressing '=', and a relative one by pressing '+' or '-', for a positive or negative leap respectively. Regardless of the adressing mode, it has to be entered as a hexadecimal number.
+.Pp
+It is also possible to set up to ten bookmarks in this screen: Pressing '0'...'9' will select one of them. Moving the cursor to "Set" and pressing ENTER will alter one of those book marks. The "Diff:" fields are showing the difference between the actual cursor position and the bookmark.
+.Pp
+Bookmarks can be stored and loaded, for this there are the "Save Markers" and "Load Markers" items on the bottom. Upon selecting one of them, the user is being prompted for a filename. It is possible to load a marker file at start time, by providing the 
+.Op Fl m Ar markerfile
+parameter. 
+.Xr dhex_markers 5
+describes the format of the marker files.
+.Ss Searching
+Pressing F2 (or its subsitute) will open the Search... screen. Here, a short string can be entered (either in hex, or in ascii). If no logfiles are being selected, the cursor will jump to the next occurance of this search string upon selection of "Go". It can be chosen if the search is supposed to be conducted forward of backwards.
+.Pp
+To jump to the next occurance, F3 (or its substitute) has to be pressed. To jump to the previous one, F4 has to be pressed. The search itself wraps at the edges of the file, meaning that when it reaches the end, it will start from the beginning and vice versa.
+.Pp
+Searchlogs are an advanced way of searching: Writing to the searchlog does not jump the cursor from one occurance to the next. Instead, it will write the offsets of all of them into the logfile. Their format is described in
+.Xr dhex_searchlog 5 .
+.Pp
+Reading from this searchlog means that the search does not cover the whole file: Only the addresses which have been provided in this file are being searched. Thus it is possible to search for specific changes. Like for example the number of lives stored in the save file of a game. 
+.Xr dhex_searchlog 5
+describes the format of the searchlog.
+.Ss HexCal
+Pressing F5 (or its substitute) will open a small 64 bit calculator. This calculator is  capable of not only performing arithmetic operations (+, -, *, /, modulo), but also logic ones. (and, or, xor, shift). There are three columns to enter numbers as hexadecimals, decimals or in binary format. Pressing 'x' will close this screen.
+.Ss Correlation
+When 
+.Xr dhex 1
+is running in diff mode, pressing F6 (or its substitute) will open the dialog for file correlation. This will try to find the optimal offset between the two files. There are three algorithms available for finding this offset: Searching for the best match (as many bytes as possible are the same), the longest match (as many consecutive bytes match as possible), or the minimum difference (as little differences between the bytes as possible).
+.Pp
+Even though it seems like the same at first, looking for the minimum difference is in fact faster. This can be improved even more, if the user sets an upper difference limit.
+.Pp
+Upon selecting Go, the program will search for the optimal offset. This will take some time.
+.Ss Saving and quitting
+Pressing F10 (or its substitute) will close 
+.Nm .
+In case there have been changes made to the file, a save dialog opens up. Here, it is possible to select whether or not to write the changes back into the file.
+.Sh FILES
+$HOME/.dhexrc: The default location of the config file. If the $HOME-variable is not set, its location has to be provided manually.
+.Sh BUGS
+Report bugs to 
+.An Aq dettus@dettus.net . 
+Make sure to include DHEX somewhere in the subject.
+.Sh AUTHOR
+Written by
+.An Thomas Dettbarn
+.Sh SEE ALSO
+.Xr dhexrc 5 ,
+.Xr dhex_markers 5 ,
+.Xr dhex_searchlog 5

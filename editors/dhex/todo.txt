@@ -1,0 +1,5 @@
+- error: when searching, the changes are being ignored
+- the length of input fields is restricted by the gui
+- return value of dhex itself
+- try compiling it under windows with cl.exe
+- write a test suite which checks if searching/correlation etc. works

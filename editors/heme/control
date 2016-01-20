@@ -1,0 +1,8 @@
+Package: heme
+Version: 0.4.2
+Description: Console hex editor.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies

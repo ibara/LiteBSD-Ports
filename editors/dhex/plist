@@ -1,0 +1,9 @@
+Console hex editor with diff support.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+###
+bin/dhex
+man/man1/dhex.0
+man/man5/dhex_markers.0
+man/man5/dhexrc.0
+man/man5/dhex_searchlog.0

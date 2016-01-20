@@ -1,0 +1,216 @@
+.\" Process this file with
+.\" groff -man -Tascii dhex.1
+.\"
+.Dd May 12, 2012
+.Os
+.Dt DHEXRC 5
+.
+.
+.Sh NAME
+.Nm dhexrc
+.Nd Configuration File for dhex 
+.Sh DESCRIPTION
+dhexrc is the configuration file that specifies the colorscheme and the key translation tab for 
+.Xr dhex 1 ,
+Upon starting the program, it is being read and parsed. It is being written and/or created after invoking the keyboard setup.
+.Ss EXAMPLE
+A typical .dhexrc file looks like this:
+.
+.br
+.Ql #DHEXCOLORSCHEME
+.br
+.Ql #VERSION 0
+.br
+.Ql #possible colors are: BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE
+.br
+.Ql #possible extra flags are: UNDERLINE,REVERSE,BLINK,DIM,BOLD
+.br
+.br
+.Ql BRACKETS:       FG=BLACK,BG=BLACK,BOLD
+.br
+.Ql HEXFIELD:       FG=WHITE,BG=BLACK
+.br
+.Ql INPUT:          FG=BLACK,BG=WHITE
+.br
+.Ql CURSOR:         FG=WHITE,BG=BLACK
+.br
+.Ql TEXT:           FG=WHITE,BG=BLACK,BOLD
+.br
+.Ql MENU_NORMAL:    FG=CYAN,BG=BLACK
+.br
+.Ql MENU_HIGHLIGHT: FG=BLACK,BG=CYAN
+.br
+.Ql MENU_HOTKEY:    FG=YELLOW,BG=BLACK,BOLD
+.br
+.Ql MENU_HOTKEY_HI: FG=YELLOW,BG=CYAN,BOLD
+.br
+.Ql FRAME:          FG=BLUE,BG=BLACK,BOLD
+.br
+.Ql NORMAL_DIFF:    FG=YELLOW,BG=BLACK
+.br
+.Ql CURSOR_DIFF:    FG=YELLOW,BG=WHITE,BOLD
+.br
+.Ql HEADLINE:       FG=BLUE,BG=BLACK,BOLD
+.br
+.Ql HEADER:         FG=BLACK,BG=CYAN
+.br
+.br
+.Ql KEYF1:1b 5b 31 31 7e
+.br
+.Ql KEYF2:1b 5b 31 32 7e
+.br
+.Ql KEYF3:1b 5b 31 33 7e
+.br
+.Ql KEYF4:1b 5b 31 34 7e
+.br
+.Ql KEYF5:1b 5b 31 35 7e
+.br
+.Ql KEYF6:1b 5b 31 37 7e
+.br
+.Ql KEYF7:1b 5b 31 38 7e
+.br
+.Ql KEYF8:1b 5b 31 39 7e
+.br
+.Ql KEYF9:1b 5b 32 30 7e
+.br
+.Ql KEYF10:1b 5b 32 31 7e
+.br
+.Ql KEYESC:1b
+.br
+.Ql KEYBACKSPACE:08
+.br
+.Ql KEYDEL:7f
+.br
+.Ql KEYENTER:0a
+.br
+.Ql KEYTAB:09
+.br
+.Ql KEYUP:1b 5b 41
+.br
+.Ql KEYDOWN:1b 5b 42
+.br
+.Ql KEYRIGHT:1b 5b 43
+.br
+.Ql KEYLEFT:1b 5b 44
+.br
+.Ql KEYPGUP:1b 5b 35 7e
+.br
+.Ql KEYPGDOWN:1b 5b 36 7e
+.br
+.Ql KEYHOME:1b 5b 37 7e
+.br
+.Ql KEYEND:1b 5b 38 7e
+.br
+.Sh OPTIONS
+In the example above, the dhexrc file has three distinct sections: A comment section, a color section and a key conversion tab section.
+.Ss Comments
+Comments are indicated with a '#' character. Everything afterwards in a line is being ignored when parsing the file
+.Ss Color section
+There are 14 color groups. Each of the color group has a foreground color, a background color and some extra flags, coming from ncurses. The foreground color is being defined by
+.Nm FG=
+while the background color is being defined by
+.Nm BG=.
+They and the extra flags are being separated by ','. Possible colors are
+.Nm BLACK ,
+.Nm GREEN ,
+.Nm RED ,
+.Nm YELLOW ,
+.Nm BROWN ,
+.Nm BLUE ,
+.Nm MAGENTA ,
+.Nm WHITE ,
+and exclusively as foreground colors
+.Nm LIGHTBLACK ,
+.Nm LIGHTGREEN ,
+.Nm LIGHTRED ,
+.Nm LIGHTYELLOW ,
+.Nm LIGHTBROWN ,
+.Nm LIGHTBLUE ,
+.Nm LIGHTMAGENTA
+and 
+.Nm LIGHTWHITE.
+Valid extra flags are
+.Nm UNDERLINE ,
+.Nm REVERSE ,
+.Nm BLINK ,
+.Nm DIM
+and
+.Nm BOLD .
+.Pp
+The color pairs are as followed:
+.Bl -tag -width 10
+.It BRACKETS:
+This specifies the color for the brackets around text fields.
+.It HEXFIELD:
+This specifies the color in which the file's content is being shown.
+.It INPUT:
+When entering text, it is in this color.
+.It CURSOR:
+The cursor in the hex field has this color.
+.It TEXT:
+This color is for informative text as well as for text fields which are not taking input yet.
+.It MENU_NORMAL:
+Menu items which are not selected belong into this color group.
+.It MENU_HIGHLIGHT:
+The selected menu item gets this special color.
+.It MENU_HOTKEY:
+Hotkeys for menu items are visually distinct from the rest of the text because they have this color.
+.It MENU_HOTKEY_HI:
+If the actual menu item has a hotkey, it is shown in this color.
+.It FRAME:
+Some screens have frames. Those frames have this color.
+.It NORMAL_DIFF:
+Differences in the file's content (either because of changes or because dhex is running in diff mode) are indicated by this color.
+.It CURSOR_DIFF:
+If the cursor is on one of those differences, it will have this color.
+.It HEADLINE:
+On top of the screen, there is a headline. Which is shown in this color.
+.It HEADER:
+In the headline, there are brackets. Within those brackets is the header. It tells you what the window is all about.
+.El
+.Ss Key conversion tab section
+When pressing a "standard" key, something which can be mapped directly to an ascii character, only this character will end up in ncurses' buffer. However, pressing special keys like (for example)
+.Nm F1
+or 
+.Nm ALT+6
+will produce longer sequences. Mapping those sequences back to a specific key is the job of the key conversion tab. (I was dissatisfied how ncurses handled this on its own). The sequences are called (in order)
+.Nm KEYF1 ,
+.Nm KEYF2 ,
+.Nm KEYF3 ,
+.Nm KEYF4 ,
+.Nm KEYF5 ,
+.Nm KEYF6 ,
+.Nm KEYF7 ,
+.Nm KEYF8 ,
+.Nm KEYF9 ,
+.Nm KEYF10 ,
+.Nm KEYESC ,
+.Nm KEYBACKSPACE ,
+.Nm KEYDEL ,
+.Nm KEYENTER ,
+.Nm KEYTAB ,
+.Nm KEYUP ,
+.Nm KEYDOWN ,
+.Nm KEYRIGHT ,
+.Nm KEYLEFT ,
+.Nm KEYPGUP ,
+.Nm KEYPGDOWN ,
+.Nm KEYHOME
+and
+.Nm KEYEND . 
+.Pp
+Sequences itself are a string of lower case hex-values, each two nibbles long. Currently, there is no way of adding an alternative sequence to the same key.
+.Pp
+It is possible that the sequence made up of hex values does not REALLY belong to the key. (For example if F2 was pressed in the setup program when F1 was prompted).
+However, when this sequence ends up in the ncurses buffer, it is being interpreted as if that key was pressed.
+.Sh BUGS
+Report bugs to 
+.An Aq dettus@dettus.net . 
+Make sure to include DHEX somewhere in the subject.
+.Sh AUTHOR
+Written by 
+.An Thomas Dettbarn
+.Sh SEE ALSO
+.Xr dhex 1 ,
+.Xr dhex_markers 5 ,
+.Xr dhex_searchlog 5

@@ -1,0 +1,53 @@
+.\" Process this file with
+.\" groff -man -Tascii dhex.1
+.\"
+.Dd May 12, 2012
+.Os
+.Dt DHEX_SEARCHLOG 5
+.Sh NAME
+.Nm dhex_searchlog
+.Nd search log file for dhex
+.Sh DESCRIPTION
+Searchlogs for 
+.Xr dhex 1
+are stored in searchlog files. This manpage describes the format of those files.
+.Ss EXAMPLE
+A typical searchlog file looks like this:
+.br
+.Ql #DHEX SEARCHLOG
+.br
+.Ql #VERSION 0
+.br
+.Ql #Search was for d0 0f af fe
+.br
+.Ql #lines are all in hex
+.br
+.br
+.Ql 0000000000002385
+.br
+.Ql 0000000000002e21
+.br
+.Ql 0000000000006acb
+.br
+.Ql 0000000000006b8b
+.br
+.Ql 000000000000cd27
+.br
+.Sh OPTIONS
+In the example above, the file has two sections: A comment section, and an offset section.
+.Ss Comments
+Comments are indicated with a '#' character. Everything afterwards in a line is being ignored when parsing the file
+.Ss Offset section
+Offsets are 64 bit addresses presented as hexadecimal values. It is the offset where the searchstring occurred as result when the searchlog was written.
+And it is also where the next search is being conducted when reading the searchlog.
+.Sh BUGS
+Report bugs to 
+.An Aq dettus@dettus.net .
+Make sure to include DHEX somewhere in the subject.
+.Sh AUTHOR
+Written by 
+.An Thomas Dettbarn
+.Sh SEE ALSO
+.Xr dhex 1 ,
+.Xr dhexrc 5 ,
+.Xr dhex_markers 5 .

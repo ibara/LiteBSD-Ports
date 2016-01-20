@@ -1,0 +1,42 @@
+
+heme - console hex editor
+
+heme is intended to be fast and portable console hex editor for unix systems.
+It has undo support (number of undo operations is only limited by available
+memory), ability to fill a range of addresses with the specified byte, ability 
+to search for a single byte or character string. Offsets can be given in
+hexadecimal, octal or decimal. There are two editing modes: hex and ascii. In
+hex mode you type hexadecimal digits and in ascii mode you type characters. In 
+the ascii mode cursor is automatically moved to the next byte after typing a 
+character (this behaviour is configurable for hex mode). heme uses curses library
+for screen and input handling. Colors are supported and they may be configured
+in the configuration file (see below). If the configuration file isn't present,
+heme will use defaults. You may also specify which configuration file to use
+with the '-c' command line option. Type 'heme --help' to see list of all command
+line options.
+
+Keys:
+
+left (right)   move to previous (next) byte
+up (down)      move to previous (next) line
+<              move to beginning of line
+>              move to end of line
+page up        move 1 page up
+page down      move 1 page down
+home           move to beginning of file
+end            move to end of file
+h              display help screen
+j              jump to offset
+n (w)          search for byte (string)
+l              fill range with byte
+tab	       toggle between hex and ascii editing modes
+u              undo
+s              save file
+q              quit
+
+See heme(1) for complete user manual.
+
+heme is distributed under the GNU General Public License. For details
+see the file COPYING included in the source distribution.
+
+Please send comments, bug reports, suggestions etc. to pokemon@fly.srk.fer.hr

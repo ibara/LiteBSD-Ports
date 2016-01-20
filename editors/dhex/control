@@ -1,0 +1,8 @@
+Package: dhex
+Version: 0.68
+Description: Console hex editor with diff support.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies

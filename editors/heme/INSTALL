@@ -1,0 +1,8 @@
+If you don't have have mmap() or want to change the
+default installation directory(/usr/local/bin), edit
+the Makefile as appropriate. Then simply type
+
+    make install
+
+This will build the binary and install it under specified
+installation directory. It will also install the man page.
