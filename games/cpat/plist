@@ -1,0 +1,6 @@
+Console solitaire suite.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+###
+bin/cpat
+man/man1/cpat.0

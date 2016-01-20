@@ -1,0 +1,8 @@
+Package: cpat
+Version: 1.2.1
+Description: Console solitaire suite.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies

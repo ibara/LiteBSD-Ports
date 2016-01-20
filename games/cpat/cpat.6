@@ -1,0 +1,114 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH CPAT 6 "3 MAR 2006" GAMES "User Manuals"
+.SH NAME
+cpat \- a curses-based solitaire game
+.SH SYNOPSIS
+.B cpat 
+.RB [ \-hfcV ]
+.RB [ \-s
+.IR seed ]
+.SH DESCRIPTION
+.B
+cpat 
+is collection of solitaire card games.
+Different games can be chosen from a menu at startup.
+Games implemented in this collection include Freecell, Klondike, Spider
+and 40 Thieves.
+.SH OPTIONS
+.TP
+.B \-h 
+prints a short help message.
+.TP
+.B \-f
+causes the auto-moves to go faster. More 
+of these = more speed.
+.TP
+.B \-s " seed"
+.B cpat 
+accepts an optional integer argument to use as
+a seed for the deck shuffle.
+.TP
+.B \-R
+this option disables the collection of game and high score statistics.
+Normally they are saved to the ~/.cpat_scores file.
+.TP
+.B \-c
+allows any move to be undo-able (i.e. allows cheating). Normally you can 
+undo only those moves that do not reveal any new information (e.g. moving 
+cards from one column to another).
+.TP
+.B \-V
+prints current version information.
+.SH IN GAME OPTIONS
+.PP
+When playing a solitaire game, a number of commands are available at all
+times:
+.TP
+.B '?'
+Will print some help details similar to what you are reading now.
+.TP
+.B 'r'
+Will print the rules of the current game.
+.TP
+.B 'u'
+Will undo the previous move if this is allowed. You can undo only those moves 
+that do not reveal any new information (e.g. moving cards from one column to 
+another).
+.TP
+.B 't'
+Will show credit where it is due.
+.TP
+.B 'w'
+Will print license and warranty information.
+.TP
+.B 's'
+Will redraw the screen from scratch, in case something goes wrong with
+the display.
+.TP
+.B 'q'
+Will quit the current game and give you some statistics about the game 
+you played (you will actually get the option to resume the game again).
+.SH HOW TO MOVE CARDS
+.PP                                        
+CPat is laid out with the general playing board in the centre of the screen. 
+Each column on the main board is labelled with a letter starting at 'a' 
+going up to the number of columns in the particular game you are playing. 
+Most of the games have foundation piles and these are placed in a board on the 
+left side of the screen. These piles are labelled 'p' for foundation 
+[p]iles. On the right hand side there is usually another board which is used 
+for different purposes depending on the game. This is labelled 'o' for [o]ther.
+.PP                                        
+Most move commands consist of a 2 character sequence proceeded by an 
+optional number. 
+The first character denotes the source card and the second the 
+destination pile. For example 'ad' moves the bottom card from column 'a' 
+onto column 'd', 'bp' moves the bottom card from column 'b' onto the 
+appropriate foundation pile (depending on its suit).
+.PP                                        
+In general, a number is included in the command to signify the number of 
+cards to move when moving a stack or sequence of cards. 
+For example, '3bf' will move a stack of 3 cards from column 'b' to 'f'. 
+The type of stacks 
+you are allowed to move depends on the game you are playing. 
+.PP
+The 'o' command is used to manipulate cards on the "other" board. This 
+will depend on the game you are playing. In Klondike type games where 
+there is a deck of cards to look through, two 'o' characters command will turn 
+cards over onto the waste pile and an 'o' followed by another letter will 
+move a card off the waste pile. In Freecell type games, the "other" board 
+contains the freecells and cards can be moved to and from these piles in the 
+normal way, however when moving a card from the freecells a number is 
+required to designate which card you want to move.
+.PP                                        
+Cards can also be moved 
+to the foundation piles automatically. To do this you use only the 
+letter 'p'. Two 'p' characters will move one card (or pile depending on 
+the game being played) to the foundation. If the 'pp' is proceeded by 
+a number, a maximum of that many cards (piles) will be moved at once. 
+A capital 'P' will move as many 
+cards (piles) as possible. There is no particular order 
+to the way the cards are moved.
+.SH AUTHOR
+Trevor Carey-Smith <trev at highwater dot co dot nz>
