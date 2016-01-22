@@ -1,0 +1,8 @@
+Package: ee
+Version: 1.5.2
+Description: Easy editor
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
