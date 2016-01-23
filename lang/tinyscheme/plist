@@ -1,0 +1,6 @@
+Lightweight Scheme implementation of a subset of R5RS.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+###
+bin/tinyscheme
+share/tinyscheme/init.scm
