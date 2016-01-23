@@ -1,0 +1,8 @@
+Package: deco
+Version: 3.9
+Description: Terminal orthodox file manager by Serge.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPL
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies

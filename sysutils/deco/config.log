@@ -1,0 +1,131 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:526: checking for gcc
+configure:603: checking whether the C compiler (gcc  ) works
+configure:617: gcc -o conftest    conftest.c  1>&5
+configure:637: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:642: checking whether we are using GNU C
+configure:651: gcc -E conftest.c
+configure:666: checking whether gcc accepts -g
+configure:723: checking for a BSD compatible install
+configure:773: checking whether make sets ${MAKE}
+configure:806: checking for dirent.h that defines DIR
+configure:819: gcc -c -g -O2  conftest.c 1>&5
+configure:844: checking for opendir in -ldir
+configure:863: gcc -o conftest -g -O2   conftest.c -ldir   1>&5
+/usr/bin/ld: cannot find -ldir
+collect2: error: ld returned 1 exit status
+configure: failed program was:
+#line 852 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char opendir();
+
+int main() {
+opendir()
+; return 0; }
+configure:927: checking how to run the C preprocessor
+configure:948: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:988: checking for ANSI C header files
+configure:1001: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1068: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function 'main':
+configure:1063:67: warning: incompatible implicit declaration of built-in function 'exit'
+ if (XOR (islower (i), ISLOWER (i)) || toupper (i) != TOUPPER (i)) exit(2);
+                                                                   ^
+configure:1092: checking for sys/wait.h that is POSIX.1 compatible
+configure:1113: gcc -c -g -O2  conftest.c 1>&5
+configure:1137: checking for fcntl.h
+configure:1147: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1137: checking for sys/ioctl.h
+configure:1147: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1137: checking for termio.h
+configure:1147: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1137: checking for termios.h
+configure:1147: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1137: checking for unistd.h
+configure:1147: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1137: checking for termcap.h
+configure:1147: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1175: checking for working const
+configure:1229: gcc -c -g -O2  conftest.c 1>&5
+configure:1250: checking for st_rdev in struct stat
+configure:1263: gcc -c -g -O2  conftest.c 1>&5
+configure:1284: checking whether struct tm is in sys/time.h or time.h
+configure:1297: gcc -c -g -O2  conftest.c 1>&5
+configure:1319: checking for ANSI C header files
+configure:1423: checking for uid_t in sys/types.h
+configure:1457: checking type of array argument to getgroups
+configure:1490: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function 'main':
+configure:1485:3: warning: incompatible implicit declaration of built-in function 'exit'
+   exit ((n > 0 && gidset[n] != val.gval) ? 1 : 0);
+   ^
+configure:1529: checking whether gcc needs -traditional
+configure:1575: checking for 8-bit clean memcmp
+configure:1593: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function 'main':
+configure:1588:3: warning: incompatible implicit declaration of built-in function 'exit'
+   exit(memcmp(&c0, &c2, 1) < 0 && memcmp(&c1, &c2, 1) < 0 ? 0 : 1);
+   ^
+configure:1611: checking return type of signal handlers
+configure:1633: gcc -c -g -O2  conftest.c 1>&5
+configure:1652: checking for pid_t
+configure:1686: checking for vfork.h
+configure:1696: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1692:19: fatal error: vfork.h: No such file or directory
+ #include <vfork.h>
+                   ^
+compilation terminated.
+configure: failed program was:
+#line 1691 "configure"
+#include "confdefs.h"
+#include <vfork.h>
+configure:1721: checking for working vfork
+configure:1871: gcc -o conftest -g -O2   conftest.c  1>&5
+configure: In function 'main':
+configure:1854:5: warning: incompatible implicit declaration of built-in function 'exit'
+     exit(
+     ^
+configure:1894: checking for vprintf
+configure:1922: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1906:6: warning: conflicting types for built-in function 'vprintf'
+ char vprintf();
+      ^
+configure:2001: checking for gethostname
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2001: checking for getgroups
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2001: checking for opendir
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2001: checking for memcpy
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2013:6: warning: conflicting types for built-in function 'memcpy'
+ char $ac_func();
+      ^
+configure:2001: checking for strtol
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2001: checking for dirfd
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2001: checking for tcgetattr
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2001: checking for tcsetpgrp
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2001: checking for killpg
+configure:2029: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2054: checking for main in -lcposix
+configure:2069: gcc -o conftest -g -O2   conftest.c -lcposix   1>&5
+/usr/bin/ld: cannot find -lcposix
+collect2: error: ld returned 1 exit status
+configure: failed program was:
+#line 2062 "configure"
+#include "confdefs.h"
+
+int main() {
+main()
+; return 0; }
+configure:2097: checking for tgetent in -lncurses
+configure:2116: gcc -o conftest -g -O2   conftest.c -lncurses   1>&5
