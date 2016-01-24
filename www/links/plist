@@ -1,0 +1,6 @@
+Text-mode web browser
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+###
+bin/links
+man/man1/links.0

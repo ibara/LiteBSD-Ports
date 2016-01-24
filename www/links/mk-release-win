@@ -1,0 +1,59 @@
+#!/bin/sh
+set -e
+cp ../links-current/links*.nsi ../links-current/links.crt ../links-current/COPYING ../links-current/BRAILLE_HOWTO ../links-current/KEYS ../links-current/README .
+unix2dos COPYING BRAILLE_HOWTO KEYS README
+if which gcc-4 2>/dev/null; then
+	CC=gcc-4
+else
+	CC=gcc
+fi
+export CC
+if [ -n "$NO_LTO" ]; then
+	LTO_ARGS=""
+else
+	if $CC -v 2>&1|grep -q '4\.5'; then
+		LTO_ARGS="-flto -fwhole-program"
+	else
+		LTO_ARGS="-flto=12 -fwhole-program"
+	fi
+fi
+if [ "`uname -m`" != x86_64 ]; then
+	ARCH_CFLAGS="-O3 -march=pentiumpro -mtune=generic"
+else
+	ARCH_CFLAGS="-O3 -mtune=generic"
+fi
+CFLAGS="$ARCH_CFLAGS $LTO_ARGS -shared-libgcc -Wall -W -Wno-unused-parameter -Wmissing-prototypes -Wmissing-declarations -Wstrict-prototypes"
+export CFLAGS
+windres -O coff ../links-current/linkswin.rc linkswin.res
+LIBS=../linkswin.res
+export LIBS
+
+LDFLAGS=""
+export LDFLAGS
+mkdir -p links-text
+cd links-text
+if [ ! -f config.h -o ! -f Makefile ]; then
+	../../links-current/configure --enable-utf8 --disable-graphics --without-x --enable-debuglevel=0
+fi
+make -j12
+cp links.exe ..
+cd ..
+
+LDFLAGS=""
+export LDFLAGS
+mkdir -p links-graphics
+cd links-graphics
+if [ ! -f config.h -o ! -f Makefile ]; then
+	CPPFLAGS="-DUSE_WIN32_HEAP"
+	export CPPFLAGS
+	../../links-current/configure --disable-utf8 --enable-graphics --without-x --enable-debuglevel=0
+fi
+make -j12 LDFLAGS="-mwindows"
+cp links.exe ../links-g.exe
+cd ..
+
+if [ "`uname -m`" != x86_64 ]; then
+	/cygdrive/c/Program\ Files\ \(x86\)/NSIS/makensis.exe links.nsi
+else
+	/cygdrive/c/Program\ Files\ \(x86\)/NSIS/makensis.exe links64.nsi
+fi

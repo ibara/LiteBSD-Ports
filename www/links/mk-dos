@@ -1,0 +1,40 @@
+#!/bin/sh
+if [ "$1" = dbg ]; then
+	CFLAGS="-fgnu89-inline -O0 -g -Wall"
+	export CFLAGS
+	./configure --enable-debuglevel --enable-graphics
+elif [ "$1" = lite ]; then
+	CFLAGS="-fgnu89-inline -march=i386 -Os -fomit-frame-pointer -Wall -Wextra -Wno-unused-parameter -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations"
+	export CFLAGS
+	./configure --disable-graphics --without-ssl --without-lzma
+else
+	CFLAGS="-fgnu89-inline -march=i386 -mtune=i486 -O3 -fomit-frame-pointer -frename-registers -fweb -Wall -Wextra -Wno-unused-parameter -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations"
+	export CFLAGS
+	./configure --enable-graphics
+fi
+ed config.status <<EOF
+/outfile
+/esac
+a
+  if [ "\$ac_file_in" = "config.h.in" ]; then ac_file_in=config.h-i; fi
+.
+/outfile
+/esac
+a
+  if [ "\$ac_file_in" = "config.h.in" ]; then ac_file_in=config.h-i; fi
+.
+wq
+EOF
+./config.status
+ed Makefile <<EOF
+/^Makefile:
+s/:.*/:/
+.+1,.+2d
+/^config\.h:
+s/:.*/:/
+.+1,.+4c
+
+.
+wq
+EOF
+make

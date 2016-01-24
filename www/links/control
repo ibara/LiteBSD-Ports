@@ -1,0 +1,8 @@
+Package: links
+Version: 2.12
+Description: Text-mode web browser.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
