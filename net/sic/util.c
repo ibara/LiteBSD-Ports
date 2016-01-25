@@ -3,14 +3,6 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-static unsigned short
-lhtons(unsigned short x)
-{
-	unsigned char *s = (void *) &x;
-
-	return (unsigned short)(s[0] << 8 | s[1]);
-}
-
 static void
 eprint(const char *fmt, ...) {
 	va_list ap;
@@ -26,27 +18,26 @@ eprint(const char *fmt, ...) {
 
 static int
 dial(char *host, char *port) {
-	int fd;
-	struct sockaddr_in sin;
-	struct hostent *hp = gethostbyname(host);
+	static struct addrinfo hints;
+	int srv;
+	struct addrinfo *res, *r;
 
-	memset(&sin, 0, sizeof(struct sockaddr_in));
-	if (!hp) {
-		fprintf(stderr, "sic: cannot retrieve host information\n");
-		exit(1);
+	memset(&hints, 0, sizeof hints);
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	if(getaddrinfo(host, port, &hints, &res) != 0)
+		eprint("error: cannot resolve hostname '%s':", host);
+	for(r = res; r; r = r->ai_next) {
+		if((srv = socket(r->ai_family, r->ai_socktype, r->ai_protocol)) == -1)
+			continue;
+		if(connect(srv, r->ai_addr, r->ai_addrlen) == 0)
+			break;
+		close(srv);
 	}
-	sin.sin_family = AF_INET;
-	memcpy(&sin.sin_addr, hp->h_addr, hp->h_length);
-	sin.sin_port = lhtons(atoi(port));
-	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-		fprintf(stderr, "sic: cannot create socket\n");
-		exit(1);
-	}
-	if (connect(fd, (const struct sockaddr *) &sin, sizeof(sin)) < 0) {
-		fprintf(stderr, "sic: cannot connect to host\n");
-		exit(1);
-	}
-	return fd;
+	freeaddrinfo(res);
+	if(!r)
+		eprint("error: cannot connect to host '%s'\n", host);
+	return srv;
 }
 
 static char *
