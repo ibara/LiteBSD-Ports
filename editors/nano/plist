@@ -1,0 +1,7 @@
+Clone of the pico editor from the GNU project.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv3+
+###
+bin/nano
+man/man1/nano.0
+man/man5/nanorc.0

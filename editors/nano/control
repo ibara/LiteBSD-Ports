@@ -1,0 +1,8 @@
+Package: nano
+Version: 2.5.1
+Description: Clone of the pico editor from the GNU project.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv3+
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
