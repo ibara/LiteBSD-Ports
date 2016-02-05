@@ -1,0 +1,8 @@
+Package: cgo
+Version: 0.4.1
+Description: Terminal gopher client.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: ISC
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
