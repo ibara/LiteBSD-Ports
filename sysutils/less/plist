@@ -1,0 +1,6 @@
+Feature enhanced clone of the more(1) pager.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+###
+bin/less
+man/man1/less.0
