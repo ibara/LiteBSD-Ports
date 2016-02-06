@@ -1,0 +1,8 @@
+Package: icb
+Version: 6
+Description: Console ICB client.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: ISC
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
