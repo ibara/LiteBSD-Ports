@@ -1,0 +1,8 @@
+Package: sre
+Version: 8
+Description: Clone of 1970s RAND text editor.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv3+
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies

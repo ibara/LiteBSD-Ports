@@ -1,0 +1,7 @@
+MicroEMACS from RetroBSD.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Public Domain
+###
+bin/emg
+man/man1/emg.0
+share/doc/emg/emg.keys
