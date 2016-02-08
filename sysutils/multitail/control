@@ -1,0 +1,8 @@
+Package: multitail
+Version: 6.4.2
+Description: Monitor logfiles and command output in multiple windows in a terminal.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2 only
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
