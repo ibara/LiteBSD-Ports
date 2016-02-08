@@ -1,0 +1,6 @@
+Small multi-platform vi clone.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+###
+bin/levee
+man/man1/levee.0

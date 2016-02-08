@@ -1,0 +1,8 @@
+Package: levee
+Version: 3.5b
+Description: Small multi-platform vi clone.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
