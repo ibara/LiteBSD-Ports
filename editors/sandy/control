@@ -1,0 +1,8 @@
+Package: sandy
+Version: 0.6
+Description: Minimalist ncurses text editor from the suckless project.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
