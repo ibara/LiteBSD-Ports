@@ -1,0 +1,8 @@
+Package: pforth
+Version: 27
+Description: Portable ANS Forth in C.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Public Domain
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
