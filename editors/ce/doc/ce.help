@@ -1,0 +1,147 @@
+                          CE Help screens		(04/18/86)
+
+	M-  means to use the <ESC> key prior to using another key
+	^A  means to use the control key at the same time as the A key
+	<DEL> means to use the delete or rubout key
+	<SPACE> means to hit the space bar
+
+^V      Scroll down a screen		M-< 	Begining of file
+M-V     Scroll up a screen		M-> 	End of file
+
+-----------------------------------------------------------------------
+		(1) MOVING THE CURSOR
+
+^F  Forward character   M-F    Forward word		Keypad arrows
+^B  Backward character  M-B    Backward word		are active on
+^A  Front of line	                                xterms!
+^E  End of line		
+^N  Next line		M-P    Start of paragraph
+^P  Previous line	M-N    End of paragraph
+-----------------------------------------------------------------------
+		(2) SEARCHING
+
+^S	I-Search forward from cursor position.  Type in a string to be searched
+	for at the prompt and end it with a carriage return.  Either case 
+	matches.  The search is done and screen updated as you type the 
+	characters (incrementally, hence "I-Search")
+^R	As above, but Reverse search from cursor position.
+-----------------------------------------------------------------------
+		(3) REPLACING
+
+^X%  Replace all instances of first typed-in string with second
+          typed-in string.  End each string with a carriage return.
+M-%  Replace with query.  Answer with:
+	^G  cancel			.   exit to entry point
+	!   replace the rest		<SPACE>    replace & continue
+	?   Get a list of options	<DEL>	   no replacement & continue
+-----------------------------------------------------------------------
+		(4) CAPITALIZING & TRANSPOSING
+
+M-U	UPPERCASE word
+M-C	Capitalize word		^T	Transpose characters
+M-L	lowercase word
+^X^L	lowercase region
+^X^U	uppercase region
+^Q	Quote next entry, so that control codes may be entered into text
+-----------------------------------------------------------------------
+		(5) REGIONS & THE KILL BUFFER
+
+M-<SPACE>	set MARK at current position
+^X^X		eXchange mark and cursor
+M-=		count the number of lines in the region
+
+A REGION will then be continuously-defined as the area between the mark and
+the current cursor position.  The KILL BUFFER is the text which has been
+most recently saved or deleted.
+-----------------------------------------------------------------------
+		(6) DELETING & INSERTING
+
+<DEL>	Delete previous character	M-<DEL>	Delete previous word
+^D	Delete next character		M-D	Delete next word
+^K	Close (delete) to end of line
+^O	Open (insert) line	
+^W	Delete region between mark (set using M-<spacebar>) and cursor
+M-W	Copy region to kill buffer
+-----------------------------------------------------------------------
+		(7) COPYING AND MOVING
+
+^W  Delete (Wipe) region		M-W	copy region to KILL buffer
+^Y  Yankback save buffer at cursor
+Generally, the procedure for copying or moving text is:
+    1)  Mark a REGION using M-<SPACE> or ^@ at beginning; the cursor is the end
+    2)  Delete it (with ^W) or copy it (with M-W) into the KILL buffer.
+    3)  Move the cursor to the desired location and yank it back (with ^Y).
+-----------------------------------------------------------------------
+		(8) MODES OF OPERATION
+^X M	Add Mode		^X ^M	Delete Mode
+	Fill	Turns on word wrap (automatic carraige return).
+	View	Allows viewing file without insertion and deletion.
+	Save	Turns on Auto Save
+-----------------------------------------------------------------------
+		(9) ON-SCREEN FORMATTING
+
+^X F		Set fill column
+Mn-<tab>	Set tab spacing to n charecters between tabs stops
+M-Q		Format paragraph so that text lies between margins
+^X =		Position report -- displays line number, char count, size
+
+-----------------------------------------------------------------------
+		(10) MULTIPLE WINDOWS
+
+Many WINDOWS may be active at once on the screen.  All windows may show
+different parts of the same buffer, or each may display a different one.
+
+^X 2	Split the current window in two	^X 1	remove all but current window
+^X O	cursor to next window		^X ^	Enlarge current window
+M-^V	scroll down, other window	M-^Z	scroll up, other window
+-----------------------------------------------------------------------
+		(11) MULTIPLE BUFFERS
+A BUFFER is a named area containing a document being edited.  Many buffers
+may be activated at once.
+^X B	Switch to another buffer.  <CR> = use just-previous buffer
+^X ^B	Type buffer directory in a window
+^X ^F	Find file; read into a new buffer created from filename.
+^X ^I   Insert the contents of another buffer at the cursor
+^X ^V   Find alternate file; read into the current buffer
+^X K	Delete a non-displayed buffer.
+^X X	Switch to next buffer in buffer list
+-----------------------------------------------------------------------
+		(12) READING FROM DISK
+
+^X^F	Find file; read into a new buffer created from filename.
+	(This is the usual way to begin editing a new file.)
+^X^V	Read file into current buffer, erasing its previous contents.
+	No new buffer will be created.
+^X I	Insert file into current buffer at cursor's location.
+^X^R	Find a file to make current in VIEW mode
+-----------------------------------------------------------------------
+		(13) SAVING TO DISK
+
+^X^S	Save current buffer to disk, using the buffer's filename
+	as the name of the disk file.  Any disk file of that name
+	will be overwritten.
+^X S	Save all changed buffers to disk, asking whether or not to 
+	save each one.
+^X^W	Write current buffer to disk.  Type in a new filename to write to
+	at the prompt; it will become the current buffer's filename.
+M-Z	Write out all changed buffers and exit CE
+^X ^C   exit ce, asking whether or not to save each changed buffer
+-----------------------------------------------------------------------
+		(14) ACCESSING THE OPERATING SYSTEM
+
+^X!	Send one command to the operating system and return
+^Z	Start a new command processer under CE (non-4.2BSD UNIX)
+^Z	Suspend CE into the background (4.2BSD UNIX only)
+^X^C	Exit CE, asking about each changed buffer
+M-Z	Write out all changed buffers and then exit CE
+---------------------------------------------------------------
+		(15) SPECIAL KEYS AND KEY BINDINGS
+
+^G		Cancel current command and return to top level of processing.
+^U or		Universal argument.  May be followed by an integer (default = 4)
+M-<digit>	and repeats the next command that many times.
+M-X		Execute a named (and possibly unbound) command
+M-K		Bind a key to a named command
+Describe-Bindings
+		List the current key bindings in a buffer
+M-?		Bring up this file in a new window

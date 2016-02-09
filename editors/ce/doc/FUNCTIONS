@@ -1,0 +1,151 @@
+add-mode			Add an editing mode for the current buffer
+add-global-mode			Add an editing mode to all buffers
+auto-fill-mode			Put the current buffer in word-wrap mode
+auto-save-mode			Put the current buffer in auto-save mode
+backward-character		Move backwards one character
+backward-sentence		Move back to the beginning of the current sentence
+begin-macro			Begin defining a keyboard macro
+begining-of-file		Move to the beginning of the current buffer
+begining-of-line		Move to the beginning of the current buffer
+bind-to-key			Bind a key sequence to a named command	
+buffer-position			Print out the current position in the buffer
+c-mode				Put the current buffer in a mode for editing C code
+capitalize-word			Capitalize the current word
+center-buffer			Center all lines in the current buffer
+center-line			Center the current line, using the current fill column
+center-paragraph		Center the current paragraph
+center-region			Center all lines in the region
+change-directory		Change the working directory
+change-file-name		Change the current buffer's attached file name
+clear-and-redraw		Clear the screen and redraw it
+clear-pattern			Clear the remembered search pattern
+copy-region			Copy the region to the kill buffer
+delete-blank-lines		Delete blank lines around `.'
+delete-buffer			Delete a buffer from the buffer list by name
+delete-mode			Delete a mode from the current buffer
+delete-global-mode		Delete a mode from all buffers
+delete-next-character		Delete the character following the cursor
+delete-next-word		Delete the word following the cursor
+delete-other-windows		Delete all windows but the current one
+delete-previous-character	Delete the character before the cursor
+delete-previous-word		Delete the word before the cursor
+delete-sentence-back		Delete all characters back to the beginning of the sentence
+describe-bindings		Describe the current key bindings by named commands
+describe-key			Print the command currently bound to a key sequence
+emacs-version			Print the current version information
+end-macro			Signal the end of a keyboard macro definition
+end-of-file			Move point to the end of the current buffer
+end-of-line			Move point to the end of the current line
+eval-file			Read a file and evaluate it as ce commands
+exchange-point-and-mark		Swap the values of `.' and the mark
+execute-command-line		Execute a line as a ce command
+execute-macro			Execute a keyboard macro
+execute-named-command		Execute a ce command by name
+exit-emacs			Save all dirty buffers and exit ce
+fill-mode			Put the current buffer in word-wrap mode
+fill-paragraph			Fill the current paragraph to the current fill column
+filter-buffer			Fill the current buffer to the current fill column
+filter-region			Fill the region to the current fill column
+find-file			Read a file into another buffer and switch to it
+forward-character		Move `.' forward by one character
+forward-sentence		Move `.' forward by one sentence
+global-set-key			Bind a command to a key sequence
+goto-char			Move `.' to a specific character position in the buffer
+goto-line			Move `.' to a specific line in the buffer
+grow-window			Make the current window bigger, if > 1 on screen
+handle-tab			Insert a tab, or do mode-specific things
+help				Display out the ce help file in a new window
+insert-buffer			Insert another buffer into the current buffer at `.'
+insert-file			Insert a file into the current buffer at `.'
+insert-space			Insert a ' ' into the current buffer at `.'
+insert-shell-command-output	Run a shell command and insert its output at `.'
+interactive-shell		Start up an interactive shell under ce
+introduction			Run the ce tutorial in another window
+isearch-backward		Incremental search for a word, backwards
+isearch-forward			Incremental search for a word, forwards
+kill-paragraph			Delete the current paragraph, copying to kill buffer
+kill-region			Delete the region, copying to kill buffer
+kill-sentence			Delete the current sentence, copying to kill buffer
+kill-to-end-of-line		Delete all characters up to the next newline, copying to kill buffer
+list-buffers			Display a list of all buffers in a new window
+lower-case-region		Convert all characters in region to lower case
+lower-case-word			Convert current word to lower case
+make-backup-files		Toggle the making of backup copies of old files
+make-bug-report			Compose a ce bug report in a new buffer
+mark-buffer			Make the region encompass the entire buffer
+mark-paragraph			Make the region encompass the current paragraph
+mark-word			Make the region encompass the current word
+move-window-down		Change the position of the current line
+move-window-up			Change the position of the current line
+newline				Insert a newline into the buffer, do mode-specific things
+newline-and-indent		Insert a newline and indent for editing C code
+next-buffer			Switch to the next buffer in the buffer list
+next-line			Move `.' to the next line in the buffer
+next-page			Move down a page (a screenful) in the current buffer
+next-paragraph			Move `.' to the beginning of the next paragraph
+next-window			Move `.' down to the next window on the screen
+next-word			Move `.' to the beginning of the next word
+no-auto-save-mode		Turn off auto-save mode
+no-c-mode			Turn off C mode
+no-view-mode			Turn off view mode (make editable)
+no-wrap-mode			Turn off word wrap
+not-modified			Clear the modified flag for the current buffer
+open-line			Insert a blank line at `.'
+prefix-region			Add a prefix to each line in the current region
+previous-line			Move `.' to the previous line
+previous-page			Move `.' to the previous page (go back 1 screenful)
+previous-paragraph		Move `.' to the previous paragraph
+previous-window			Move `.' up to the previous window, if > 1 on screen
+previous-word			Move `.' to the beginning of the previous word
+query-replace			Replace a string with another, with confirmation
+query-replace-regexp		Replace regexp matches with confirmation
+quick-exit			Save all dirty files without asking and exit
+quote-character			Insert the next character verbatim into the buffer
+read-file			Read a file into the buffer, discarding old contents
+read-only			Mark the current buffer as read-only (no edit)
+redraw-display			Redraw the entire screen
+regexp-search-forward		Search forward for matches of a regexp
+regexp-search-backward		Search backward for matches of a regexp
+rename-buffer			Change the name associated with the current buffer
+replace-regexp			Replace occurrences of a regexp with a string
+replace-string			Replace occurrences of a string with another
+revert-buffer-from-file		Re-read file associated with current buffer
+save-buffers-exit-emacs		Save all modified buffers and exit ce
+save-file			Save the current buffer to its associated file
+save-some-buffers		Save all modified buffers 
+scroll-next-up			Scroll next window up one window-full
+scroll-next-down		Scroll next window down one window-full
+scroll-other-window		Scroll the other window on screen (if > 1 on screen)
+search-again			Search for the last pattern entered
+search-backward			Search backward in current buffer for a string
+search-forward			Search forward in current buffer for a string
+select-buffer			Switch to a specific named buffer
+send-bug-report			Send the current buffer as a ce bug report
+set-fill-column			Set the column at which lines are wrapped
+set-mark			Set the value of the mark to the value of `.'
+set-prefix			Set the prefix added to lines in prefix-region
+set-visited-file-name		Set the name of the file associated with the buffer
+shell-command			Execute a shell command
+shell-command-on-region		Execute a shell command with the region as input
+show-current-directory		Display the value of the current directory
+show-functions			Display this list of functions in a window
+show-matching-brace		Switch point to the character matching point
+show-matching-character		Show the character matching point
+show-version			Display version information
+shrink-window			Reduce the number of lines in the current window, if > 1 on screen
+split-current-window		Split the current window into 2 windows
+suspend-emacs			Suspend ce and go back to the shell
+switch-to-buffer		Switch to a named buffer
+transpose-characters		Swap the character at the cursor with the one before it
+transpose-lines			Swap the current and previous lines
+tutorial			Run the ce tutorial in a new window
+unbind-key			Remove the command assoicated with a key sequence
+universal-argument		Cause a command to be executed multiple times
+upper-case-region		Convert region to upper case
+upper-case-word			Convert the current word to upper case
+view-file			Display a new file in read-only mode
+view-mode			Switch the current buffer to read-only mode
+what-line			Display the number of the current line in the buffer
+wrap-mode			Put the current buffer in word-wrap mode
+write-file			Write the current buffer to a named file
+yank				Insert the contents of the kill buffer at `.'

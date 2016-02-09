@@ -1,0 +1,382 @@
+%!PS-Adobe-3.0
+%%Creator: groff version 1.05
+%%DocumentNeededResources: font Times-Roman
+%%+ font Times-Bold
+%%+ font Times-Italic
+%%DocumentSuppliedResources: procset grops 1.05 0
+%%Pages: 2
+%%PageOrder: Ascend
+%%Orientation: Portrait
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset grops 1.05 0
+
+/setpacking where {
+	pop
+	currentpacking
+	true setpacking
+} if
+
+/grops 120 dict dup begin 
+
+% The ASCII code of the space character.
+/SC 32 def
+
+/A /show load def
+/B { 0 SC 3 -1 roll widthshow } bind def
+/C { 0 exch ashow } bind def
+/D { 0 exch 0 SC 5 2 roll awidthshow } bind def
+/E { 0 rmoveto show } bind def
+/F { 0 rmoveto 0 SC 3 -1 roll widthshow } bind def
+/G { 0 rmoveto 0 exch ashow } bind def
+/H { 0 rmoveto 0 exch 0 SC 5 2 roll awidthshow } bind def
+/I { 0 exch rmoveto show } bind def
+/J { 0 exch rmoveto 0 SC 3 -1 roll widthshow } bind def
+/K { 0 exch rmoveto 0 exch ashow } bind def
+/L { 0 exch rmoveto 0 exch 0 SC 5 2 roll awidthshow } bind def
+/M { rmoveto show } bind def
+/N { rmoveto 0 SC 3 -1 roll widthshow } bind def
+/O { rmoveto 0 exch ashow } bind def
+/P { rmoveto 0 exch 0 SC 5 2 roll awidthshow } bind def
+/Q { moveto show } bind def 
+/R { moveto 0 SC 3 -1 roll widthshow } bind def
+/S { moveto 0 exch ashow } bind def
+/T { moveto 0 exch 0 SC 5 2 roll awidthshow } bind def
+
+% name size font SF -
+
+/SF {
+	findfont exch
+	[ exch dup 0 exch 0 exch neg 0 0 ] makefont
+	dup setfont
+	[ exch /setfont cvx ] cvx bind def
+} bind def
+
+% name a c d font MF -
+
+/MF {
+	findfont
+	[ 5 2 roll
+	0 3 1 roll % b
+	neg 0 0 ] makefont
+	dup setfont
+	[ exch /setfont cvx ] cvx bind def
+} bind def
+
+/level0 0 def
+/RES 0 def
+/PL 0 def
+/LS 0 def
+
+% BP -
+
+/BP {
+	/level0 save def
+	1 setlinecap
+	1 setlinejoin
+	72 RES div dup scale
+	LS {
+		90 rotate
+	} {
+		0 PL translate
+	} ifelse
+	1 -1 scale
+} bind def
+
+/EP {
+	level0 restore
+	showpage
+} bind def
+
+
+% centerx centery radius startangle endangle DA -
+
+/DA {
+	newpath arcn stroke
+} bind def
+
+% x y SN - x' y'
+% round a position to nearest (pixel + (.25,.25))
+
+/SN {
+	transform 
+	.25 sub exch .25 sub exch
+	round .25 add exch round .25 add exch
+	itransform
+} bind def
+	
+% endx endy startx starty DL -
+% we round the endpoints of the line, so that parallel horizontal
+% and vertical lines will appear even
+
+/DL {
+	SN
+	moveto
+	SN
+	lineto stroke
+} bind def
+
+% centerx centery radius DC -
+
+/DC {
+	newpath 0 360 arc closepath
+} bind def
+
+
+/TM matrix def
+
+%  width height centerx centery DE -
+
+/DE {
+	TM currentmatrix pop
+	translate scale newpath 0 0 .5 0 360 arc closepath
+	TM setmatrix
+} bind def
+
+% these are for splines
+
+/RC /rcurveto load def
+/RL /rlineto load def
+/ST /stroke load def
+/MT /moveto load def
+/CL /closepath load def
+
+% fill the last path
+
+% amount FL -
+
+/FL {
+	currentgray exch setgray fill setgray
+} bind def
+
+% fill with the ``current color''
+
+/BL /fill load def
+
+/LW /setlinewidth load def
+% new_font_name encoding_vector old_font_name RE -
+
+/RE {
+	findfont
+	dup maxlength dict begin
+	{
+		1 index /FID ne { def } { pop pop } ifelse
+	} forall
+	/Encoding exch def
+	dup /FontName exch def
+	currentdict end definefont pop
+} bind def
+
+/DEFS 0 def
+
+% hpos vpos EBEGIN -
+
+/EBEGIN {
+	moveto
+	DEFS begin
+} bind def
+
+/EEND /end load def
+
+/CNT 0 def
+/level1 0 def
+
+% llx lly newwid wid newht ht newllx newlly PBEGIN -
+
+/PBEGIN {
+	/level1 save def
+	translate
+	div 3 1 roll div exch scale
+	neg exch neg exch translate
+	% set the graphics state to default values
+	0 setgray
+	0 setlinecap
+	1 setlinewidth
+	0 setlinejoin
+	10 setmiterlimit
+	[] 0 setdash
+	/setstrokeadjust where {
+		pop
+		false setstrokeadjust
+	} if
+	/setoverprint where {
+		pop
+		false setoverprint
+	} if
+	newpath
+	/CNT countdictstack def
+	userdict begin
+	/showpage {} def
+} bind def
+
+/PEND {
+	clear
+	countdictstack CNT sub { end } repeat
+	level1 restore
+} bind def
+
+end def
+
+/setpacking where {
+	pop
+	setpacking
+} if
+%%EndResource
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Times-Bold
+%%IncludeResource: font Times-Italic
+grops begin/DEFS 1 dict def DEFS begin/u{.001 mul}bind def end/RES 72 def/PL
+792 def/LS false def/ENC0[/asciicircum/asciitilde/Scaron/Zcaron/scaron/zcaron
+/Ydieresis/trademark/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
+/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/space/exclam
+/quotedbl/numbersign/dollar/percent/ampersand/quoteright/parenleft/parenright
+/asterisk/plus/comma/hyphen/period/slash/zero/one/two/three/four/five/six/seven
+/eight/nine/colon/semicolon/less/equal/greater/question/at/A/B/C/D/E/F/G/H/I/J
+/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/bracketleft/backslash/bracketright/circumflex
+/underscore/quoteleft/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z
+/braceleft/bar/braceright/tilde/.notdef/quotesinglbase/guillemotleft
+/guillemotright/bullet/florin/fraction/perthousand/dagger/daggerdbl/endash
+/emdash/ff/fi/fl/ffi/ffl/dotlessi/dotlessj/grave/hungarumlaut/dotaccent/breve
+/caron/ring/ogonek/quotedblleft/quotedblright/oe/lslash/quotedblbase/OE/Lslash
+/.notdef/exclamdown/cent/sterling/currency/yen/brokenbar/section/dieresis
+/copyright/ordfeminine/guilsinglleft/logicalnot/minus/registered/macron/degree
+/plusminus/twosuperior/threesuperior/acute/mu/paragraph/periodcentered/cedilla
+/onesuperior/ordmasculine/guilsinglright/onequarter/onehalf/threequarters
+/questiondown/Agrave/Aacute/Acircumflex/Atilde/Adieresis/Aring/AE/Ccedilla
+/Egrave/Eacute/Ecircumflex/Edieresis/Igrave/Iacute/Icircumflex/Idieresis/Eth
+/Ntilde/Ograve/Oacute/Ocircumflex/Otilde/Odieresis/multiply/Oslash/Ugrave
+/Uacute/Ucircumflex/Udieresis/Yacute/Thorn/germandbls/agrave/aacute/acircumflex
+/atilde/adieresis/aring/ae/ccedilla/egrave/eacute/ecircumflex/edieresis/igrave
+/iacute/icircumflex/idieresis/eth/ntilde/ograve/oacute/ocircumflex/otilde
+/odieresis/divide/oslash/ugrave/uacute/ucircumflex/udieresis/yacute/thorn
+/ydieresis]def/Times-Italic@0 ENC0/Times-Italic RE/Times-Bold@0 ENC0/Times-Bold
+RE/Times-Roman@0 ENC0/Times-Roman RE
+%%EndProlog
+%%Page: 1 1
+%%BeginPageSetup
+BP
+%%EndPageSetup
+/F0 10/Times-Roman@0 SF 416.62(CE\(1\) CE\(1\))72 48 R/F1 9/Times-Bold@0 SF
+(NAME)72 84 Q F0(xce - X1)108 96 Q 2.5(1v)-.37 G(ersion of Chet')154.56 96 Q
+2.5(sE)-.55 G(macs)226.5 96 Q F1(SYNOPSIS)72 112.8 Q/F2 10/Times-Bold@0 SF(ce)
+108 124.8 Q F0
+([-r] [-b name] [+n] [-d display] [-f font] [-g geometry] [-R] [\214les])2.5 E
+F1(DESCRIPTION)72 141.6 Q F2(ce)108 153.6 Q F0 .037(is Chet')2.537 F 2.537(sE)
+-.55 G 2.537(macs. It)162.831 153.6 R .037(is a customizable, self-documenting\
+, real-time display editor similar to the GNU ver)2.537 F(-)-.2 E .499
+(sion of EMACS written by Richard Stallman.)108 165.6 R F2(ce)5.499 E F0 .499
+(is very similar to GNU EMACS, but there are some dif-)2.999 F
+(ferences, and one should not rely on complete compatibility)108 177.6 Q(.)-.65
+E F1(OPTIONS)72 194.4 Q F2(ce)108 206.4 Q F0
+(interprets the following \215ags when invoked:)2.5 E F2<ad72>108 223.2 Q F0
+.183(Cause the buf)158 223.2 R .183
+(fer containing the \214le designated by the following ar)-.18 F .182
+(gument to be placed in V)-.18 F(iew)-.6 E(\(read-only\) mode)158 235.2 Q F2
+<ad62>108 247.2 Q/F3 10/Times-Italic@0 SF(name).27 E F0(Cause the buf)158 247.2
+Q(fer containing the next \214le given as an ar)-.18 E(gument to be named)-.18
+E F3(name)2.5 E F2(+n)108 259.2 Q F0(Start at line)158 259.2 Q F3(n)2.5 E F0
+(in the \214rst)2.5 E F3(\214le)2.5 E F0(named as an ar)2.5 E(gument)-.18 E F2
+<ad64>108 271.2 Q F3(displayname).35 E F0(Start up on X1)158 283.2 Q 2.5(1d)
+-.37 G(isplay)228.74 283.2 Q F3(displayname)2.5 E F2<ad66>108 295.2 Q F3
+(fontname)1.98 E F0(Use)158 307.2 Q F3(fontname)2.5 E F0
+(rather than the default font)2.5 E F2<ad67>108 319.2 Q F3(geometry).4 E F0
+(Cause the initial)158 331.2 Q F2(xce)2.5 E F0
+(window to be created with size and placement speci\214ed by)2.5 E F3(geometry)
+2.5 E F2<ad52>108 343.2 Q F0(Cause the)158 343.2 Q F2(xce)2.5 E F0
+(window to simulate reverse video)2.5 E F1(INV)72 360 Q(OCA)-.18 E(TION)-.666 E
+F0(If)108 372 Q F2(ce)3.672 E F0 1.173(is invoked with no ar)3.673 F 1.173
+(guments, you will be placed in an empty buf)-.18 F 1.173
+(fer called *scratch*.)-.18 F(Otherwise,)6.173 E .565
+(each \214le name supplied as an ar)108 384 R .565(gument is given its own buf)
+-.18 F(fer)-.18 E 5.564(.O)-.55 G .564
+(nly the \214rst such \214le is read in immedi-)378.268 384 R
+(ately -- the others are deferred until needed to complete some operation.)108
+396 Q .221(The names of all buf)108 412.8 R .221
+(fers are saved in a list, and can be viewed with the C-X C-B command \()-.18 F
+F3(show-buffers)A F0(\).)A F1(RESOURCES)72 429.6 Q F0(For)108 441.6 Q F2(xce)
+2.5 E F0(the available X resources are:)2.5 E F2(font)108 458.4 Q F0
+(Speci\214es the name of the normal font.)148 458.4 Q 2.5(The default)5 F(is `)
+2.5 E(`8x13.')-.74 E(')-.74 E F2(geometry)108 475.2 Q F0
+(Speci\214es the preferred size)148 487.2 Q 2.5(and position of the)5 F(window)
+2.5 E(.)-.65 E F2(charClass)108 504 Q F0 2.818
+(Speci\214es comma-separated lists of character class bindings)148 516 R 5.318
+(of the form)7.818 F([low-]high:value.)5.318 E .509
+(These are used in determining which sets of characters)148 528 R .509
+(should be)5.509 F 3.01(treated the)5.51 F .51(same when doing)3.01 F
+(cut and paste.)148 540 Q(See the section on specifying character classes in)5
+E F3(xterm)2.5 E F0(\(1\).)A F2(multiClickT)108 556.8 Q(ime)-.18 E F0 .956
+(Speci\214es the maximum time in)148 568.8 R 3.456(milliseconds between)5.956 F
+.956(multi-click select events.)3.456 F .955(The default is)5.956 F
+(500 milliseconds.)148 580.8 Q F2 -.18(re)108 597.6 S(verseV).18 E(ideo)-.37 E
+F0 .206(Speci\214es that the)148 609.6 R F2(xce)2.706 E F0 .206
+(window is to simulate reverse video \(foreground color is)2.706 F F2
+(BlackPixel)2.707 E F0 2.707(,b)C(ack-)522.79 609.6 Q(ground color is)148 621.6
+Q F2(WhitePixel)2.5 E F0 2.5(\). The)B(default is `)2.5 E(`false.')-.74 E(')
+-.74 E F2(for)108 638.4 Q(egr)-.18 E(ound)-.18 E F0
+(Speci\214es the foreground color)148 650.4 Q 5(.T)-.55 G(he default is `)
+281.87 650.4 Q(`black.')-.74 E(')-.74 E F2(backgr)108 667.2 Q(ound)-.18 E F0
+(Speci\214es the background color)148 679.2 Q 5(.T)-.55 G(he default is `)
+284.65 679.2 Q(`white.')-.74 E(')-.74 E F1(HELP)72 696 Q F0 .055(While running)
+108 708 R F2(xce)2.555 E F0 2.555(,s)C .054
+(everal commands are available to help the inexperienced user)191.485 708 R
+5.054(.T)-.55 G 2.554(oe)450.374 708 S .054(xecute any)462.368 708 R F2(ce)
+2.554 E F0(com-)2.554 E .835
+(mand by name, type "ESC X command-name", followed by a carriage return.)108
+720 R 3.335(Al)5.835 G .835(ist of all)446.67 720 R F2(ce)3.335 E F0(commands)
+3.335 E 172.055(CWRU 1992)72 768 R(August 3)2.5 E(1)535 768 Q EP
+%%Page: 2 2
+%%BeginPageSetup
+BP
+%%EndPageSetup
+/F0 10/Times-Roman@0 SF 416.62(CE\(1\) CE\(1\))72 48 R 1.118
+(and a short explanation of each is available with the)108 84 R/F1 10
+/Times-Italic@0 SF(show-functions)3.618 E F0 3.618(command. The)3.618 F F1
+(help)3.618 E F0 1.118(command will)3.618 F
+(bring up a help screen in a new window)108 96 Q(.)-.65 E(The)108 112.8 Q F1
+(describe-bindings)3.762 E F0 1.263
+(command will also list each command, and the key sequence bound to it, if any)
+3.762 F(.)-.65 E .11(The list will be placed in a separate buf)108 124.8 R .11
+(fer and viewed in a new window)-.18 F 2.61(,s)-.65 G 2.61(ot)405.42 124.8 S
+.11(hat it can be saved to a \214le and)415.81 124.8 R 1.37(possibly printed.)
+108 136.8 R 2.77 -.7(To v)6.37 H 1.371
+(iew the command bound to a particular key sequence, use the).7 F F1
+(describe-key)3.871 E F0(com-)3.871 E(mand.)108 148.8 Q .455(For those unfamil\
+iar with EMACS-style editors, an interactive tutorial is provided.)108 165.6 R
+(The)5.454 E F1(tutorial)2.954 E F0(command)2.954 E
+(will run this tutorial from inside)108 177.6 Q/F2 10/Times-Bold@0 SF(ce)2.5 E
+F0 2.5(;t)C(he)255.5 177.6 Q F2(teach-ce)2.5 E F0
+(shell command will run this from a user)2.5 E 1.1 -.55('s s).37 H(hell.).55 E
+/F3 9/Times-Bold@0 SF(CUST)72 194.4 Q(OMIZA)-.162 E(TION)-.666 E F2(ce)108
+206.4 Q F0 1.045(will automatically read startup commands from an initializati\
+on \214le in a user)3.544 F 2.145 -.55('s h).37 H 1.045(ome directory).55 F
+3.545(,c)-.65 G(alled)520.56 206.4 Q F2(.ceinit)108 218.4 Q F0 2.853(,i)C 2.853
+(fo)141.963 218.4 S .353(ne is present.)153.146 218.4 R .353
+(Place commands as they would normally be entered to)5.353 F F2(ce)2.853 E F0
+.353(into this \214le.)2.853 F .353(Here is a)5.353 F(sample \214le:)108 230.4
+Q(bind-to-key ^C emacs-version)144 247.2 Q(set-\214ll-column 78)144 259.2 Q F3
+(BINDINGS)72 276 Q F0 .312(The key bindings in)108 288 R F2(xce)2.812 E F0 .312
+(can be altered to \214t personal tastes.)2.812 F .312
+(That is, the command executed when a key is)5.312 F
+(struck can be changed to whatever you like.)108 300 Q 1.4 -.7(To c)5 H
+(hange a binding, use the).7 E F1(bind-to-key)2.5 E F0(command.)2.5 E F3(BUGS)
+72 316.8 Q F0 1.127(There are almost certainly bugs in)108 328.8 R F2(xce)3.626
+E F0 6.126(.T)C(he)282.236 328.8 Q F1(make-bug-r)3.626 E(eport)-.37 E F0 1.126
+(command will create and switch to a new)3.626 F(buf)108 340.8 Q .788
+(fer in which a bug report may be composed.)-.18 F(The)5.789 E F1(send-bug-r)
+3.289 E(eport)-.37 E F0 .789(command will send the contents of)3.289 F
+(the current buf)108 352.8 Q(fer to the current)-.18 E F2(xce)2.5 E F0
+(maintainer as a bug report.)2.5 E F3(AUTHOR)72 369.6 Q F0(Chet Ramey)108 381.6
+Q(Case W)108 393.6 Q(estern Reserve University)-.8 E(chet@ins.CWRU.Edu)108
+405.6 Q F3(FILES)72 422.4 Q F1(xce)108 434.4 Q F0(The)144 434.4 Q F2(xce)2.5 E
+F0(executable)2.5 E F1(teach-ce)108 446.4 Q F0 2.5(As)144 458.4 S
+(cript that runs the interactive)157.61 458.4 Q F2(ce)2.5 E F0(tutorial)2.5 E
+F1(~/.ceinit)108 470.4 Q F0(The personal)5.17 E F2(ce)2.5 E F0
+(initialization \214le)2.5 E F3(SEE ALSO)72 487.2 Q F1 -.37(re)108 499.2 S
+(gexp).37 E F0(\(3\))A F1(emacs)108 511.2 Q F0(\(1\))A F1(xterm)108 523.2 Q F0
+(\(1\))A F3(BUGS)72 540 Q F0
+(Regular expression searches may not cross line boundaries)108 552 Q 172.055
+(CWRU 1992)72 768 R(August 3)2.5 E(2)535 768 Q EP
+%%Trailer
+end
+%%EOF

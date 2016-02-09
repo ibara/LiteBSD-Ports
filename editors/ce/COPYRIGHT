@@ -1,0 +1,19 @@
+All files in the CE distribution are subject to the following copyright:
+
+/*
+ * This file is part of the CE editor, and is
+ * Copyright (c) 1987, 1988, 1989, 1990, 1993, 1997 by Chester Ramey.
+ *
+ * Permission is hereby granted to copy, reproduce, redistribute or
+ * otherwise use this software subject to the following: 
+ * 	1) That there be no monetary profit gained specifically from 
+ *	   the use or reproduction of this software.
+ * 	2) This software may not be sold, rented, traded or otherwise 
+ *	   marketed.
+ * 	3) This copyright notice must be included prominently in any copy
+ * 	   made of this software.
+ *
+ * The author makes no claims as to the fitness or correctness of
+ * this software for any use whatsoever, and it is provided as is. 
+ * Any use of this software is at the user's own risk.
+ */

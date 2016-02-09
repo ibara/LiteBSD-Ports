@@ -1,0 +1,143 @@
+.TH CE 1 "1991 March 16" CWRU
+.SH NAME
+ce - Chet's Emacs
+.SH SYNOPSIS
+.B ce
+[-r] [-b name] [+n] [files]
+.SH DESCRIPTION
+.B ce
+is Chet's Emacs.  It is a customizable, self-documenting, real-time
+display editor similar to the GNU version of EMACS written by
+Richard Stallman.
+.B ce
+is very similar to GNU EMACS, but there are some differences, and
+one should not rely on complete compatibility.
+.SH OPTIONS
+.B ce
+interprets the following flags when invoked:
+.PP
+.PD 0
+.TP 10
+.B \-r
+Cause the buffer containing the file designated by the following
+argument to be placed in View (read-only) mode
+.TP
+.BI \-b name
+Cause the buffer containing the next file given as an argument to
+be named
+.I name
+.TP
+.BI \+n file
+Start at line
+.I n
+in 
+.I file
+.PD
+.SH INVOCATION
+If
+.B ce
+is invoked with no arguments, you will be placed in an empty buffer
+called *scratch*.  Otherwise, each file name supplied as an argument
+is given its own buffer.  Only the first such file is read in
+immediately -- the others are deferred until needed to complete some
+operation.
+.PP
+The names of all buffers are saved in a list, and can be viewed with
+the C-X C-B command (\fIshow-buffers\fP).
+.SH HELP
+While running
+.BR ce ,
+several commands are available to help the inexperienced user.  To
+execute any
+.B ce
+command by name, type "ESC X command-name", followed by a carriage
+return.  A list of all
+.B ce
+commands and a short explanation of each is available with the
+.I show-functions
+command.  The
+.I help
+command will bring up a help screen in a new window.
+.PP
+The
+.I describe-bindings
+command will also list each command, and the key sequence bound to it,
+if any.  The list will be placed in a separate buffer and viewed in a
+new window, so that it can be saved to a file and possibly printed.
+To view the command bound to a particular key sequence, use
+the
+.I describe-key
+command.
+.PP
+For those unfamiliar with EMACS-style editors, an interactive tutorial
+is provided.  The
+.I tutorial
+command will run this tutorial from inside
+.BR ce ;
+the
+.B teach-ce
+shell command will run this from a user's shell.
+.SH CUSTOMIZATION
+.B ce
+will automatically read startup commands from an initialization file
+in a user's home directory, called
+.BR .ceinit ,
+if one is present.  Place commands as they would normally be entered
+to
+.B ce
+into this file.
+Here is a sample file:
+.PP
+.RS
+.nf
+bind-to-key ^C emacs-version
+set-fill-column 78
+.fi
+.RE
+.SH BINDINGS
+The key bindings in
+.B ce
+can be altered to fit personal tastes.  That is, the command executed
+when a key is struck can be changed to whatever you like.  To change
+a binding, use the
+.I bind-to-key
+command.
+.SH BUGS
+There are almost certainly bugs in
+.BR ce .
+The
+.I make-bug-report
+command will create and switch to a new buffer in which a bug
+report may be composed.  The
+.I send-bug-report
+command will send the contents of the current buffer to the
+current
+.B ce
+maintainer as a bug report.
+.SH AUTHOR
+Chet Ramey
+.br
+Case Western Reserve University
+.br
+chet@ins.CWRU.Edu
+.SH FILES
+.PD 0
+.TP
+.I ce
+The \fBce\fP executable
+.TP
+.I teach-ce
+A script that runs the interactive \fBce\fP tutorial
+.TP
+.I ~/.ceinit
+The personal \fBce\fP initialization file
+.PD
+.SH SEE ALSO
+.PD 0
+.TP
+\fIregexp\fP(3)
+.TP
+\fIemacs\fP(1)
+.PD
+.SH BUGS
+Regular expression searches may not cross line boundaries
