@@ -3,6 +3,6 @@
 #
 
 # Hook up all editors ports
-SUBDIR=	ce dhex ee emg heme levee nano sre traditional-vi
+SUBDIR=	atto ce dhex ee emg heme levee nano sre traditional-vi
 
 .include <bsd.subdir.mk>

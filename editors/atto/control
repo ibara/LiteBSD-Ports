@@ -1,0 +1,8 @@
+Package: atto
+Version: 1.6
+Description: The smallest functional Emacs in less than 2000 lines of C.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Public Domain
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies
