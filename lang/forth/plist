@@ -1,0 +1,5 @@
+Portable Forth interpreter by Serge.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+###
+bin/forth
