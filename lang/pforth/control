@@ -5,4 +5,3 @@ Maintainer: Brian Callahan <bcallah@devio.us>
 License: Public Domain
 Architecture: mipsel
 Installed-Size: nbytes
-Depends: list of dependencies
