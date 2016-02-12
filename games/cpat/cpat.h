@@ -66,7 +66,7 @@ struct timespec {
 };
 #  endif
 #  if HAVE_USLEEP
-#    define nanosleep(req,rem)    ((void) usleep (*req.ts_nsec/1000))
+#    define nanosleep(req,rem)    ((void) usleep (*req.tv_nsec/1000))
 #  else
 #    define nanosleep(req,rem)  
 #  endif

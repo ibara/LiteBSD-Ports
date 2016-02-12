@@ -505,7 +505,7 @@ main(int argc, char **argv, char *envp[])
         read_hs();
     }
 
-    pauselength.ts_nsec= PAUSETIME*1000000/fast_flag;
+    pauselength.tv_nsec= PAUSETIME*1000000/fast_flag;
 
     srand(g.seed);
 
