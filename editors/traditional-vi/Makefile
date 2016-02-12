@@ -121,7 +121,7 @@ LDFLAGS+= -Wl,--gc-sections
 #
 # Ex is very large - this version will not fit on PDP-11's without overlay
 # software.  Things that can be turned off to save
-# space include LISPCODE (-l flag, showmatch and lisp options), CHDIR (the 
+# space include LISPCODE (-l flag, showmatch and lisp options), CHDIR (the
 # previously undocumented chdir command.)
 #
 # If your system expands tabs to 4 spaces you should -DTABS=4 below
@@ -166,9 +166,9 @@ FEATURES	= -DCHDIR -DFASTTAG -DUCVISUAL -DBIT8
 #
 # Historic comments:
 #
-# VMUNIX makes ex considerably larger, raising 
-# many limits and improving speed and simplicity of maintenance.  It is 
-# suitable only for a VAX or other large machine, and then probably only in 
+# VMUNIX makes ex considerably larger, raising
+# many limits and improving speed and simplicity of maintenance.  It is
+# suitable only for a VAX or other large machine, and then probably only in
 # a paged system.
 #
 # Don't define VFORK unless your system has the VFORK system call,
@@ -188,7 +188,7 @@ OSTYPE	= -DVMUNIX
 #
 #LARGEF	= -DLARGEF
 
-# 
+#
 # The next setting is a crucial one since it determines the way ex
 # gets its knowledge about the terminal's capabilities. If you get
 # weird results, try using another library here. Uncomment exactly
@@ -294,9 +294,9 @@ install-man:
 	test -d $(DESTDIR)$(MANDIR)/man1 || mkdir -p $(DESTDIR)$(MANDIR)/man1
 	$(INSTALL) -c -m 644 ex.0 $(DESTDIR)$(MANDIR)/man1/ex.0
 	$(INSTALL) -c -m 644 vi.0 $(DESTDIR)$(MANDIR)/man1/vi.0
-	ln ex.0 $(DESTDIR)$(MANDIR)/man1/edit.0
-	ln vi.0 $(DESTDIR)$(MANDIR)/man1/vedit.0
-	ln vi.0 $(DESTDIR)$(MANDIR)/man1/view.0
+	ln -f ex.0 $(DESTDIR)$(MANDIR)/man1/edit.0
+	ln -f vi.0 $(DESTDIR)$(MANDIR)/man1/vedit.0
+	ln -f vi.0 $(DESTDIR)$(MANDIR)/man1/view.0
 
 beforeinstall: all install-man
 	rm -f $(DESTDIR)$(BINDIR)/ex $(DESTDIR)$(BINDIR)/edit \
@@ -315,10 +315,10 @@ beforeinstall: all install-man
 	test -d $(DESTDIR)$(LIBEXECDIR) || mkdir -p $(DESTDIR)$(LIBEXECDIR)
 	$(INSTALL) -c $(STRIP) exrecover $(DESTDIR)$(LIBEXECDIR)/exrecover
 	$(INSTALL) -c $(STRIP) expreserve $(DESTDIR)$(LIBEXECDIR)/expreserve
-	ln ex $(DESTDIR)$(BINDIR)/edit
-	ln ex $(DESTDIR)$(BINDIR)/vedit
-	ln ex $(DESTDIR)$(BINDIR)/vi
-	ln ex $(DESTDIR)$(BINDIR)/view
+	ln -f ex $(DESTDIR)$(BINDIR)/edit
+	ln -f ex $(DESTDIR)$(BINDIR)/vedit
+	ln -f ex $(DESTDIR)$(BINDIR)/vi
+	ln -f ex $(DESTDIR)$(BINDIR)/view
 	test -d $(DESTDIR)$(PRESERVEDIR) || mkdir -p $(DESTDIR)$(PRESERVEDIR)
 	chmod 1777 $(DESTDIR)$(PRESERVEDIR)
 

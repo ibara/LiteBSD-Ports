@@ -687,7 +687,7 @@ static int      locstart ARGS((char *Startfile));
 static int      match ARGS((int filenum));
 static long     nblock ARGS((long size));
 static handler_t onctlz ARGS((int sig));
-static void     outch ARGS((int c));
+static int      outch ARGS((int c));
 static void     overflow ARGS((void));
 static void     pmode ARGS((int aflag,char *buf));
 static void     printpath ARGS((char str[]));
@@ -2648,10 +2648,10 @@ getWinSize(){
 
 }
 
-static void
+static int
 outch(int c)
 {
-    putchar(c);
+    return putchar(c);
 }
 
 static void

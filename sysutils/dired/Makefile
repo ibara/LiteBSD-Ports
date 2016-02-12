@@ -56,7 +56,7 @@ CFLAGS          += -ffunction-sections -fdata-sections $(DEFINES) \
 			-DMINFILES=$(MINFILES) \
 			-DMOREPGM=\"$(MOREPGM)\"
 
-DEFINES		= -DHAVE_TERMIOS_H -DHAVE_DIRENT_H
+DEFINES		= -DHAVE_TERMIOS_H -DHAVE_DIRENT_H -DHAVE_TERM_H
 
 # A few systems need -lcurses too, but usually just -ltermlib suffices
 LDFLAGS        += -Wl,--gc-sections

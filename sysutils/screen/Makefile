@@ -1,6 +1,6 @@
 # Generated automatically from Makefile.in by configure.
 #
-# Makefile template for screen 
+# Makefile template for screen
 #
 # See machine dependant config.h for more configuration options.
 #
@@ -35,8 +35,8 @@ AWK = mawk
 
 ### Chose some debug configuration options:
 # -DDEBUG
-#	Turn on really heavy debug output. This is written to 
-#	/tmp/debug/screen.{front,back} Look at these files and quote 
+#	Turn on really heavy debug output. This is written to
+#	/tmp/debug/screen.{front,back} Look at these files and quote
 #	questionable sections when sending bug-reports to the author.
 # -DTMPTEST
 #	Change the socket directory to a location that does not interfere
@@ -46,7 +46,7 @@ AWK = mawk
 #	With shadow-pw screen would never dump core. Use this option if you
 #	still want to have a core. Use only for debugging.
 # -DFORKDEBUG
-#	Swap roles of father and son when forking the SCREEN process. 
+#	Swap roles of father and son when forking the SCREEN process.
 #	Useful only for debugging.
 OPTIONS=
 #OPTIONS= -DDEBUG -DTMPTEST
@@ -95,7 +95,7 @@ term.h: term.c term.sh
 
 kmapdef.c: term.h
 
-tty.c:	tty.sh 
+tty.c:	tty.sh
 	sh $(srcdir)/tty.sh tty.c
 
 comm.h: comm.c comm.sh config.h
@@ -118,7 +118,7 @@ clean: mostlyclean
 
 cleandir: clean
 
-# Delete all files from the current directory that are created by 
+# Delete all files from the current directory that are created by
 # configuring or building the program.
 # building of term.h/comm.h requires awk. Keep it in the distribution
 # we keep config.h, as this file knows where 'make dist' finds the ETCSCREENRC.
@@ -168,7 +168,7 @@ screen-$(VERSION).tar: term.h comm.h tty.c kmapdef.c
 	  ../dist/screen-$(VERSION)/terminfo
 	mkdir dist/screen-$(VERSION)/etc
 	cd etc; ln * ../dist/screen-$(VERSION)/etc
-	sed -e 's/^startup/#startup/' -e 's/^autodetach/#autodetach/' < $(ETCSCREENRC) > dist/screen-$(VERSION)/etc/etcscreenrc 
+	sed -e 's/^startup/#startup/' -e 's/^autodetach/#autodetach/' < $(ETCSCREENRC) > dist/screen-$(VERSION)/etc/etcscreenrc
 	cp $(HOME)/.screenrc dist/screen-$(VERSION)/etc/screenrc
 	mkdir dist/screen-$(VERSION)/doc
 	sed -e 's@/local/emacs@/usr/local@g' < doc/Makefile.in > dist/screen-$(VERSION)/doc/Makefile.in
@@ -215,7 +215,7 @@ mdepend: $(CFILES) term.h
 depend: $(CFILES) term.h
 	cp Makefile Makefile~
 	sed -e '/\#\#\# Dependencies/q' < Makefile > tmp_make
-	for i in $(CFILES); do echo $$i; $(CPP_DEPEND) $$i >> tmp_make; done 
+	for i in $(CFILES); do echo $$i; $(CPP_DEPEND) $$i >> tmp_make; done
 	mv tmp_make Makefile
 
 screen.o socket.o: Makefile

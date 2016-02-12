@@ -660,19 +660,16 @@ int
 do_mount(int argc, const char ** argv)
 {
 	const char *	str;
-	const char *	type;
-	int		flags;
-
+#if	HAVE_LINUX_MOUNT || HAVE_BSD_MOUNT
+	const char *	type = MOUNT_TYPE;
+#endif
+#if	HAVE_LINUX_MOUNT
+	int		flags = MS_MGC_VAL;
+#elif	HAVE_BSD_MOUNT
+	int		flags = 0;
+#endif
 	argc--;
 	argv++;
-
-	type = MOUNT_TYPE;
-
-#if	HAVE_LINUX_MOUNT
-	flags = MS_MGC_VAL;
-#else
-	flags = 0;
-#endif
 
 	while ((argc > 0) && (**argv == '-'))
 	{
@@ -681,6 +678,7 @@ do_mount(int argc, const char ** argv)
 
 		while (*++str) switch (*str)
 		{
+#if	HAVE_LINUX_MOUNT || HAVE_BSD_MOUNT
 			case 't':
 				if ((argc <= 0) || (**argv == '-'))
 				{
@@ -692,7 +690,7 @@ do_mount(int argc, const char ** argv)
 				type = *argv++;
 				argc--;
 				break;
-
+#endif
 #if	HAVE_LINUX_MOUNT
 			case 'r':
 				flags |= MS_RDONLY;
@@ -1499,7 +1497,7 @@ do_losetup(int argc, const char ** argv)
 
 		if (loopfd < 0)
 		{
-			fprintf(stderr, "Error opening %s: %s\n", argv[2], 
+			fprintf(stderr, "Error opening %s: %s\n", argv[2],
 				strerror(errno));
 
 			return 1;
@@ -1507,7 +1505,7 @@ do_losetup(int argc, const char ** argv)
 
 		if (ioctl(loopfd, LOOP_CLR_FD, 0))
 		{
-			fprintf(stderr, "Error unassociating device: %s\n", 
+			fprintf(stderr, "Error unassociating device: %s\n",
 				strerror(errno));
 
 			return 1;
@@ -1518,7 +1516,7 @@ do_losetup(int argc, const char ** argv)
 
 	if (loopfd < 0)
 	{
-		fprintf(stderr, "Error opening %s: %s\n", argv[1], 
+		fprintf(stderr, "Error opening %s: %s\n", argv[1],
 			strerror(errno));
 
 		return 1;
@@ -1528,7 +1526,7 @@ do_losetup(int argc, const char ** argv)
 
 	if (targfd < 0)
 	{
-		fprintf(stderr, "Error opening %s: %s\n", argv[2], 
+		fprintf(stderr, "Error opening %s: %s\n", argv[2],
 			strerror(errno));
 
 		return 1;
@@ -1536,7 +1534,7 @@ do_losetup(int argc, const char ** argv)
 
 	if (ioctl(loopfd, LOOP_SET_FD, targfd))
 	{
-		fprintf(stderr, "Error setting up loopback device: %s\n", 
+		fprintf(stderr, "Error setting up loopback device: %s\n",
 			strerror(errno));
 
 		return 1;
@@ -1547,7 +1545,7 @@ do_losetup(int argc, const char ** argv)
 
 	if (ioctl(loopfd, LOOP_SET_STATUS, &loopInfo))
 	{
-		fprintf(stderr, "Error setting up loopback device: %s\n", 
+		fprintf(stderr, "Error setting up loopback device: %s\n",
 			strerror(errno));
 
 		return 1;
