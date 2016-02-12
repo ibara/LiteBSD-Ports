@@ -1,0 +1,8 @@
+Package: zmtx-zmrx
+Version: 1.02
+Description: ZMODEM send/receive programs
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Non-commercial use only
+Architecture: mipsel
+Installed-Size: nbytes
+Depends: list of dependencies

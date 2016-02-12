@@ -3,6 +3,7 @@
 #
 
 # Hook up all directories
-SUBDIR=	benchmarks devel editors games lang net shells sysutils www
+SUBDIR=	benchmarks comms devel editors games \
+	lang net shells sysutils www
 
 .include <bsd.subdir.mk>
