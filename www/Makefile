@@ -3,6 +3,6 @@
 #
 
 # Hook up all www ports
-SUBDIR=	httpsrv links
+SUBDIR=	httpsrv links thttpd
 
 .include <bsd.subdir.mk>

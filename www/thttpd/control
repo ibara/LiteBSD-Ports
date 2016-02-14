@@ -1,0 +1,7 @@
+Package: thttpd
+Version: 2.27
+Description: Simple, small, portable, fast, and secure HTTP server.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 629387

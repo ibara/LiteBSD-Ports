@@ -1,0 +1,57 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:573: checking host system type
+configure:594: checking target system type
+configure:612: checking build system type
+configure:638: checking for gcc
+configure:751: checking whether the C compiler (gcc  ) works
+configure:767: gcc -o conftest    conftest.c  1>&5
+configure:793: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:798: checking whether we are using GNU C
+configure:826: checking whether gcc accepts -g
+configure:861: checking gcc version
+configure:879: checking how to link static binaries
+configure:910: checking for __progname
+configure:946: checking how to run the C preprocessor
+configure:1029: checking for fcntl.h
+configure:1029: checking for grp.h
+configure:1029: checking for memory.h
+configure:1029: checking for paths.h
+configure:1029: checking for poll.h
+configure:1029: checking for sys/poll.h
+configure:1029: checking for sys/devpoll.h
+configure:1029: checking for sys/event.h
+configure:1029: checking for osreldate.h
+configure:1066: checking whether time.h and sys/time.h may both be included
+configure:1105: checking for dirent.h that defines DIR
+configure:1143: checking for opendir in -ldir
+configure:1228: checking for /usr/local/v6/lib
+configure:1238: checking for gethostbyname
+configure:1451: checking for socket
+configure:1580: checking for main in -linet6
+configure:1624: checking for crypt
+configure:1670: checking for crypt in -lcrypt
+configure:1719: checking for hstrerror
+configure:1810: checking for strerror
+configure:1867: checking for waitpid
+configure:1867: checking for vsnprintf
+configure:1867: checking for daemon
+configure:1867: checking for setsid
+configure:1867: checking for setlogin
+configure:1867: checking for getaddrinfo
+configure:1867: checking for getnameinfo
+configure:1867: checking for gai_strerror
+configure:1867: checking for kqueue
+configure:1867: checking for sigset
+configure:1867: checking for atoll
+configure:1923: checking for unistd.h
+configure:1962: checking for getpagesize
+configure:2015: checking for working mmap
+configure:2248: checking for select
+configure:2248: checking for poll
+configure:2304: checking if struct tm has tm_gmtoff member
+configure:2338: checking if int64_t exists
+configure:2371: checking if socklen_t exists
+configure:2406: checking whether make sets ${MAKE}
+configure:2444: checking for a BSD compatible install
