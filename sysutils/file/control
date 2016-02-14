@@ -1,0 +1,7 @@
+Package: file
+Version: 5.25
+Description: The venerable Unix file(1) command.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 4507410

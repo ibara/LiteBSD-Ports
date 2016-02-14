@@ -1,0 +1,97 @@
+cdf.lo: cdf.c file.h ../config.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/stdio.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/types.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/ansi.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/types.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/cdefs.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/endian.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/errno.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/fcntl.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/stdint.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/limits.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/regex.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/time.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/param.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/syslimits.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/signal.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/signal.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/trap.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/param.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/stat.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/time.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/stdarg.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/locale.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/assert.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/stdlib.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/unistd.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/unistd.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/string.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/ctype.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/runetype.h \
+ /home/retrobsd/strip/litebsd/DESTDIR/usr/include/limits.h cdf.h
+
+file.h:
+
+../config.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/stdio.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/types.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/ansi.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/types.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/cdefs.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/endian.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/errno.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/fcntl.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/stdint.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/limits.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/regex.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/time.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/param.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/syslimits.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/signal.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/signal.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/trap.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/machine/param.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/stat.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/time.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/stdarg.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/locale.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/assert.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/stdlib.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/unistd.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/sys/unistd.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/string.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/ctype.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/runetype.h:
+
+/home/retrobsd/strip/litebsd/DESTDIR/usr/include/limits.h:
+
+cdf.h:
