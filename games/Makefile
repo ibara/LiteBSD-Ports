@@ -3,6 +3,6 @@
 #
 
 # Hook up all gamess ports
-SUBDIR=	cpat
+SUBDIR=	cpat life
 
 .include <bsd.subdir.mk>

@@ -1,0 +1,24 @@
+What, why?
+----------
+
+This is an implementation of John Conway's game of life, made with C and Curses
+library. The purpose was to practice C, but I ended up making an interface with
+curses and at the same time practicing it.
+
+Any comments, modifications and stuff are welcome as long as they are
+constructive :)
+
+Controls
+--------
+
+h = move left
+j = move down
+k = move up
+l = move right
+Spacebar = make cell alive
+Up arrow = increase the number of generations per run
+Down arrow = decrease the number of generations per run
+q = quit
+Enter = begin simulation
+
+Use the hjkl, spacebar, up arrow, and down arrow keys to move around the grid, activate cells, and determine how many generations your simulation will last. Then press Enter to run the simulation. You can repeat the process after the simulation finishes.
