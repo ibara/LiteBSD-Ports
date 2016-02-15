@@ -1,0 +1,7 @@
+Package: bigint
+Version: 20140814
+Description: Library and programs that let you do math on arbitrary integers.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 348022

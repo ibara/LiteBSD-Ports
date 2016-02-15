@@ -1,0 +1,4 @@
+Need faster mod_multiply
+
+Why is Karatsuba multiply faster than regular squaring, when applying
+the Karatsuba construction to squaring seems to yield no improvement?
