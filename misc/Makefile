@@ -3,6 +3,6 @@
 #
 
 # Hook up all net ports
-SUBDIR=	globe phoon
+SUBDIR=	egg globe phoon
 
 .include <bsd.subdir.mk>

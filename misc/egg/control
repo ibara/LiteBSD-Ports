@@ -1,0 +1,7 @@
+Package: egg
+Version: 4
+Description: Simple countdown timer.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: ISC
+Architecture: mipsel
+Installed-Size: 75318
