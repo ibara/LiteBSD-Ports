@@ -1,0 +1,75 @@
+.TH mudecode 1 "17 February 1997"
+.SH NAME
+mudecode - MIME / UU decoder
+.SH SYNOPSIS
+mudecode
+.RB [ -v ]
+.RB [ -o
+.IR destdir ]
+.RI [ file
+.IR ... ]
+.SH DESCRIPTION
+.LP
+.B mudecode
+decodes one or more files that were encoded by
+.B uuencode
+or
+.BR mimeencode .
+.LP
+The uuencode file format is truly horrible.  No checksum or other
+error detection.  Expands the file more than it needs to.  Multiple
+barely-compatible versions.  But it's
+in widespread use, so we may as well make the best uudecoder we can.
+.LP
+The MIME base64 format isn't actually that much better, since it also
+lacks error detection.  But at least there's only one version of it.
+So far.
+.LP
+This decoder will handle multiple input and output files,
+automatically ignoring any intervening header and trailer lines.
+You can decode a whole Usenet spool directory with a very simple
+command.  For example:
+.nf
+    cd /usr/spool/news/alt/binaries/pictures/spam
+    mudecode -v -o ~/tmp *
+.fi
+Only problem with this is is doesn't handle articles that arrived
+out of order.
+To fix that you can use the date_order program:
+.nf
+    mudecode -v -o ~/tmp `date_order *`
+.fi
+This is still not perfect, due to missing articles and parts that
+were actually posted out of order, but it will correctly decode
+maybe 95% of the pictures in the spool.
+.SH OPTIONS
+.TP
+.B -v
+Verbose mode.
+.TP
+.B -o
+Specifies an output directory.
+.SH "SEE ALSO
+uuencode(1), mimencode(1), munpack(1), date_order(1)
+.SH AUTHOR
+Copyright (C) 1995,1997 by Jef Poskanzer <jef@mail.acme.com>.  All rights reserved.
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\" 1. Redistributions of source code must retain the above copyright
+.\"    notice, this list of conditions and the following disclaimer.
+.\" 2. Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\" 
+.\" THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+.\" SUCH DAMAGE.
