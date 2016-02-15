@@ -1,16 +1,35 @@
-#
-# LiteBSD Ports Makefile
-#
-
+# LiteBSD Ports Makefile.template
 V=	1.0		# Must have a value!
 PORT=	myprogram	# Must have a value!
-PROG=	myprogram
+PROG=	${PORT}		# Set this for automagic build/install
+NOMAN=			# Delete this if you have a manual page
+CLEANFILES+=		# If "make clean" doesn't remove everything
 SRCS=	source1.c source2.c \
 	source3.c source4.c
 
 # I like to add these CFLAGS and LDFLAGS as I find
 # you often save 15K-30K per program with them.
-CFLAGS+=-ffunction-sections -fdata-sections
-LDFLAGS+=-Wl,--gc-sections
+# Stripping the final binaries also brings down the size a lot.
+CFLAGS+= -ffunction-sections -fdata-sections
+LDFLAGS+= -Wl,--gc-sections -s
 
-.include <bsd.port.mk>
+# If you need to link to libraries other than libc and libgcc.
+LDADD+= -lm -lncurses
+
+# If you set PROG, then you get automagic building and installation,
+# as if it were any other program in the main tree. You can delete
+# eveything from here on down, except for the .include <bsd.port.mk>
+# line.
+# If you do not set PROG, you need to install the port by hand.
+# This is easy: the magic target name is beforeinstall.
+# XXX: Make a better target name, like do-install
+# You can also use the beforeinstall target with automagic
+# installation to install necessary items that are not binaries or
+# manual pages, such as READMEs or run-time configuration files.
+beforeinstall:
+	install -d ${DESTDIR}${BINDIR}
+	install -d ${DESTDIR}${MANDIR}1
+	install -c -m 555 myprogram ${DESTDIR}${BINDIR}
+	install -c -m 444 myprogram.0 ${DESTDIR}${MANDIR}1
+
+.include <bsd.port.mk>	# Do not delete this!
