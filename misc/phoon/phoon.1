@@ -1,0 +1,23 @@
+.TH phoon 1 "07 June 1988"
+.SH NAME
+phoon - show the PHase of the mOON
+.SH SYNOPSIS
+phoon
+.RB -l
+.IR lines ]
+.RI [ date ]
+.SH DESCRIPTION
+.I Phoon
+displays the phase of the moon, either currently
+or at a specified date / time.
+Unlike other such programs, which just tell you how long since first quarter
+or something like that, phoon
+.I shows
+you the phase with a cute little picture.
+You can vary the size of the picture with the -l flag, but only some
+sizes have pictures defined - other sizes use @'s.
+.SH "SEE ALSO"
+date_parse(3)
+.SH AUTHOR
+Jef Poskanzer.
+The moon-phase computation is from "moontool.c", by John Walker.

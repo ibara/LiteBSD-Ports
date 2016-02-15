@@ -1,0 +1,7 @@
+Package: globe
+Version: 20140814
+Description: Show an ASCII graphic of the currently-lighted face of the Earth.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 67157
