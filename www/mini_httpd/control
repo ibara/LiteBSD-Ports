@@ -1,0 +1,7 @@
+Package: mini_httpd
+Version: 1.23
+Description: Small HTTP server for low and medium traffic sites.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 287306

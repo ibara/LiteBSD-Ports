@@ -28,7 +28,7 @@
 prefix =	/usr/local
 exec_prefix =	${prefix}
 BINDIR =	${exec_prefix}/sbin
-WEBDIR =	$(prefix)/www
+WEBDIR =	$(prefix)/var/www
 CGIBINDIR =	$(WEBDIR)/cgi-bin
 MANDIR =	${prefix}/man
 

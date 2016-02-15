@@ -37,7 +37,7 @@ BINDIR = ${exec_prefix}/sbin
 # Pathname of directory to install the man page.
 MANDIR = ${prefix}/man
 # Pathname of directory to install the CGI programs.
-WEBDIR = $(prefix)/www
+WEBDIR = $(prefix)/var/www
 
 # CONFIGURE: The group that the web directory belongs to.  This is so that
 # the makeweb program can be installed set-group-id to that group, and make
@@ -129,6 +129,7 @@ installsubdirs:
 		WEBGROUP=$(WEBGROUP) \
 		install \
 	) ; done
+	install -c -m 444 index.html $(DESTDIR)$(prefix)/var/www/index.html
 
 
 clean:		cleansubdirs

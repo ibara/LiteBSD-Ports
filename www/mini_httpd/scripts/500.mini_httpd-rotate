@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# mini_httpd-rotate - nightly script to rotate mini_httpd's log files on FreeBSD
+#
+# This goes in /etc/periodic/daily.  It rotates the log files and then
+# tells mini_httpd to re-open its log file.
+
+cd /usr/local/www/chroot/logs
+rm -f mini_httpd_log.7.gz
+mv mini_httpd_log.6.gz mini_httpd_log.7.gz
+mv mini_httpd_log.5.gz mini_httpd_log.6.gz
+mv mini_httpd_log.4.gz mini_httpd_log.5.gz
+mv mini_httpd_log.3.gz mini_httpd_log.4.gz
+mv mini_httpd_log.2.gz mini_httpd_log.3.gz
+mv mini_httpd_log.1.gz mini_httpd_log.2.gz
+mv mini_httpd_log mini_httpd_log.1
+kill -HUP `cat /var/run/mini_httpd.pid`
+sleep 1
+gzip -f mini_httpd_log.1

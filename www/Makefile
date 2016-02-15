@@ -3,6 +3,6 @@
 #
 
 # Hook up all www ports
-SUBDIR=	httpsrv links thttpd
+SUBDIR=	httpsrv links mini_httpd thttpd
 
 .include <bsd.subdir.mk>

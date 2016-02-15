@@ -186,7 +186,7 @@
 ** measure, to prevent inadvertant exposure by accidentally running without -r.
 ** You can still disable it at runtime with the -nor flag.
 */
-#if 1
+#ifdef notdef
 #define ALWAYS_CHROOT
 #endif
 
