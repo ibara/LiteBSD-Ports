@@ -1,0 +1,131 @@
+.TH DIR 1
+.SH NAME
+DIR - Version 1.0 by Richard Conn
+.SH SYNOPSIS
+.nf
+Usage:
+        dir path        <-- List Files Along Path
+        dir -a path     <-- List Files Along Path with Attributes
+        dir -h path     <-- List Files Along Path, Including Hidden
+        dir -ah path    <-- -a and -h Combined
+.fi
+
+.SH DESCRIPTION
+	DIR is designed to provide a "clean" directory display to the user.
+It lists the matching files in a double column format, alphabetizing the
+entries down the columns.  File names and sizes are included in the listing,
+as well as a total at the bottom of the screen.  If a file is a directory,
+it is preceeded by the letter "D".
+
+	If the -a option is used, the attributes (read, write, and execute)
+are listed as well.
+
+	If the -h option is used, hidden files (those whose names start
+with a dot) are listed in addition to the other files.
+
+.SH EXAMPLES
+	The following directory displays illustrate the various
+options of DIR.  Comments are included in these displays, and they
+are denoted by "<--" and extend from this symbol to the end of the line.
+
+.nf
+$ dir $HOME/.src        <-- Display non-hidden files in $HOME/.src
+
+  -- Filename --  - Size -      -- Filename --  - Size -
+  c.c                  921      menu.c             10421    
+  chario.c            1498      setek.c              637    
+  comhex.c            2067      type.c              2611    
+  cpmunix.c           2490      uc.c               30629    
+  cpmutl7.c          32032      umodem.c           42252    
+  crc.c               1752      unixcpm.c           1264    
+  crck.c              1254      unixcpm.lbr       139904    
+  dir.c               7485      unixcpm.txt         1361    
+  dirtest.c           1325      xsq107.c           21521    
+  lar.c              13787      xtype107.c          6292    
+  lss.c                711      xusq107.c           6281    
+  mcheck.c            3186    
+           -- 23 Entries Displayed, 331681 Bytes --
+
+$ dir -a $HOME/.src     <-- Display non-hidden files in $HOME/.src
+                        <-- with Attributes
+
+  -- Filename --  - Size -  Atr      -- Filename --  - Size -  Atr
+  c.c                  921  rw-      menu.c             10421  rw-    
+  chario.c            1498  rw-      setek.c              637  rw-    
+  comhex.c            2067  rw-      type.c              2611  rw-    
+  cpmunix.c           2490  rw-      uc.c               30629  rw-    
+  cpmutl7.c          32032  rw-      umodem.c           42252  rw-    
+  crc.c               1752  rw-      unixcpm.c           1264  rw-    
+  crck.c              1254  rw-      unixcpm.lbr       139904  rw-    
+  dir.c               7485  rw-      unixcpm.txt         1361  rw-    
+  dirtest.c           1325  rw-      xsq107.c           21521  rw-    
+  lar.c              13787  rw-      xtype107.c          6292  rw-    
+  lss.c                711  rw-      xusq107.c           6281  rw-    
+  mcheck.c            3186  rw-    
+           -- 23 Entries Displayed, 331681 Bytes --
+
+$ dir -a $HOME/.src/*.c <-- Display non-hidden files matching *.c
+                        <-- in $HOME/.src with Attributes
+
+  -- Filename --  - Size -  Atr      -- Filename --  - Size -  Atr
+  c.c                  921  rw-      mcheck.c            3186  rw-    
+  chario.c            1498  rw-      menu.c             10421  rw-    
+  comhex.c            2067  rw-      setek.c              637  rw-    
+  cpmunix.c           2490  rw-      type.c              2611  rw-    
+  cpmutl7.c          32032  rw-      uc.c               30629  rw-    
+  crc.c               1752  rw-      umodem.c           42252  rw-    
+  crck.c              1254  rw-      unixcpm.c           1264  rw-    
+  dir.c               7485  rw-      xsq107.c           21521  rw-    
+  dirtest.c           1325  rw-      xtype107.c          6292  rw-    
+  lar.c              13787  rw-      xusq107.c           6281  rw-    
+  lss.c                711  rw-    
+           -- 21 Entries Displayed, 190416 Bytes --
+
+$ dir -a $HOME          <-- Display non-hidden files in $HOME
+                        <-- with Attributes
+
+  -- Filename --  - Size -  Atr
+  uc.log                 0  rw-    
+           -- 1 Entries Displayed, 0 Bytes --
+
+$ dir -ah $HOME         <-- Display all files in $HOME with
+                        <-- Attributes
+
+  -- Filename --  - Size -  Atr      -- Filename --  - Size -  Atr
+D .                    224  rwx      .profile              75  rw-    
+D ..                   160  rwx    D .sh                   80  rwx    
+D .bin                 320  rwx    D .src                 480  rwx    
+D .c                   464  rwx      .stmenu              225  rw-    
+D .doc                 224  rwx      .ucsetup             123  rw-    
+D .man                 432  rwx      uc.log                 0  rw-    
+D .new                  32  rwx    
+           -- 13 Entries Displayed, 2839 Bytes --
+.fi
+
+.SH FILES
+dir.c     <-- source code
+
+.SH DIAGNOSTICS
+	DIR issues only two diagnostic messages:
+.sp 2
+1.  Dynamic Memory Overflow
+.br
+	While DIR is running, it dynamically allocates memory for the
+directory entries as it identifies them.  This message means the the
+operating system has run out of dynamic memory to give to DIR.  This
+error is fatal and non-recoverable.  I have never seen it occur.
+.sp 2
+2.  Can't find filename
+.br
+	DIR cannot locate a file as identified by the user.  This occurs
+if the file unambigously specified by the user does not exist in the
+directory searched.
+
+.SH BUGS
+	No known bugs exist within DIR.
+
+.SH AUTHOR
+Richard Conn
+.sp 2
+DDN Addresses:  rconn@BRL, rconn@SIMTEL20
+

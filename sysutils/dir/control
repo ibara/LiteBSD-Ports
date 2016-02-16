@@ -1,0 +1,7 @@
+Package: dir
+Version: 19851203
+Description: Two-column directory listing program.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Unknown
+Architecture: mipsel
+Installed-Size: 81217
