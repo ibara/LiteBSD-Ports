@@ -1,0 +1,75 @@
+#! /usr/bin/make -f
+#
+#	debian/rules file for elvis-tiny
+#
+
+# Name.
+pkg	= elvis-tiny
+tmp	= $(shell pwd)/debian/tmp
+
+SHELL	= /bin/bash
+LC_ALL	= POSIX
+
+define checkdir
+	test -f cmd1.c
+endef
+
+build:
+# Builds the binary package.
+	$(checkdir)
+	make CC="$(CC) -fsigned-char"
+	$(CC) -O2 -s -o debian/wrapper debian/wrapper.c
+	touch build
+
+# Architecture independant files.
+binary-indep:   build
+	$(checkdir)
+
+# Make a binary package (.deb file)
+binary-arch:	build checkroot
+	-rm -rf $(tmp)
+	install -d -g root -m 755 -o root $(tmp)
+	install -d -g root -m 755 -o root $(tmp)/DEBIAN
+	install -d -g root -m 755 -o root $(tmp)/bin
+	install -d -g root -m 755 -o root $(tmp)/usr
+	install -d -g root -m 755 -o root $(tmp)/usr/share
+	install -d -g root -m 755 -o root $(tmp)/usr/share/doc
+	install -d -g root -m 755 -o root $(tmp)/usr/share/doc/$(pkg)
+	install -d -g root -m 755 -o root $(tmp)/usr/share/man
+	install -d -g root -m 755 -o root $(tmp)/usr/share/man/man1
+	install -g root -s -m 755 debian/wrapper $(tmp)/bin/vi
+	strip --remove-section=.comment --remove-section=.note $(tmp)/bin/vi
+	install -g root -s -m 755 elvis $(tmp)/bin/elvis-tiny
+	strip --remove-section=.comment --remove-section=.note $(tmp)/bin/elvis-tiny
+	install -g root -m 644 debian/changelog \
+		$(tmp)/usr/share/doc/$(pkg)/changelog.Debian
+	install -g root -m 644 debian/changelog.upstream \
+		$(tmp)/usr/share/doc/$(pkg)/changelog
+	install -g root -m 644 KNOWN.BUGS $(tmp)/usr/share/doc/$(pkg)
+	install -g root -m 644 debian/elvis-tiny.1 $(tmp)/usr/share/man/man1
+	gzip -9f $(tmp)/usr/share/man/man1/*
+	gzip -9f $(tmp)/usr/share/doc/$(pkg)/*
+
+	install -g root -m 644 debian/copyright $(tmp)/usr/share/doc/$(pkg)
+
+	install -g root -m 755 debian/postinst $(tmp)/DEBIAN
+	install -g root -m 755 debian/prerm $(tmp)/DEBIAN
+
+	dpkg-shlibdeps elvis
+	dpkg-gencontrol -isp
+	dpkg --build $(tmp) ..
+	rm -rf $(tmp)
+
+clean:	checkroot
+	-make clobber
+	rm -f build debian/{files,substvars,wrapper}
+	rm -rf $(tmp)
+	find . -name '*.bak' -o -name '*~' | xargs -r rm -f --
+
+binary: binary-indep binary-arch
+
+checkroot:
+	$(checkdir)
+	test root = "`whoami`"
+
+.PHONY: binary binary-arch binary-indep clean checkroot

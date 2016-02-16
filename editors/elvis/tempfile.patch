@@ -1,0 +1,208 @@
+From: Topi Miettinen <Topi.Miettinen@nic.fi>
+To: submit@bugs.debian.org
+Date: Tue, 17 Oct 2000 20:30:00 +0300
+Subject: Bug#74976: elvis-tiny: temporary file problems
+
+Package: elvis-tiny
+Version: 1.4-9
+Severity: grave
+
+Elvis-tiny (probably full elvis also) has serious problems with temporary
+file use. Those files are created with a predictable pattern and O_EXCL
+flag is not used when opening. This makes elvis users vulnerable to race
+conditions and/or data lossage.
+
+=======================================================================
+
+Topi included a patch to fix these problems, but the patch itself
+was broken in 2 ways:
+
+1. Recovery of lost files didn't work anymore
+2. :w to an existing file broke.
+
+The patch below by Miquel van Smoorenburg, based on Topi's bugreport
+and patch, should fix the bug without any side effects.
+
+diff -ruN elvis-tiny-1.4.b4/Makefile elvis-tiny-1.4/Makefile
+--- elvis-tiny-1.4.b4/Makefile	Tue Nov 28 11:50:09 2000
++++ elvis-tiny-1.4/Makefile	Tue Nov 28 13:04:01 2000
+@@ -45,7 +45,7 @@
+ BIN=	/usr/bin
+ CFLAGS=	-O2 -DM_SYSV -DCRUNCH -DNO_MKEXRC -DNO_CURSORSHAPE -DNO_CHARATTR \
+ 	-DNO_SHOWMODE -DNO_MODELINE -DNO_OPTCOLS -DNO_DIGRAPH -DNO_ABBR \
+-	-DNO_AT -DNO_SENTENCE -DNO_ERRLIST
++	-DNO_AT -DNO_SENTENCE -DNO_ERRLIST -DUSE_MKSTEMP -DUSE_SNPRINTF
+ OF=	-o 
+ RF=	-c
+ DATE=	-DDATE=\'\"`date`\"\'
+diff -ruN elvis-tiny-1.4.b4/cmd1.c elvis-tiny-1.4/cmd1.c
+--- elvis-tiny-1.4.b4/cmd1.c	Tue Nov 28 11:50:09 2000
++++ elvis-tiny-1.4/cmd1.c	Tue Nov 28 11:53:23 2000
+@@ -158,6 +158,8 @@
+ 	mark[*extra - 'a'] = tomark;
+ }
+ 
++void cmd_write2(MARK frommark, MARK tomark, int fd);
++
+ /*ARGSUSED*/
+ void cmd_write(frommark, tomark, cmd, bang, extra)
+ 	MARK	frommark;
+@@ -168,9 +170,6 @@
+ {
+ 	int		fd;
+ 	int		append;	/* boolean: write in "append" mode? */
+-	REG long	l;
+-	REG char	*scan;
+-	REG int		i;
+ 
+ 	/* if all lines are to be written, use tmpsave() */
+ 	if (frommark == MARK_FIRST && tomark == MARK_LAST)
+@@ -221,6 +220,16 @@
+ 			return;
+ 		}
+ 	}
++	cmd_write2(frommark, tomark, fd);
++	close(fd);
++}
++
++void cmd_write2(MARK frommark, MARK tomark, int fd)
++{
++	REG long	l;
++	REG char	*scan;
++	REG int		i;
++
+ 	for (l = markline(frommark); l <= markline(tomark); l++)
+ 	{
+ 		/* get the next line */
+@@ -231,7 +240,6 @@
+ 		/* print the line */
+ 		twrite(fd, scan, i);
+ 	}
+-	close(fd);
+ }	
+ 
+ 
+diff -ruN elvis-tiny-1.4.b4/system.c elvis-tiny-1.4/system.c
+--- elvis-tiny-1.4.b4/system.c	Tue Nov 28 11:50:09 2000
++++ elvis-tiny-1.4/system.c	Tue Nov 28 12:00:54 2000
+@@ -22,6 +22,8 @@
+ 
+ #include "config.h"
+ #include "vi.h"
++#include <unistd.h>
++#include <sys/types.h>
+ #include <signal.h>
+ extern char	**environ;
+ 
+@@ -331,7 +333,7 @@
+ {
+ 	int	scratch;	/* fd of the scratch file */
+ 	int	fd;		/* fd of the pipe from the filter */
+-	char	scrout[50];	/* name of the scratch out file */
++	char	*scrout = NULL;	/* name of the scratch out file */
+ 	MARK	new;		/* place where new text should go */
+ 	int	i;
+ 
+@@ -339,6 +341,9 @@
+ 	if (to)
+ 	{
+ 		/* we have lines */
++		scrout = malloc(strlen(o_directory) + 9 + 1); /* strlen("/soXXXXXX") */
++		if (!scrout)
++			return -1;
+ #if MSDOS || TOS
+ 		strcpy(scrout, o_directory);
+ 		if ((i=strlen(scrout)) && strchr("\\/:", scrout[i-1]))
+@@ -347,6 +352,7 @@
+ #else
+ 		sprintf(scrout, SCRATCHOUT, o_directory);
+ #endif
++#if !USE_MKSTEMP
+ 		mktemp(scrout);
+ 		cmd_write(from, to, CMD_BANG, 0, scrout);
+ 
+@@ -357,6 +363,13 @@
+ 			unlink(scrout);
+ 			return -1;
+ 		}
++#else
++		if ((scratch = mkstemp(scrout)) < 0)
++			return -1;
++		/* use those lines as stdin */
++		cmd_write2(from, to, scratch);
++		lseek(scratch, 0L, SEEK_SET);
++#endif
+ 	}
+ 	else
+ 	{
+@@ -371,6 +384,7 @@
+ 		{
+ 			close(scratch);
+ 			unlink(scrout);
++			free(scrout);
+ 		}
+ 		return -1;
+ 	}
+@@ -429,6 +443,7 @@
+ 	{
+ 		close(scratch);
+ 		unlink(scrout);
++		free(scrout);
+ 	}
+ 	return 0;
+ }
+diff -ruN elvis-tiny-1.4.b4/tmp.c elvis-tiny-1.4/tmp.c
+--- elvis-tiny-1.4.b4/tmp.c	Tue Nov 28 11:50:09 2000
++++ elvis-tiny-1.4/tmp.c	Tue Nov 28 13:02:18 2000
+@@ -23,6 +23,7 @@
+ #  include <sys/stat.h>
+ # endif
+ #endif
++#include <malloc.h>
+ 
+ 
+ #ifndef NO_MODELINE
+@@ -193,7 +194,12 @@
+ 		tmpname[i++]=SLASH;
+ 	sprintf(tmpname+i, TMPNAME+3, sum, statb.st_ino, statb.st_dev);
+ #else
++#  if USE_SNPRINTF
++	snprintf(tmpname, sizeof(tmpname), TMPNAME,
++		o_directory, sum, statb.st_ino, statb.st_dev);
++#  else
+ 	sprintf(tmpname, TMPNAME, o_directory, sum, statb.st_ino, statb.st_dev);
++#  endif
+ #endif
+ 
+ 	/* make sure nobody else is editing the same file */
+@@ -209,11 +215,28 @@
+ 
+ 	/* create the temp file */
+ #if ANY_UNIX
+-	close(creat(tmpname, 0600));		/* only we can read it */
++#  if USE_MKSTEMP
++	scan = malloc(strlen(o_directory) + 10 + 1); /* "/elvXXXXXX" */
++	if (scan == NULL) {
++		FAIL("No memory: %s", strerror(errno));
++	}
++	sprintf(scan, "%s/elvXXXXXX", o_directory);
++	if ((tmpfd = mkstemp(scan)) >= 0) {
++		if (link(scan, tmpname) < 0) {
++			close(tmpfd);
++			tmpfd = -1;
++		}
++		unlink(scan);
++	}
++	free(scan);
++#  else
++	tmpfd = open(tmpname, O_CREAT|O_WRONLY|O_TRUNC|O_EXCL, 0600);
++						/* only we can read it */
++#  endif
+ #else
+ 	close(creat(tmpname, FILEPERMS));	/* anybody body can read it, alas */
+-#endif
+ 	tmpfd = open(tmpname, O_RDWR | O_BINARY);
++#endif
+ 	if (tmpfd < 0)
+ 	{
+ 		FAIL("Can't create temporary file, errno=%d", errno);

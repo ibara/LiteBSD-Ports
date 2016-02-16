@@ -1,0 +1,176 @@
+elvis-tiny (1.4-20) unstable; urgency=low
+
+  * Fix overflow in command line processing (closes: #203258).
+    Note that elvis-tiny is riddled with strcpy's and fixing all of them
+    would be a major undertaking akin to a rewrite.
+  * Disable CTRL-Z as elvis-tiny has no suspend support
+    (closes: #136862, #206518)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Sat, 26 Nov 2005 14:58:47 +0100
+
+elvis-tiny (1.4-19) unstable; urgency=low
+
+  * QA Group upload orphaning this package
+  * debian/rules: invoke dpkg-gencontrol with -isp
+  * debian/control: rephrase package description synopsis
+
+ -- Andrew Pollock <apollock@debian.org>  Wed,  5 Oct 2005 07:02:38 +1000
+
+elvis-tiny (1.4-18.1) unstable; urgency=low
+
+  * 0-day NMU from the QA meeting.
+  * Correcting conflicting types for 'malloc' (closes: #258640)
+  * Replacing "gcc" with "$(CC)" for being able to cross-compile
+    (closes: #285295)
+  * Removing obsolete code for /usr/doc support (closes: #254913)
+
+ -- Axel Beckert <abe@deuxchevaux.org>  Sun, 11 Sep 2005 02:08:26 +0200
+
+elvis-tiny (1.4-18) unstable; urgency=low
+
+  * Include string.h in tmp.c to solve prototype problem on
+    64-bit platforms (closes: #124028)
+  * tmp.c: fix problem where a TAB expanded exactly at the right margin
+    and screen drawing was wrong (closes: #79385)
+  * Set LC_ALL=POSIX in debian/rules
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 23 Jan 2002 22:52:47 +0100
+
+elvis-tiny (1.4-17) unstable; urgency=low
+
+  * Remove empty /usr/doc directory from package (closes: #121549)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 28 Nov 2001 17:13:37 +0100
+
+elvis-tiny (1.4-16) unstable; urgency=high
+
+  * Change arguments to ln -sf in postinst (closes: #100283,#112124)
+  * Small adjustements for complete migration to termios
+    instead of termio (closes: #106099)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Fri,  5 Oct 2001 13:10:51 +0200
+
+elvis-tiny (1.4-15) unstable; urgency=low
+
+  * Make sure /etc/alternatives/vi also points to /bin/elvis-tiny
+    and not /usr/bin/elvis-tiny (closes: #90094, #92633)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Thu,  5 Apr 2001 17:56:50 +0200
+
+elvis-tiny (1.4-14) unstable; urgency=low
+
+  * Fix small bug in the range-segfault.patch patch (closes: #88119)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Thu,  1 Mar 2001 17:21:09 +0100
+
+elvis-tiny (1.4-13) unstable; urgency=low
+
+  * Oops. Should go into unstable only, with urgency=low...
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 21 Feb 2001 14:07:11 +0100
+
+elvis-tiny (1.4-12) stable unstable; urgency=high
+
+  * Patch by David Douthitt to fix subsitition bug (closes: #73059)
+  * Patch by David Douthitt to fix range bug (closes: #55407)
+  * Move elvis-tiny to /bin (closes: #37571)
+  * Install wrapper in /bin/vi that execs /usr/bin/vi if it is
+    present and /bin/elvis-tiny otherwise (closes: #72889)
+  * Install alternative for 'editor' (closes: #85318)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Tue, 20 Feb 2001 14:08:19 +0100
+
+elvis-tiny (1.4-11) stable unstable; urgency=high
+
+  * The patch by Topi Miettinen to fix critical bug #74976 broke
+    file recovery, but also the :w command. Re-engineered the patch
+    so that the bug is fixed without any side-effects (closes: #77918)
+  * Add explanation by the author to clear up copyright notice (closes: #72021)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Tue, 28 Nov 2000 13:13:40 +0100
+
+elvis-tiny (1.4-10) stable unstable; urgency=high
+
+  * Close tempfile hole. This is a critical bug, since it can be
+    exploited locally. Patch by Topi Miettinen <Topi.Miettinen@nic.fi>
+    Upload to both stable and unstable. (closes: #74976)
+  * Check for files > 500000 bytes (closes: #44601)
+  * There is no changelog file, say so (closes: #60003)
+  * Runs fine in 80x30 for me (closes: #62720)
+  * Compile warnings aren't bugs on old sources (closes: #62807)
+  * Add Build-Depends (closes: #70311)
+  * Fix update-alternatives call (closes: #71212)
+  * Compile with gcc -fsigned-char (closes: #62807)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 22 Nov 2000 15:04:54 +0100
+
+elvis-tiny (1.4-9) frozen unstable; urgency=high
+
+  * Add patch for Alpha (closes: #58672)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Tue,  7 Mar 2000 23:43:04 +0100
+
+elvis-tiny (1.4-8) unstable; urgency=high
+
+  * Set SHELL=/bin/bash in debian/rules (closes: #54607)
+  * MU this time (closes: #54146)
+  * Move man and doc to /usr/share
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Fri, 14 Jan 2000 13:35:10 +0100
+
+elvis-tiny (1.4-7.1) unstable; urgency=low
+
+  * Non-maintainer upload during bug-squashing-party.
+  * Recompilation with ncurses5.
+  * Fixed rules-file to work with /bin/ash.
+
+ -- Christian Kurz <shorty@debian.org>  Sat,  8 Jan 2000 12:56:19 +0100
+
+elvis-tiny (1.4-7) unstable; urgency=low
+
+  * Link with ncurses4
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Thu, 29 Oct 1998 19:14:40 +0100
+
+elvis-tiny (1.4-6) unstable; urgency=low
+
+  * Fixes bugs:
+    #22773: elvis-tiny: incorrect manpage permissions
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Mon,  5 Oct 1998 13:00:37 +0200
+
+elvis-tiny (1.4-5) unstable; urgency=low
+
+  * Lintian fixes
+  * Fixes bugs:
+    #12284: elvis-tiny unable to display long lines.
+    #14391: /usr/doc/$(PACKAGE)/copyright should not be compressed
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Sun, 22 Feb 1998 15:43:36 +0100
+
+elvis-tiny (1.4-4) unstable; urgency=low
+
+  * libc6 version
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 24 Sep 1997 14:05:38 +0200
+
+elvis-tiny (1.4-3) frozen unstable; urgency=high
+
+  * Corrected alternatives priority (0 -> 10).
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Sun, 1 Jun 1997 15:55:16 +0200
+
+elvis-tiny (1.4-2) frozen unstable; urgency=high
+
+  * Corrected alternatives priority (99 -> 0).
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Fri, 30 May 1997 14:10:28 +0200
+
+elvis-tiny (1.4-1) unstable; urgency=low
+
+  * Initial release of a tiny vi compatible editor.
+    (it was uploaded to "Incoming" before with distribution=experimental
+     but never got processed - would be nice if that actually worked.)
+
+ -- Miquel van Smoorenburg <miquels@cistron.nl>  Tue, 20 May 1997 14:38:24 +0200
+

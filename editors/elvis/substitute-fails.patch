@@ -1,0 +1,79 @@
+From: "David Douthitt" <ssrat@mailbag.com>
+To: submit@bugs.debian.org
+Date: Tue, 3 Oct 2000 11:01:13 -0500
+Subject: Substitution command & fails on third (second?) try
+Reply-to: ddouthitt@mennonite.minister.net
+Message-ID: <39D9BC79.32551.23FF0C@localhost>
+
+Package: elvis-tiny
+Version: 1.4
+
+Do the following on a file:
+
+:s/tcp/TCP!/
+j
+&
+j
+&
+
+The first substitution works, then the first & , then on the second & 
+it replaces the substitution string with a '~' character.
+
+For example, given:
+
+my-tcp
+his-tcp
+her-tcp
+their-tcp
+
+The results would be:
+
+my-TCP!
+his-TCP!
+her-~
+their-~
+
+This is consistent.
+From: "David Douthitt" <ssrat@mailbag.com>
+To: miquels@cistron.nl
+Date: Wed, 13 Dec 2000 09:36:44 -0600
+Subject: elvis-tiny
+Reply-to: n9ubh@callsign.net
+Message-ID: <3A37432C.147.3BB4F415@localhost>
+
+I have a few fixes for elvis-tiny, one for bug #55407 (vi segfaults) 
+and one for bug #73059 (substitute & fails on third substitution).
+
+I've included them in the text below.  They're two separate patches; 
+so cut them out into two files.
+
+I don't know if I qualify as "maintainer" but I'll see if I can keep 
+fixing and learning as time goes on.
+
+--- elvis-tiny-1.4/regsub.c.orig	Sun Jan 14 16:23:39 2001
++++ elvis-tiny-1.4/regsub.c	Sun Jan 14 16:24:13 2001
+@@ -194,10 +194,18 @@
+ 	}
+ 	*dst = '\0';
+ 
+-	/* remember what text we inserted this time */
+-	if (previous)
+-		free(previous);
+-	previous = (char *)malloc((unsigned)(strlen(start) + 1));
+-	if (previous)
+-		strcpy(previous, start);
++#ifndef NO_MAGIC
++       /* Don't copy the pattern if it is '~'; leave previous copy alone */
++       if (! (*start == '~' && *o_magic))
++       {
++#endif
++               /* remember what text we inserted this time */
++               if (previous)
++                       free(previous);
++               previous = (char *)malloc((unsigned)(strlen(start) + 1));
++               if (previous)
++                       strcpy(previous, start);
++#ifndef NO_MAGIC
++       }
++#endif
+ }

@@ -1,0 +1,17 @@
+diff -urN ../tmp-orig/elvis-tiny-1.4/config.h ./config.h
+--- ../tmp-orig/elvis-tiny-1.4/config.h 1991-08-04 23:20:32.000000000 +0200
++++ ./config.h  2004-07-10 21:39:44.742474908 +0200
+@@ -178,13 +178,6 @@
+ # define uchar         unsigned char
+ #endif
+
+-/* Some compilers prefer to have malloc declared as returning a (void *) */
+-#if BSD
+-extern void *malloc();
+-#else
+-extern char *malloc();
+-#endif
+-
+ /* Most compilers could benefit from using the "register" storage class */
+ #if 1
+ # define REG   register

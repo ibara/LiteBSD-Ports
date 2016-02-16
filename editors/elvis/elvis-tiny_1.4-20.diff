@@ -1,0 +1,1775 @@
+--- elvis-tiny-1.4.orig/cmd1.c
++++ elvis-tiny-1.4/cmd1.c
+@@ -158,6 +158,8 @@
+ 	mark[*extra - 'a'] = tomark;
+ }
+ 
++void cmd_write2(MARK frommark, MARK tomark, int fd);
++
+ /*ARGSUSED*/
+ void cmd_write(frommark, tomark, cmd, bang, extra)
+ 	MARK	frommark;
+@@ -168,9 +170,6 @@
+ {
+ 	int		fd;
+ 	int		append;	/* boolean: write in "append" mode? */
+-	REG long	l;
+-	REG char	*scan;
+-	REG int		i;
+ 
+ 	/* if all lines are to be written, use tmpsave() */
+ 	if (frommark == MARK_FIRST && tomark == MARK_LAST)
+@@ -221,6 +220,16 @@
+ 			return;
+ 		}
+ 	}
++	cmd_write2(frommark, tomark, fd);
++	close(fd);
++}
++
++void cmd_write2(MARK frommark, MARK tomark, int fd)
++{
++	REG long	l;
++	REG char	*scan;
++	REG int		i;
++
+ 	for (l = markline(frommark); l <= markline(tomark); l++)
+ 	{
+ 		/* get the next line */
+@@ -231,7 +240,6 @@
+ 		/* print the line */
+ 		twrite(fd, scan, i);
+ 	}
+-	close(fd);
+ }	
+ 
+ 
+--- elvis-tiny-1.4.orig/cmd2.c
++++ elvis-tiny-1.4/cmd2.c
+@@ -591,6 +591,12 @@
+ 		msg("\"%s\" is not a regular file", extra);
+ 		return;
+ 	}
++	if (statb.st_size > 500000)
++	{
++		msg("\"%s\" is too large (>500000 bytes)", extra);
++		close(fd);
++		return;
++	}
+ #endif /* not CRUNCH */
+ 
+ 	/* get blocks from the file, and add them */
+--- elvis-tiny-1.4.orig/config.h
++++ elvis-tiny-1.4/config.h
+@@ -178,13 +178,6 @@
+ # define uchar		unsigned char
+ #endif
+ 
+-/* Some compilers prefer to have malloc declared as returning a (void *) */
+-#if BSD
+-extern void *malloc();
+-#else
+-extern char *malloc();
+-#endif
+-
+ /* Most compilers could benefit from using the "register" storage class */
+ #if 1
+ # define REG	register
+--- elvis-tiny-1.4.orig/curses.c
++++ elvis-tiny-1.4/curses.c
+@@ -19,7 +19,7 @@
+ 
+ #if ANY_UNIX
+ # if UNIXV
+-#  include	<termio.h>
++#  include	<termios.h>
+ #  undef	TIOCWINSZ	/* we can't handle it correctly yet */
+ # else
+ #  include	<sgtty.h>
+@@ -101,8 +101,8 @@
+ 
+ #if ANY_UNIX
+ # if UNIXV
+-static struct termio	oldtermio;	/* original tty mode */
+-static struct termio	newtermio;	/* cbreak/noecho tty mode */
++static struct termios	oldtermio;	/* original tty mode */
++static struct termios	newtermio;	/* cbreak/noecho tty mode */
+ # else
+ static struct sgttyb	oldsgttyb;	/* original tty mode */
+ static struct sgttyb	newsgttyb;	/* cbreak/nl/noecho tty mode */
+@@ -160,7 +160,7 @@
+ 	/* change the terminal mode to cbreak/noecho */
+ #if ANY_UNIX
+ # if UNIXV
+-	ioctl(2, TCGETA, &oldtermio);
++	tcgetattr(2, &oldtermio);
+ # else
+ 	ioctl(2, TIOCGETP, &oldsgttyb);
+ # endif
+@@ -209,7 +209,7 @@
+ 	/* change the terminal mode back the way it was */
+ #if ANY_UNIX
+ # if UNIXV
+-	ioctl(2, TCSETAW, &oldtermio);
++	tcsetattr(2, TCSANOW, &oldtermio);
+ # else
+ 	ioctl(2, TIOCSETP, &oldsgttyb);
+ 
+@@ -239,19 +239,25 @@
+ 		/* change the terminal mode to cbreak/noecho */
+ #if ANY_UNIX
+ # if UNIXV
+-		ospeed = (oldtermio.c_cflag & CBAUD);
++		ospeed = cfgetospeed(&oldtermio);
+ 		ERASEKEY = oldtermio.c_cc[VERASE];
+ 		newtermio = oldtermio;
+ 		newtermio.c_iflag &= (IXON|IXOFF|IXANY|ISTRIP|IGNBRK);
+ 		newtermio.c_oflag &= ~OPOST;
+ 		newtermio.c_lflag &= ISIG;
+ 		newtermio.c_cc[VINTR] = ctrl('C'); /* always use ^C for interrupts */
++#ifdef VSUSP
++		newtermio.c_cc[VSUSP] = 0;	/* disable ^Z for elvis */
++#endif
++#ifdef VLNEXT
++		newtermio.c_cc[VLNEXT] = 0;		/* disable ^V for elvis */
++#endif
+ 		newtermio.c_cc[VMIN] = 1;
+ 		newtermio.c_cc[VTIME] = 0;
+ #  ifdef VSWTCH
+ 		newtermio.c_cc[VSWTCH] = 0;
+ #  endif
+-		ioctl(2, TCSETAW, &newtermio);
++		tcsetattr(2, TCSANOW, &newtermio);
+ # else /* BSD or V7 or Coherent or Minix */
+ 		struct tchars	tbuf;
+ #  ifdef TIOCSLTC
+--- elvis-tiny-1.4.orig/ex.c
++++ elvis-tiny-1.4/ex.c
+@@ -390,6 +390,11 @@
+ 			msg("first address exceeds the second");
+ 			return;
+ 		}
++               if (markline(tomark) > markline(MARK_LAST))
++               {
++                       msg("there are only %d lines in the file", nlines);
++                       return;
++               }
+ 	}
+ 	isdfl = (scan == cmdbuf);
+ 
+--- elvis-tiny-1.4.orig/main.c
++++ elvis-tiny-1.4/main.c
+@@ -25,7 +25,7 @@
+ 
+ /*---------------------------------------------------------------------*/
+ 
+-void main(argc, argv)
++int main(argc, argv)
+ 	int	argc;
+ 	char	*argv[];
+ {
+@@ -124,6 +124,7 @@
+ 			msg("Use the `virec` program to recover lost files");
+ 			endmsgs();
+ 			refresh();
++			sleep(1);
+ 			endwin();
+ 			exit(0);
+ 			break;
+@@ -195,11 +196,29 @@
+ #if ! ( MSDOS || TOS )
+ 		firstarg = argv[i];
+ #endif
+-		strcpy(args, argv[i]);
+-		while (++i < argc && strlen(args) + 1 + strlen(argv[i]) < sizeof args)
++		args[0] = 0;
++		while (i < argc)
+ 		{
+-			strcat(args, " ");
+-			strcat(args, argv[i]);
++			if (strlen(argv[i]) > 128)
++			{
++				msg("file name too long");
++				endmsgs();
++				refresh();
++				sleep(1);
++				endwin();
++				exit(1);
++			}
++			if (strlen(args) + strlen(argv[i]) + 1 >= sizeof(args))
++			{
++				msg("too many files on command line");
++				endmsgs();
++				refresh();
++				sleep(1);
++				endwin();
++				exit(1);
++			}
++			if (args[0]) strcat(args, " ");
++			strcat(args, argv[i++]);
+ 		}
+ 	}
+ #if ! ( MSDOS || TOS )
+@@ -330,7 +349,7 @@
+ 	refresh();
+ 	endwin();
+ 
+-	exit(0);
++	return(0);
+ 	/*NOTREACHED*/
+ }
+ 
+--- elvis-tiny-1.4.orig/redraw.c
++++ elvis-tiny-1.4/redraw.c
+@@ -354,7 +354,16 @@
+ 		if (i == '\t' && !*o_list)
+ 		{
+ 			i = col + tabstop - (col % tabstop);
++#if 1
++			/*
++			 *	With modern terminals, autowrap occurs only
++			 *	if a new character is added after limitcol.
++			 *	-- miquels@cistron.nl 23-Jan-2002
++			 */
++			if (i < limitcol || (has_AM && i <= limitcol))
++#else
+ 			if (i < limitcol)
++#endif
+ 			{
+ #ifdef CRUNCH
+ 				if (!clr && has_PT && !((i - leftcol) & 7))
+@@ -450,7 +459,16 @@
+ 		clrtoeol();
+ 	}
+ #endif
++#if 1
++	/*
++	 *	With modern terminals, autowrap occurs only
++	 *	if a new character is added after limitcol.
++	 *	-- miquels@cistron.nl 22-Feb-1998
++	 */
++	if (!has_AM || col <= limitcol)
++#else
+ 	if (!has_AM || col < limitcol)
++#endif
+ 	{
+ 		addch('\n');
+ 	}
+--- elvis-tiny-1.4.orig/regsub.c
++++ elvis-tiny-1.4/regsub.c
+@@ -194,10 +194,18 @@
+ 	}
+ 	*dst = '\0';
+ 
+-	/* remember what text we inserted this time */
+-	if (previous)
+-		free(previous);
+-	previous = (char *)malloc((unsigned)(strlen(start) + 1));
+-	if (previous)
+-		strcpy(previous, start);
++#ifndef NO_MAGIC
++       /* Don't copy the pattern if it is '~'; leave previous copy alone */
++       if (! (*start == '~' && *o_magic))
++       {
++#endif
++               /* remember what text we inserted this time */
++               if (previous)
++                       free(previous);
++               previous = (char *)malloc((unsigned)(strlen(start) + 1));
++               if (previous)
++                       strcpy(previous, start);
++#ifndef NO_MAGIC
++       }
++#endif
+ }
+--- elvis-tiny-1.4.orig/system.c
++++ elvis-tiny-1.4/system.c
+@@ -22,6 +22,8 @@
+ 
+ #include "config.h"
+ #include "vi.h"
++#include <unistd.h>
++#include <sys/types.h>
+ #include <signal.h>
+ extern char	**environ;
+ 
+@@ -331,7 +333,7 @@
+ {
+ 	int	scratch;	/* fd of the scratch file */
+ 	int	fd;		/* fd of the pipe from the filter */
+-	char	scrout[50];	/* name of the scratch out file */
++	char	*scrout = NULL;	/* name of the scratch out file */
+ 	MARK	new;		/* place where new text should go */
+ 	int	i;
+ 
+@@ -339,6 +341,9 @@
+ 	if (to)
+ 	{
+ 		/* we have lines */
++		scrout = malloc(strlen(o_directory) + 9 + 1); /* strlen("/soXXXXXX") */
++		if (!scrout)
++			return -1;
+ #if MSDOS || TOS
+ 		strcpy(scrout, o_directory);
+ 		if ((i=strlen(scrout)) && strchr("\\/:", scrout[i-1]))
+@@ -347,6 +352,7 @@
+ #else
+ 		sprintf(scrout, SCRATCHOUT, o_directory);
+ #endif
++#if !USE_MKSTEMP
+ 		mktemp(scrout);
+ 		cmd_write(from, to, CMD_BANG, 0, scrout);
+ 
+@@ -357,6 +363,13 @@
+ 			unlink(scrout);
+ 			return -1;
+ 		}
++#else
++		if ((scratch = mkstemp(scrout)) < 0)
++			return -1;
++		/* use those lines as stdin */
++		cmd_write2(from, to, scratch);
++		lseek(scratch, 0L, SEEK_SET);
++#endif
+ 	}
+ 	else
+ 	{
+@@ -371,6 +384,7 @@
+ 		{
+ 			close(scratch);
+ 			unlink(scrout);
++			free(scrout);
+ 		}
+ 		return -1;
+ 	}
+@@ -429,6 +443,7 @@
+ 	{
+ 		close(scratch);
+ 		unlink(scrout);
++		free(scrout);
+ 	}
+ 	return 0;
+ }
+--- elvis-tiny-1.4.orig/tio.c
++++ elvis-tiny-1.4/tio.c
+@@ -354,7 +354,7 @@
+ 	return 0;
+ }
+ # else 
+-static int dummy()
++static void dummy()
+ {
+ }
+ # endif
+--- elvis-tiny-1.4.orig/tmp.c
++++ elvis-tiny-1.4/tmp.c
+@@ -23,7 +23,8 @@
+ #  include <sys/stat.h>
+ # endif
+ #endif
+-
++#include <malloc.h>
++#include <string.h>
+ 
+ #ifndef NO_MODELINE
+ static void do_modeline(l, stop)
+@@ -75,7 +76,7 @@
+ 
+ 
+ /* The FAIL() macro prints an error message and then exits. */
+-#define FAIL(why,arg)	mode = MODE_EX; msg(why, arg); endwin(); exit(9)
++#define FAIL(why,arg)	mode = MODE_EX; msg(why, arg); sleep(1); endwin(); exit(9)
+ 
+ /* This is the name of the temp file */
+ static char	tmpname[80];
+@@ -132,6 +133,13 @@
+ 				msg("\"%s\" is not a regular file", origname);
+ 				return tmpstart("");
+ 			}
++			/* Can't edit files > 500.000 bytes */
++			if (statb.st_size > 500000)
++			{
++				msg("\"%s\" is too big (>500000 bytes)",
++					origname);
++				return tmpstart("");
++			}
+ 		}
+ 		else
+ 		{
+@@ -186,7 +194,12 @@
+ 		tmpname[i++]=SLASH;
+ 	sprintf(tmpname+i, TMPNAME+3, sum, statb.st_ino, statb.st_dev);
+ #else
++#  if USE_SNPRINTF
++	snprintf(tmpname, sizeof(tmpname), TMPNAME,
++		o_directory, sum, statb.st_ino, statb.st_dev);
++#  else
+ 	sprintf(tmpname, TMPNAME, o_directory, sum, statb.st_ino, statb.st_dev);
++#  endif
+ #endif
+ 
+ 	/* make sure nobody else is editing the same file */
+@@ -202,11 +215,28 @@
+ 
+ 	/* create the temp file */
+ #if ANY_UNIX
+-	close(creat(tmpname, 0600));		/* only we can read it */
++#  if USE_MKSTEMP
++	scan = malloc(strlen(o_directory) + 10 + 1); /* "/elvXXXXXX" */
++	if (scan == NULL) {
++		FAIL("No memory: %s", strerror(errno));
++	}
++	sprintf(scan, "%s/elvXXXXXX", o_directory);
++	if ((tmpfd = mkstemp(scan)) >= 0) {
++		if (link(scan, tmpname) < 0) {
++			close(tmpfd);
++			tmpfd = -1;
++		}
++		unlink(scan);
++	}
++	free(scan);
++#  else
++	tmpfd = open(tmpname, O_CREAT|O_WRONLY|O_TRUNC|O_EXCL, 0600);
++						/* only we can read it */
++#  endif
+ #else
+ 	close(creat(tmpname, FILEPERMS));	/* anybody body can read it, alas */
+-#endif
+ 	tmpfd = open(tmpname, O_RDWR | O_BINARY);
++#endif
+ 	if (tmpfd < 0)
+ 	{
+ 		FAIL("Can't create temporary file, errno=%d", errno);
+--- elvis-tiny-1.4.orig/Makefile
++++ elvis-tiny-1.4/Makefile
+@@ -0,0 +1,474 @@
++# combined Makefile for ELVIS - a clone of `vi`
++#
++# After editing this Makefile as described below, you should...
++#
++# Use `make` to compile all programs
++# Use `make install` to copy the programs to the BIN directory
++# Use `make clean` to remove all object files
++# Use `make clobber` to remove everything except source & documentation
++# Use `make tags` to build new "tags" and "refs" files
++# Use `make uue` to produce uuencoded compressed tar archives of the source
++# Use `make sh` to produce shar archives of the source
++# Use `make print` to print the Elvis documentation
++#
++# Several groups of Makefile settings are included below.  Choose *ONE* group
++# of settings for your particular system, and leave the others commented out.
++# The meanings of these settings are:
++#	O	the filename extension for unlinked object files -- usually .o
++#	E	the filename extension for executable files -- usually null
++#	EXTRA	version-specific object files used in elvis
++#	EXTRA2	version-specific object files used in elvis, virec, & refont
++#	LIBS	any special libraries, such as "-ltermcap"
++#	BIN	directory where executables should be installed
++#	CC	the C compiler command, possibly with "memory model" flags
++#	CFLAGS	compiler flags used to select compile-time options
++#	OF	link flag to control the output file's name -- usually -o<space>
++#	RF	flag used to denote "compile but don't link" -- usually -c
++#	DATE	a "cc" flag that defines "DATE".  e.g. DATE=-DDATE=\"7/4/76\"
++#	EVAL	the word "eval", if DATE requires it
++#	PROGS	the list of all programs
++#	CHMEM	any extra commands to be run after ELVIS is linked
++#	SORT	if the "tags" file must be sorted, then SORT=-DSORT
++#	INST	installation method: inst.dos, inst.tos, inst.os9, or inst.unix
++#	RM	the name of a program that deletes files
++#	PR1	used to print documentation -- typically "refont -c"
++#	PR2	used to send text to printer -- typically "| lpr"
++#	DUMMY	usually nothing, but OS9 needs "dummy"
++#	DOC	name of "doc" directory, with a trailing slash
++
++#---- These settings are recommended for System-V UNIX and SCO XENIX-386 ----
++O=	.o
++E=
++EXTRA=
++EXTRA2=
++LIBS=	-lncurses
++BIN=	/usr/bin
++CFLAGS=	-O2 -DM_SYSV -DCRUNCH -DNO_MKEXRC -DNO_CURSORSHAPE -DNO_CHARATTR \
++	-DNO_SHOWMODE -DNO_MODELINE -DNO_OPTCOLS -DNO_DIGRAPH -DNO_ABBR \
++	-DNO_AT -DNO_SENTENCE -DNO_ERRLIST -DUSE_MKSTEMP -DUSE_SNPRINTF
++OF=	-o 
++RF=	-c
++DATE=	-DDATE=\'\"`date`\"\'
++EVAL=	eval 
++PROGS=	elvis
++CHMEM=	
++SORT=	-DSORT
++INST=	inst.unix
++RM=	rm -f
++PR1=	refont -c
++PR2=	| lpr
++DUMMY=
++DOC=	doc/
++
++#---- These settings are recommended for SCO XENIX-286 ----
++#O=	.o
++#E=
++#EXTRA=
++#EXTRA2=
++#LIBS=	-ltermcap
++#BIN=	/usr/local/bin
++#CC=	cc -M2s -i
++#CFLAGS=	-DM_SYSV -Ox -DCS_IBMPC
++#OF=	-o 
++#RF=	-c
++#DATE=	-DDATE=\'\"`date`\"\'
++#EVAL=	eval 
++#PROGS=	elvis$E ctags$E ref$E virec$E refont$E
++#CHMEM=	
++#SORT=	-DSORT
++#INST=	inst.unix
++#RM=	rm -f
++#PR1=	refont -c
++#PR2=	| lp
++#DUMMY=
++#DOC=	doc/
++
++#---- These settings are recommended for BSD 4.3 UNIX ----
++#O=	.o
++#E=
++#EXTRA=
++#EXTRA2=
++#LIBS=	-ltermcap
++#BIN=	/usr/local/bin
++#CFLAGS=	-Dbsd -O
++#OF=	-o 
++#RF=	-c
++#DATE=	-DDATE=\'\"`date`\"\'
++#EVAL=	eval 
++#PROGS=	elvis$E ctags$E ref$E virec$E refont$E
++#CHMEM=	
++#SORT=	-DSORT
++#INST=	inst.unix
++#RM=	rm -f
++#PR1=	refont -c
++#PR2=	| lpr
++#DUMMY=
++#DOC=	doc/
++
++#---- These settings are recommended for Coherent ----
++#O=.o
++#E=
++#EXTRA=
++#EXTRA2=
++#LIBS=	-lterm
++#BIN=	/usr/bin
++#CC=	cc 
++#CFLAGS=	-O -DCOHERENT -DCRUNCH -DNO_CHARATTR -DNO_CURSORSHAPE \
++#	-DNO_DIGRAPH -DNO_MKEXRC -VSUVAR
++#OF=	-o 
++#RF=	-c
++#DATE=	-DDATE=\'\"`date`\"\'
++#EVAL=	eval
++#PROGS=	elvis$E ctags$E ref$E virec$E refont$E
++#CHMEM=	fixstack 2000 elvis$E
++#SORT=
++#INST=	inst.unix
++#RM=	rm -f
++#PR1=	refont -b
++#PR2=	| lpr
++#DUMMY=
++#DOC=	doc/
++
++#---- These settings are recommended for Minix-ST ----
++#O=	.o
++#E=
++#EXTRA=
++#EXTRA2=
++#LIBS=
++#BIN=	/usr/bin
++#CC=	cc
++#CFLAGS=
++#OF=	-o 
++#RF=	-c
++#DATE=	-DDATE=\'\"`date`\"\'
++#EVAL=	eval 
++#PROGS=	elvis$E ctags$E ref$E virec$E refont$E
++#CHMEM=	chmem =18000 elvis
++#SORT=
++#INST=	inst.unix
++#RM=	rm -f
++#PR1=	lpr
++#PR2=
++#DUMMY=
++#DOC=	doc/
++
++#---- These settings are recommended for Minix-PC ----
++#O=	.s
++#E=
++#EXTRA=	tinytcap$O
++#EXTRA2=
++#LIBS=
++#BIN=	/usr/bin
++#CC=	cc -i
++#CFLAGS=	-O -DCRUNCH -DNO_MKEXRC -DNO_CURSORSHAPE -DNO_CHARATTR \
++#	-DNO_SHOWMODE -DNO_MODELINE -DNO_OPTCOLS -DNO_DIGRAPH -DNO_ABBR \
++#	-DNO_AT -DNO_SENTENCE -DNO_ERRLIST
++#### (all but -DNO_EXTENSIONS, -DNO_RECYCLE, -DNO_MAGIC, and -DNO_CHARSEARCH)
++#OF=	-o 
++#RF=	-c
++#DATE=	-DDATE=\'\"`date`\"\'
++#EVAL=	eval 
++#PROGS=	elvis$E ctags$E ref$E virec$E refont$E
++#CHMEM=
++#SORT=
++#INST=	inst.unix
++#RM=	rm -f
++#PR1=	lpr
++#PR2=	
++#DUMMY=
++#DOC=	doc/
++
++#---- These settings are recommended for MS-DOS + MS-C + NDMAKE ----
++#O=	.obj
++#E=	.exe
++#EXTRA=	pc$O sysdos$O tinytcap$O
++#EXTRA2=
++#LIBS=
++#BIN=	c:\dos
++#CC=	cl /AM
++#CFLAGS=	-O -DCS_IBMPC -DCS_SPECIAL
++#OF=	-o 
++#RF=	-c
++#DATE=
++#EVAL=
++#PROGS=	elvis$E ex$E ctags$E ref$E virec$E wildcard$E refont$E
++#CHMEM=	
++#SORT=
++#INST=	inst.dos
++#RM=	del
++#PR1=	refont -c
++#PR2=	>PRN
++#DUMMY=
++#DOC=	doc\
++
++#---- These settings are recommended for Atari TOS + Mark Williams C ----
++#O=.o
++#E=.ttp
++#EXTRA=	sysdos$O tinytcap$O
++#EXTRA2=	atari$O
++#LIBS=
++#BIN=	c:\
++#CC=	cc -VPEEP
++#CFLAGS=	-O -DCS_IBMPC -DCS_SPECIAL
++#OF=	-o 
++#RF=	-c
++#DATE=
++#EVAL=
++#PROGS=	elvis$E ctags$E ref$E virec$E wildcard$E shell$E refont$E
++#CHMEM=
++#SORT=
++#INST=	inst.tos
++#RM=	rm -f
++#PR1=	refont -e
++#PR2=	>PRT:
++#DUMMY=
++#DOC=	'doc\'
++
++#---- These settings are recommended for OS-9/68K V2.3 ----
++#O=	.r
++#E=
++#EXTRA=	date$O
++#EXTRA2=	osk$O 
++#LIBS=	-l=/dd/lib/termlib.l
++#BIN=	/dd/usr/cmds
++#CC=	cc
++#ODIR=	/dd/usr/src/elvis
++#CFLAGS=	-gq -m=2
++#OF=	-f=$(ODIR)/
++#RF=	-r
++#DATE=
++#EVAL=
++#PROGS=	elvis$E vi$E view$E input$E ctags$E ref$E virec$E refont$E
++#CHMEM=	touch date.r
++#SORT=
++#INST=	inst.os9
++#RM=	del *.stb *.dbg
++#PR1=	refont -b
++#PR2=	>/p
++#DUMMY=	dummy
++#DOC=	doc/
++
++###########################################################################
++###########################################################################
++###                                                                     ###
++###     The rest of this Makefile contains no user-servicable parts     ###
++###                                                                     ###
++###########################################################################
++###########################################################################
++
++OBJS=	blk$O cmd1$O cmd2$O curses$O cut$O ex$O input$O main$O misc$O \
++	modify$O move1$O move2$O move3$O move4$O move5$O opts$O recycle$O \
++	redraw$O regexp$O regsub$O system$O tio$O tmp$O vars$O vcmd$O vi$O
++
++ALIAS=	alias$O
++
++DOCS=	$(DOC)index.doc $(DOC)intro.doc $(DOC)visual.doc $(DOC)ex.doc \
++	$(DOC)regexp.doc $(DOC)options.doc $(DOC)cutbufs.doc $(DOC)differ.doc \
++	$(DOC)internal.doc $(DOC)cflags.doc $(DOC)termcap.doc \
++	$(DOC)environ.doc $(DOC)versions.doc
++
++SRC1=	README KNOWN.BUGS $(DOC)intro.doc $(DOC)visual.doc $(DOC)ex.doc \
++	$(DOC)versions.doc $(DOC)cflags.doc $(DOC)differ.doc
++SRC2=	$(DOC)cutbufs.doc $(DOC)options.doc $(DOC)environ.doc $(DOC)regexp.doc \
++	$(DOC)internal.doc $(DOC)termcap.doc $(DOC)index.doc $(DOC)ctags.man \
++	$(DOC)elvis.man $(DOC)ref.man $(DOC)refont.man $(DOC)virec.man
++SRC3=	Elvis.lnk Elvis.mak Elvis.prj Makefile.mix alias.c atari.c \
++	ctags.c pc.c ref.c shell.c sysdos.c virec.c wildcard.c \
++	profile.sh osk.c osk.h date.c
++SRC4=	blk.c cmd1.c cmd2.c config.h curses.c
++SRC5=	curses.h cut.c ex.c input.c main.c misc.c
++SRC6=	modify.c move1.c move2.c move3.c move4.c move5.c opts.c recycle.c \
++	redraw.c 
++SRC7=	regexp.c regexp.h regsub.c system.c tinytcap.c tio.c tmp.c 
++SRC8=	vars.c vcmd.c vi.c vi.h refont.c
++
++###########################################################################
++
++all: $(PROGS)
++	@echo done.
++
++elvis$E: $(OBJS) $(EXTRA) $(EXTRA2)
++	$(CC) $(CFLAGS) $(OF)elvis$E $(OBJS) $(EXTRA) $(EXTRA2) $(LIBS)
++	$(CHMEM)
++
++ctags$E: ctags.c
++	$(CC) $(CFLAGS) $(SORT) $(OF)ctags$E ctags.c
++
++ref$E: ref.c
++	$(CC) $(CFLAGS) $(OF)ref$E ref.c
++
++virec$E: virec.c
++	$(CC) $(CFLAGS) $(OF)virec$E virec.c $(EXTRA2)
++
++view$E: $(ALIAS)
++	$(CC) $(CFLAGS) $(OF)view$E $(ALIAS)
++
++ex$E: $(ALIAS)
++	$(CC) $(CFLAGS) $(OF)ex$E $(ALIAS)
++
++vi$E: $(ALIAS)
++	$(CC) $(CFLAGS) $(OF)vi$E $(ALIAS)
++
++input$E: $(ALIAS)
++	$(CC) $(CFLAGS) $(OF)input$E $(ALIAS)
++
++shell$E: shell.c
++	$(CC) $(CFLAGS) $(OF)shell$E shell.c
++
++wildcard$E: wildcard.c
++	$(CC) $(CFLAGS) $(OF)wildcard$E wildcard.c
++
++refont$E: refont.c
++	$(CC) $(CFLAGS) $(OF)refont$E refont.c $(EXTRA2)
++
++##############################################################################
++
++# The file cmd1.c is compiled with the extra flag -DDATE="today's date".
++cmd1$O: cmd1.c vi.h config.h
++	$(EVAL) $(CC) $(CFLAGS) $(RF) $(DATE) cmd1.c
++
++# "It all depends..."
++$(OBJS): vi.h curses.h config.h
++
++# OS9 must create a custom date.c file, and compile it.
++date$O: $(OBJS)
++	@echo '/* compilation date of elvis */' >-date.c
++	@echo -r 'char date[] = "' >+date.c
++	@echo -r 'echo -r ' >-/dd/tmp/date.c
++	@date >+/dd/tmp/date.c
++	@shell /dd/tmp/date.c >+date.c
++	@echo '";' >+date.c
++	@del /dd/tmp/date.c
++	$(CC) $(CFLAGS) $(RF) date.c
++
++##############################################################################
++install: $(INST)
++	@echo Installation complete.
++
++inst.unix: $(DUMMY)
++	cp $(PROGS) $(BIN)
++	(cd $(BIN); chmod 755 $(PROGS))
++	(cd $(BIN); chown bin $(PROGS))
++	-ln $(BIN)/elvis $(BIN)/vi
++	-ln $(BIN)/elvis $(BIN)/ex
++	-ln $(BIN)/elvis $(BIN)/view
++	-ln $(BIN)/elvis $(BIN)/input
++
++inst.dos: $(DUMMY)
++	copy $(PROGS) $(BIN)
++	copy $(BIN)/ex$E $(BIN)/vi$E
++	copy $(BIN)/ex$E $(BIN)/view$E
++	copy $(BIN)/ex$E $(BIN)/input$E
++
++inst.tos: $(DUMMY)
++	copy $(PROGS) $(BIN)
++
++inst.os9: $(DUMMY)
++	copy $(PROGS) -rw=$(BIN)
++	chd $(BIN); attr -epenprnpw $(PROGS)
++
++##############################################################################
++clean: $(DUMMY)
++	$(RM) *$O $(DOC)*.1 elvis?.uue elvis?.sh core
++
++clobber: clean
++	$(RM) tags refs $(PROGS)
++
++##############################################################################
++print: refont$E
++	$(PR1) $(DOCS) $(PR2)
++
++tags refs: ctags$E
++	ctags -r *.c *.h
++
++##############################################################################
++uue: elvis1.uue elvis2.uue elvis3.uue elvis4.uue elvis5.uue \
++	elvis6.uue elvis7.uue elvis8.uue
++
++elvis1.uue: $(SRC1)
++	tar cf elvis1.tar $(SRC1)
++	compress -b13 elvis1.tar
++	cp README elvis1.uue
++	uue elvis1.tar.Z - >>elvis1.uue
++	$(RM) elvis1.tar*
++
++elvis2.uue: $(SRC2)
++	tar cf elvis2.tar $(SRC2)
++	compress -b13 elvis2.tar
++	uue elvis2.tar.Z
++	$(RM) elvis2.tar*
++
++elvis3.uue: $(SRC3)
++	tar cf elvis3.tar $(SRC3)
++	compress -b13 elvis3.tar
++	uuencode elvis3.tar.Z <elvis3.tar.Z >elvis3.uue
++	$(RM) elvis3.tar*
++
++elvis4.uue: $(SRC4)
++	tar cf elvis4.tar $(SRC4)
++	compress -b13 elvis4.tar
++	uuencode elvis4.tar.Z <elvis4.tar.Z >elvis4.uue
++	$(RM) elvis4.tar*
++
++elvis5.uue: $(SRC5)
++	tar cf elvis5.tar $(SRC5)
++	compress -b13 elvis5.tar
++	uuencode elvis5.tar.Z <elvis5.tar.Z >elvis5.uue
++	$(RM) elvis5.tar*
++
++elvis6.uue: $(SRC6)
++	tar cf elvis6.tar $(SRC6)
++	compress -b13 elvis6.tar
++	uuencode elvis6.tar.Z <elvis6.tar.Z >elvis6.uue
++	$(RM) elvis6.tar*
++
++elvis7.uue: $(SRC7)
++	tar cf elvis7.tar $(SRC7)
++	compress -b13 elvis7.tar
++	uuencode elvis7.tar.Z <elvis7.tar.Z >elvis7.uue
++	$(RM) elvis7.tar*
++
++elvis8.uue: $(SRC8)
++	tar cf elvis8.tar $(SRC8)
++	compress -b13 elvis8.tar
++	uuencode elvis8.tar.Z <elvis8.tar.Z >elvis8.uue
++	$(RM) elvis8.tar*
++
++##############################################################################
++sh: elvis1.sh elvis2.sh elvis3.sh elvis4.sh elvis5.sh elvis6.sh \
++	elvis7.sh elvis8.sh
++
++elvis1.sh: $(SRC1)
++	cat   >elvis1.sh README
++	echo >>elvis1.sh ': ------------------------ CUT HERE --------------------'
++	echo >>elvis1.sh 'test -d doc || mkdir doc || exit 2'
++	shar >>elvis1.sh -h $(SRC1)
++
++elvis2.sh: $(SRC2)
++	echo  >elvis2.sh ': ------------------------ CUT HERE --------------------'
++	echo >>elvis2.sh 'test -d doc || mkdir doc || exit 2'
++	shar >>elvis2.sh -h $(SRC2)
++
++elvis3.sh: $(SRC3)
++	shar $(SRC3) >elvis3.sh
++
++elvis4.sh: $(SRC4)
++	shar $(SRC4) >elvis4.sh
++
++elvis5.sh: $(SRC5)
++	shar $(SRC5) >elvis5.sh
++
++elvis6.sh: $(SRC6)
++	shar $(SRC6) >elvis6.sh
++
++elvis7.sh: $(SRC7)
++	shar $(SRC7) >elvis7.sh
++
++elvis8.sh: $(SRC8)
++	shar $(SRC8) >elvis8.sh
++
++##############################################################################
++
++# Under XENIX only!  This stores all sources on a 3.5" 720k floppy disk.
++floppy: $(SRC1) $(SRC2) $(SRC3) $(SRC4) $(SRC5) $(SRC6) $(SRC7) $(SRC8)
++	tar c5v $(SRC1) $(SRC2) $(SRC3) $(SRC4) $(SRC5) $(SRC6) $(SRC7) $(SRC8)
+--- elvis-tiny-1.4.orig/debian/control
++++ elvis-tiny-1.4/debian/control
+@@ -0,0 +1,14 @@
++Source: elvis-tiny
++Section: base
++Priority: standard
++Maintainer: Miquel van Smoornburg <miquels@cistron.nl>
++Build-Depends: libncurses5-dev
++Standards-Version: 3.5.1.0
++
++Package: elvis-tiny
++Architecture: any
++Pre-depends: ${shlibs:Depends}
++Description: Tiny vi compatible editor for the base system
++ Elvis-tiny is based on a 1991 Minix version of elvis. You should install
++ another vi-editor (such as "vim", "elvis" or "nvi") if you want a vi
++ editor that is full featured and has no bugs.
+--- elvis-tiny-1.4.orig/debian/prerm
++++ elvis-tiny-1.4/debian/prerm
+@@ -0,0 +1,10 @@
++#! /bin/sh
++
++if [ "$1" = "remove" ]
++then
++	update-alternatives --remove vi     /usr/bin/elvis-tiny
++	update-alternatives --remove vi     /bin/elvis-tiny
++	update-alternatives --remove editor /bin/elvis-tiny
++fi
++
++exit 0
+--- elvis-tiny-1.4.orig/debian/changelog
++++ elvis-tiny-1.4/debian/changelog
+@@ -0,0 +1,176 @@
++elvis-tiny (1.4-20) unstable; urgency=low
++
++  * Fix overflow in command line processing (closes: #203258).
++    Note that elvis-tiny is riddled with strcpy's and fixing all of them
++    would be a major undertaking akin to a rewrite.
++  * Disable CTRL-Z as elvis-tiny has no suspend support
++    (closes: #136862, #206518)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Sat, 26 Nov 2005 14:58:47 +0100
++
++elvis-tiny (1.4-19) unstable; urgency=low
++
++  * QA Group upload orphaning this package
++  * debian/rules: invoke dpkg-gencontrol with -isp
++  * debian/control: rephrase package description synopsis
++
++ -- Andrew Pollock <apollock@debian.org>  Wed,  5 Oct 2005 07:02:38 +1000
++
++elvis-tiny (1.4-18.1) unstable; urgency=low
++
++  * 0-day NMU from the QA meeting.
++  * Correcting conflicting types for 'malloc' (closes: #258640)
++  * Replacing "gcc" with "$(CC)" for being able to cross-compile
++    (closes: #285295)
++  * Removing obsolete code for /usr/doc support (closes: #254913)
++
++ -- Axel Beckert <abe@deuxchevaux.org>  Sun, 11 Sep 2005 02:08:26 +0200
++
++elvis-tiny (1.4-18) unstable; urgency=low
++
++  * Include string.h in tmp.c to solve prototype problem on
++    64-bit platforms (closes: #124028)
++  * tmp.c: fix problem where a TAB expanded exactly at the right margin
++    and screen drawing was wrong (closes: #79385)
++  * Set LC_ALL=POSIX in debian/rules
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 23 Jan 2002 22:52:47 +0100
++
++elvis-tiny (1.4-17) unstable; urgency=low
++
++  * Remove empty /usr/doc directory from package (closes: #121549)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 28 Nov 2001 17:13:37 +0100
++
++elvis-tiny (1.4-16) unstable; urgency=high
++
++  * Change arguments to ln -sf in postinst (closes: #100283,#112124)
++  * Small adjustements for complete migration to termios
++    instead of termio (closes: #106099)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Fri,  5 Oct 2001 13:10:51 +0200
++
++elvis-tiny (1.4-15) unstable; urgency=low
++
++  * Make sure /etc/alternatives/vi also points to /bin/elvis-tiny
++    and not /usr/bin/elvis-tiny (closes: #90094, #92633)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Thu,  5 Apr 2001 17:56:50 +0200
++
++elvis-tiny (1.4-14) unstable; urgency=low
++
++  * Fix small bug in the range-segfault.patch patch (closes: #88119)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Thu,  1 Mar 2001 17:21:09 +0100
++
++elvis-tiny (1.4-13) unstable; urgency=low
++
++  * Oops. Should go into unstable only, with urgency=low...
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 21 Feb 2001 14:07:11 +0100
++
++elvis-tiny (1.4-12) stable unstable; urgency=high
++
++  * Patch by David Douthitt to fix subsitition bug (closes: #73059)
++  * Patch by David Douthitt to fix range bug (closes: #55407)
++  * Move elvis-tiny to /bin (closes: #37571)
++  * Install wrapper in /bin/vi that execs /usr/bin/vi if it is
++    present and /bin/elvis-tiny otherwise (closes: #72889)
++  * Install alternative for 'editor' (closes: #85318)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Tue, 20 Feb 2001 14:08:19 +0100
++
++elvis-tiny (1.4-11) stable unstable; urgency=high
++
++  * The patch by Topi Miettinen to fix critical bug #74976 broke
++    file recovery, but also the :w command. Re-engineered the patch
++    so that the bug is fixed without any side-effects (closes: #77918)
++  * Add explanation by the author to clear up copyright notice (closes: #72021)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Tue, 28 Nov 2000 13:13:40 +0100
++
++elvis-tiny (1.4-10) stable unstable; urgency=high
++
++  * Close tempfile hole. This is a critical bug, since it can be
++    exploited locally. Patch by Topi Miettinen <Topi.Miettinen@nic.fi>
++    Upload to both stable and unstable. (closes: #74976)
++  * Check for files > 500000 bytes (closes: #44601)
++  * There is no changelog file, say so (closes: #60003)
++  * Runs fine in 80x30 for me (closes: #62720)
++  * Compile warnings aren't bugs on old sources (closes: #62807)
++  * Add Build-Depends (closes: #70311)
++  * Fix update-alternatives call (closes: #71212)
++  * Compile with gcc -fsigned-char (closes: #62807)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 22 Nov 2000 15:04:54 +0100
++
++elvis-tiny (1.4-9) frozen unstable; urgency=high
++
++  * Add patch for Alpha (closes: #58672)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Tue,  7 Mar 2000 23:43:04 +0100
++
++elvis-tiny (1.4-8) unstable; urgency=high
++
++  * Set SHELL=/bin/bash in debian/rules (closes: #54607)
++  * MU this time (closes: #54146)
++  * Move man and doc to /usr/share
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Fri, 14 Jan 2000 13:35:10 +0100
++
++elvis-tiny (1.4-7.1) unstable; urgency=low
++
++  * Non-maintainer upload during bug-squashing-party.
++  * Recompilation with ncurses5.
++  * Fixed rules-file to work with /bin/ash.
++
++ -- Christian Kurz <shorty@debian.org>  Sat,  8 Jan 2000 12:56:19 +0100
++
++elvis-tiny (1.4-7) unstable; urgency=low
++
++  * Link with ncurses4
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Thu, 29 Oct 1998 19:14:40 +0100
++
++elvis-tiny (1.4-6) unstable; urgency=low
++
++  * Fixes bugs:
++    #22773: elvis-tiny: incorrect manpage permissions
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Mon,  5 Oct 1998 13:00:37 +0200
++
++elvis-tiny (1.4-5) unstable; urgency=low
++
++  * Lintian fixes
++  * Fixes bugs:
++    #12284: elvis-tiny unable to display long lines.
++    #14391: /usr/doc/$(PACKAGE)/copyright should not be compressed
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Sun, 22 Feb 1998 15:43:36 +0100
++
++elvis-tiny (1.4-4) unstable; urgency=low
++
++  * libc6 version
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Wed, 24 Sep 1997 14:05:38 +0200
++
++elvis-tiny (1.4-3) frozen unstable; urgency=high
++
++  * Corrected alternatives priority (0 -> 10).
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Sun, 1 Jun 1997 15:55:16 +0200
++
++elvis-tiny (1.4-2) frozen unstable; urgency=high
++
++  * Corrected alternatives priority (99 -> 0).
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Fri, 30 May 1997 14:10:28 +0200
++
++elvis-tiny (1.4-1) unstable; urgency=low
++
++  * Initial release of a tiny vi compatible editor.
++    (it was uploaded to "Incoming" before with distribution=experimental
++     but never got processed - would be nice if that actually worked.)
++
++ -- Miquel van Smoorenburg <miquels@cistron.nl>  Tue, 20 May 1997 14:38:24 +0200
++
+--- elvis-tiny-1.4.orig/debian/rules
++++ elvis-tiny-1.4/debian/rules
+@@ -0,0 +1,75 @@
++#! /usr/bin/make -f
++#
++#	debian/rules file for elvis-tiny
++#
++
++# Name.
++pkg	= elvis-tiny
++tmp	= $(shell pwd)/debian/tmp
++
++SHELL	= /bin/bash
++LC_ALL	= POSIX
++
++define checkdir
++	test -f cmd1.c
++endef
++
++build:
++# Builds the binary package.
++	$(checkdir)
++	make CC="$(CC) -fsigned-char"
++	$(CC) -O2 -s -o debian/wrapper debian/wrapper.c
++	touch build
++
++# Architecture independant files.
++binary-indep:   build
++	$(checkdir)
++
++# Make a binary package (.deb file)
++binary-arch:	build checkroot
++	-rm -rf $(tmp)
++	install -d -g root -m 755 -o root $(tmp)
++	install -d -g root -m 755 -o root $(tmp)/DEBIAN
++	install -d -g root -m 755 -o root $(tmp)/bin
++	install -d -g root -m 755 -o root $(tmp)/usr
++	install -d -g root -m 755 -o root $(tmp)/usr/share
++	install -d -g root -m 755 -o root $(tmp)/usr/share/doc
++	install -d -g root -m 755 -o root $(tmp)/usr/share/doc/$(pkg)
++	install -d -g root -m 755 -o root $(tmp)/usr/share/man
++	install -d -g root -m 755 -o root $(tmp)/usr/share/man/man1
++	install -g root -s -m 755 debian/wrapper $(tmp)/bin/vi
++	strip --remove-section=.comment --remove-section=.note $(tmp)/bin/vi
++	install -g root -s -m 755 elvis $(tmp)/bin/elvis-tiny
++	strip --remove-section=.comment --remove-section=.note $(tmp)/bin/elvis-tiny
++	install -g root -m 644 debian/changelog \
++		$(tmp)/usr/share/doc/$(pkg)/changelog.Debian
++	install -g root -m 644 debian/changelog.upstream \
++		$(tmp)/usr/share/doc/$(pkg)/changelog
++	install -g root -m 644 KNOWN.BUGS $(tmp)/usr/share/doc/$(pkg)
++	install -g root -m 644 debian/elvis-tiny.1 $(tmp)/usr/share/man/man1
++	gzip -9f $(tmp)/usr/share/man/man1/*
++	gzip -9f $(tmp)/usr/share/doc/$(pkg)/*
++
++	install -g root -m 644 debian/copyright $(tmp)/usr/share/doc/$(pkg)
++
++	install -g root -m 755 debian/postinst $(tmp)/DEBIAN
++	install -g root -m 755 debian/prerm $(tmp)/DEBIAN
++
++	dpkg-shlibdeps elvis
++	dpkg-gencontrol -isp
++	dpkg --build $(tmp) ..
++	rm -rf $(tmp)
++
++clean:	checkroot
++	-make clobber
++	rm -f build debian/{files,substvars,wrapper}
++	rm -rf $(tmp)
++	find . -name '*.bak' -o -name '*~' | xargs -r rm -f --
++
++binary: binary-indep binary-arch
++
++checkroot:
++	$(checkdir)
++	test root = "`whoami`"
++
++.PHONY: binary binary-arch binary-indep clean checkroot
+--- elvis-tiny-1.4.orig/debian/substitute-fails.patch
++++ elvis-tiny-1.4/debian/substitute-fails.patch
+@@ -0,0 +1,79 @@
++From: "David Douthitt" <ssrat@mailbag.com>
++To: submit@bugs.debian.org
++Date: Tue, 3 Oct 2000 11:01:13 -0500
++Subject: Substitution command & fails on third (second?) try
++Reply-to: ddouthitt@mennonite.minister.net
++Message-ID: <39D9BC79.32551.23FF0C@localhost>
++
++Package: elvis-tiny
++Version: 1.4
++
++Do the following on a file:
++
++:s/tcp/TCP!/
++j
++&
++j
++&
++
++The first substitution works, then the first & , then on the second & 
++it replaces the substitution string with a '~' character.
++
++For example, given:
++
++my-tcp
++his-tcp
++her-tcp
++their-tcp
++
++The results would be:
++
++my-TCP!
++his-TCP!
++her-~
++their-~
++
++This is consistent.
++From: "David Douthitt" <ssrat@mailbag.com>
++To: miquels@cistron.nl
++Date: Wed, 13 Dec 2000 09:36:44 -0600
++Subject: elvis-tiny
++Reply-to: n9ubh@callsign.net
++Message-ID: <3A37432C.147.3BB4F415@localhost>
++
++I have a few fixes for elvis-tiny, one for bug #55407 (vi segfaults) 
++and one for bug #73059 (substitute & fails on third substitution).
++
++I've included them in the text below.  They're two separate patches; 
++so cut them out into two files.
++
++I don't know if I qualify as "maintainer" but I'll see if I can keep 
++fixing and learning as time goes on.
++
++--- elvis-tiny-1.4/regsub.c.orig	Sun Jan 14 16:23:39 2001
+++++ elvis-tiny-1.4/regsub.c	Sun Jan 14 16:24:13 2001
++@@ -194,10 +194,18 @@
++ 	}
++ 	*dst = '\0';
++ 
++-	/* remember what text we inserted this time */
++-	if (previous)
++-		free(previous);
++-	previous = (char *)malloc((unsigned)(strlen(start) + 1));
++-	if (previous)
++-		strcpy(previous, start);
+++#ifndef NO_MAGIC
+++       /* Don't copy the pattern if it is '~'; leave previous copy alone */
+++       if (! (*start == '~' && *o_magic))
+++       {
+++#endif
+++               /* remember what text we inserted this time */
+++               if (previous)
+++                       free(previous);
+++               previous = (char *)malloc((unsigned)(strlen(start) + 1));
+++               if (previous)
+++                       strcpy(previous, start);
+++#ifndef NO_MAGIC
+++       }
+++#endif
++ }
+--- elvis-tiny-1.4.orig/debian/postinst
++++ elvis-tiny-1.4/debian/postinst
+@@ -0,0 +1,39 @@
++#! /bin/sh
++
++case "$1" in
++	configure)
++		;;
++	abort-upgrade|abort-remove|abort-deconfigure)
++		exit 0
++		;;
++esac
++umask 022
++
++#
++#	elvis-tiny moved from /usr/bin/elvis-tiny to
++#	/bin/elvis-tiny, so adjust symlink if nessecary
++#
++#	We don't need to adjust the 'editor' alternative since
++#	it didn't exist in packages before the move.
++#
++link=
++if [ -L /etc/alternatives/vi ]
++then
++	link=`/bin/ls -ld /etc/alternatives/vi | sed -e 's/^.*-> //'`
++fi
++if [ "$link" = "/usr/bin/elvis-tiny" ]
++then
++	ln -sf /bin/elvis-tiny /etc/alternatives/vi
++	update-alternatives --auto vi
++fi
++
++# Alternative for /usr/bin/vi
++update-alternatives --install /usr/bin/vi vi /bin/elvis-tiny 10 \
++  --slave /usr/share/man/man1/vi.1.gz vi.1.gz \
++	/usr/share/man/man1/elvis-tiny.1.gz
++
++# Alternative for /usr/bin/editor
++update-alternatives --install /usr/bin/editor editor /bin/elvis-tiny 10 \
++  --slave /usr/share/man/man1/editor.1.gz editor.1.gz \
++	/usr/share/man/man1/elvis-tiny.1.gz
++
+--- elvis-tiny-1.4.orig/debian/tempfile.patch
++++ elvis-tiny-1.4/debian/tempfile.patch
+@@ -0,0 +1,208 @@
++From: Topi Miettinen <Topi.Miettinen@nic.fi>
++To: submit@bugs.debian.org
++Date: Tue, 17 Oct 2000 20:30:00 +0300
++Subject: Bug#74976: elvis-tiny: temporary file problems
++
++Package: elvis-tiny
++Version: 1.4-9
++Severity: grave
++
++Elvis-tiny (probably full elvis also) has serious problems with temporary
++file use. Those files are created with a predictable pattern and O_EXCL
++flag is not used when opening. This makes elvis users vulnerable to race
++conditions and/or data lossage.
++
++=======================================================================
++
++Topi included a patch to fix these problems, but the patch itself
++was broken in 2 ways:
++
++1. Recovery of lost files didn't work anymore
++2. :w to an existing file broke.
++
++The patch below by Miquel van Smoorenburg, based on Topi's bugreport
++and patch, should fix the bug without any side effects.
++
++diff -ruN elvis-tiny-1.4.b4/Makefile elvis-tiny-1.4/Makefile
++--- elvis-tiny-1.4.b4/Makefile	Tue Nov 28 11:50:09 2000
+++++ elvis-tiny-1.4/Makefile	Tue Nov 28 13:04:01 2000
++@@ -45,7 +45,7 @@
++ BIN=	/usr/bin
++ CFLAGS=	-O2 -DM_SYSV -DCRUNCH -DNO_MKEXRC -DNO_CURSORSHAPE -DNO_CHARATTR \
++ 	-DNO_SHOWMODE -DNO_MODELINE -DNO_OPTCOLS -DNO_DIGRAPH -DNO_ABBR \
++-	-DNO_AT -DNO_SENTENCE -DNO_ERRLIST
+++	-DNO_AT -DNO_SENTENCE -DNO_ERRLIST -DUSE_MKSTEMP -DUSE_SNPRINTF
++ OF=	-o 
++ RF=	-c
++ DATE=	-DDATE=\'\"`date`\"\'
++diff -ruN elvis-tiny-1.4.b4/cmd1.c elvis-tiny-1.4/cmd1.c
++--- elvis-tiny-1.4.b4/cmd1.c	Tue Nov 28 11:50:09 2000
+++++ elvis-tiny-1.4/cmd1.c	Tue Nov 28 11:53:23 2000
++@@ -158,6 +158,8 @@
++ 	mark[*extra - 'a'] = tomark;
++ }
++ 
+++void cmd_write2(MARK frommark, MARK tomark, int fd);
+++
++ /*ARGSUSED*/
++ void cmd_write(frommark, tomark, cmd, bang, extra)
++ 	MARK	frommark;
++@@ -168,9 +170,6 @@
++ {
++ 	int		fd;
++ 	int		append;	/* boolean: write in "append" mode? */
++-	REG long	l;
++-	REG char	*scan;
++-	REG int		i;
++ 
++ 	/* if all lines are to be written, use tmpsave() */
++ 	if (frommark == MARK_FIRST && tomark == MARK_LAST)
++@@ -221,6 +220,16 @@
++ 			return;
++ 		}
++ 	}
+++	cmd_write2(frommark, tomark, fd);
+++	close(fd);
+++}
+++
+++void cmd_write2(MARK frommark, MARK tomark, int fd)
+++{
+++	REG long	l;
+++	REG char	*scan;
+++	REG int		i;
+++
++ 	for (l = markline(frommark); l <= markline(tomark); l++)
++ 	{
++ 		/* get the next line */
++@@ -231,7 +240,6 @@
++ 		/* print the line */
++ 		twrite(fd, scan, i);
++ 	}
++-	close(fd);
++ }	
++ 
++ 
++diff -ruN elvis-tiny-1.4.b4/system.c elvis-tiny-1.4/system.c
++--- elvis-tiny-1.4.b4/system.c	Tue Nov 28 11:50:09 2000
+++++ elvis-tiny-1.4/system.c	Tue Nov 28 12:00:54 2000
++@@ -22,6 +22,8 @@
++ 
++ #include "config.h"
++ #include "vi.h"
+++#include <unistd.h>
+++#include <sys/types.h>
++ #include <signal.h>
++ extern char	**environ;
++ 
++@@ -331,7 +333,7 @@
++ {
++ 	int	scratch;	/* fd of the scratch file */
++ 	int	fd;		/* fd of the pipe from the filter */
++-	char	scrout[50];	/* name of the scratch out file */
+++	char	*scrout = NULL;	/* name of the scratch out file */
++ 	MARK	new;		/* place where new text should go */
++ 	int	i;
++ 
++@@ -339,6 +341,9 @@
++ 	if (to)
++ 	{
++ 		/* we have lines */
+++		scrout = malloc(strlen(o_directory) + 9 + 1); /* strlen("/soXXXXXX") */
+++		if (!scrout)
+++			return -1;
++ #if MSDOS || TOS
++ 		strcpy(scrout, o_directory);
++ 		if ((i=strlen(scrout)) && strchr("\\/:", scrout[i-1]))
++@@ -347,6 +352,7 @@
++ #else
++ 		sprintf(scrout, SCRATCHOUT, o_directory);
++ #endif
+++#if !USE_MKSTEMP
++ 		mktemp(scrout);
++ 		cmd_write(from, to, CMD_BANG, 0, scrout);
++ 
++@@ -357,6 +363,13 @@
++ 			unlink(scrout);
++ 			return -1;
++ 		}
+++#else
+++		if ((scratch = mkstemp(scrout)) < 0)
+++			return -1;
+++		/* use those lines as stdin */
+++		cmd_write2(from, to, scratch);
+++		lseek(scratch, 0L, SEEK_SET);
+++#endif
++ 	}
++ 	else
++ 	{
++@@ -371,6 +384,7 @@
++ 		{
++ 			close(scratch);
++ 			unlink(scrout);
+++			free(scrout);
++ 		}
++ 		return -1;
++ 	}
++@@ -429,6 +443,7 @@
++ 	{
++ 		close(scratch);
++ 		unlink(scrout);
+++		free(scrout);
++ 	}
++ 	return 0;
++ }
++diff -ruN elvis-tiny-1.4.b4/tmp.c elvis-tiny-1.4/tmp.c
++--- elvis-tiny-1.4.b4/tmp.c	Tue Nov 28 11:50:09 2000
+++++ elvis-tiny-1.4/tmp.c	Tue Nov 28 13:02:18 2000
++@@ -23,6 +23,7 @@
++ #  include <sys/stat.h>
++ # endif
++ #endif
+++#include <malloc.h>
++ 
++ 
++ #ifndef NO_MODELINE
++@@ -193,7 +194,12 @@
++ 		tmpname[i++]=SLASH;
++ 	sprintf(tmpname+i, TMPNAME+3, sum, statb.st_ino, statb.st_dev);
++ #else
+++#  if USE_SNPRINTF
+++	snprintf(tmpname, sizeof(tmpname), TMPNAME,
+++		o_directory, sum, statb.st_ino, statb.st_dev);
+++#  else
++ 	sprintf(tmpname, TMPNAME, o_directory, sum, statb.st_ino, statb.st_dev);
+++#  endif
++ #endif
++ 
++ 	/* make sure nobody else is editing the same file */
++@@ -209,11 +215,28 @@
++ 
++ 	/* create the temp file */
++ #if ANY_UNIX
++-	close(creat(tmpname, 0600));		/* only we can read it */
+++#  if USE_MKSTEMP
+++	scan = malloc(strlen(o_directory) + 10 + 1); /* "/elvXXXXXX" */
+++	if (scan == NULL) {
+++		FAIL("No memory: %s", strerror(errno));
+++	}
+++	sprintf(scan, "%s/elvXXXXXX", o_directory);
+++	if ((tmpfd = mkstemp(scan)) >= 0) {
+++		if (link(scan, tmpname) < 0) {
+++			close(tmpfd);
+++			tmpfd = -1;
+++		}
+++		unlink(scan);
+++	}
+++	free(scan);
+++#  else
+++	tmpfd = open(tmpname, O_CREAT|O_WRONLY|O_TRUNC|O_EXCL, 0600);
+++						/* only we can read it */
+++#  endif
++ #else
++ 	close(creat(tmpname, FILEPERMS));	/* anybody body can read it, alas */
++-#endif
++ 	tmpfd = open(tmpname, O_RDWR | O_BINARY);
+++#endif
++ 	if (tmpfd < 0)
++ 	{
++ 		FAIL("Can't create temporary file, errno=%d", errno);
+--- elvis-tiny-1.4.orig/debian/changelog.upstream
++++ elvis-tiny-1.4/debian/changelog.upstream
+@@ -0,0 +1,3 @@
++
++The elvis-tiny source code doesn't come with an upstream changelog.
++
+--- elvis-tiny-1.4.orig/debian/range-segfault.patch
++++ elvis-tiny-1.4/debian/range-segfault.patch
+@@ -0,0 +1,55 @@
++Date: Mon, 17 Jan 2000 00:35:57 -0800
++To: bugs@debian.org
++From: Ross Boylan <RossBoylan@stanfordalumni.org>
++Subject: vi (?) segfaults
++Mime-Version: 1.0
++Content-Type: text/plain; charset="us-ascii"
++
++Package: boot-floppies
++Version: 2.2.4 (potato i386)
++
++I suspect this problem is really for elvis-tiny 1.4-7, which dpkg showed as
++installed, but I'm not 100% sure.  Please reassign as appropriate.  If I vi
++sources.list and execute the command
++        :1,44s/stable/potato/g
++I get a segmentation fault.  Using % in place of 1,44 works alright.
++
++After the seg fault, the file is locked, and can't be edited further.  I
++had to reboot the system (I know there's a better way; fee free to
++enlighten me) to access the file.  (Well, I also did a mv sources.list
++s.l.bak; cp s.l.bak sources.list; rm s.l.bak.  But there's a better way
++than that too, right?)
++
++But to return the original subject: the file doesn't have 44 lines.  But a
++segfault seems like a poor reaction to that problem...
++
++
++From: "David Douthitt" <ssrat@mailbag.com>
++To: miquels@cistron.nl
++Date: Wed, 13 Dec 2000 09:36:44 -0600
++Subject: elvis-tiny
++Message-ID: <3A37432C.147.3BB4F415@localhost>
++
++I have a few fixes for elvis-tiny, one for bug #55407 (vi segfaults) 
++and one for bug #73059 (substitute & fails on third substitution).
++
++I've included them in the text below.  They're two separate patches; 
++so cut them out into two files.
++
++I don't know if I qualify as "maintainer" but I'll see if I can keep 
++fixing and learning as time goes on.
++
++--- elvis-tiny-1.4/ex.c.orig	Sun Aug  4 23:20:37 1991
+++++ elvis-tiny-1.4/ex.c	Sun Jan 14 16:25:29 2001
++@@ -390,6 +390,11 @@
++ 			msg("first address exceeds the second");
++ 			return;
++ 		}
+++               if (markline(tomark) > markline(MARK_LAST))
+++               {
+++                       msg("there are only %d lines in the file", nlines);
+++                       return;
+++               }
++ 	}
++ 	isdfl = (scan == cmdbuf);
++ 
+--- elvis-tiny-1.4.orig/debian/elvis-tiny.1
++++ elvis-tiny-1.4/debian/elvis-tiny.1
+@@ -0,0 +1,10 @@
++.TH ELVIS-TINY 1 "May 13, 1997" "" "Debian GNU/Linux Manual"
++.SH NAME
++elvis-tiny \- Tiny vi-compatible editor
++.SH DESCRIPTION
++Elvis-tiny is a very small vi-compatible editor with limited
++capabilities. If you want more features (and documentation), install
++its big brother \fBelvis\fP or any of the other vi clones such as
++\fBnvi\fP or \fPvim\fP.
++.SH "SEE ALSO"
++ae(1).
+--- elvis-tiny-1.4.orig/debian/copyright
++++ elvis-tiny-1.4/debian/copyright
+@@ -0,0 +1,59 @@
++
++Copyright for elvis 1.4 (elvis-tiny)
++
++This file contains the copyright part from the original README,
++and a clarification by the author
++
++==================== original copyright ===========================
++
++Elvis is a clone of vi/ex, the standard UNIX editor.  Elvis supports nearly
++all of the vi/ex commands, in both visual mode and colon mode.
++
++Elvis is freely redistributable, in either source form or executable form.
++There are no restrictions on how you may use it.
++
++Author: Steve Kirkendall
++
++E-mail:	kirkenda@cs.pdx.edu
++
++Snail	14407 SW Teal Blvd.  Apt.C
++ Mail:	Beaverton, OR   97005
++
++Phone:	(503) 643-6980
++
++==================== clarification ================================
++
++From: Steve Kirkendall <skirkendall@uswest.net>
++Reply-To: kirkenda@cs.pdx.edu
++To: Miquel van Smoorenburg <miquels@cistron.nl>
++Subject: Re: elvis 1.4
++Message-ID: <3A21A76D.CE7C4D2@uswest.net>
++Date: Sun, 26 Nov 2000 16:14:37 -0800
++Organization: Elvis
++References: <20001122144219.A6118@cistron.nl>
++
++Miquel van Smoorenburg wrote:
++> 
++> Hello,
++> 
++>         I've packaged elvis 1.4 up as "elvis tiny" to have a small
++> vi clone for use on bootfloppies etc for the Debian/Linux distribution.
++> 
++> The README says:
++> 
++>   Elvis is freely redistributable, in either source form or executable form.
++>   There are no restrictions on how you may use it.
++> 
++> Did you mean that it is allright to distribute modified versions
++> without any restrictions as well (I assume so, but someone filed
++> a bugreport against the elvis-tiny package claiming it wasn't
++> DFSG-free)
++
++Yes, modified versions can be freely redistributed.
++
++Elvis 2.0 was distributed with a slightly more restrictive license,
++which made some people uncomfortable; that's probably where the bug
++report came from.  Elvis 2.1 and later are distributed under the Perl
++"Artistic" license.
++
++
+--- elvis-tiny-1.4.orig/debian/bug#258640.patch
++++ elvis-tiny-1.4/debian/bug#258640.patch
+@@ -0,0 +1,17 @@
++diff -urN ../tmp-orig/elvis-tiny-1.4/config.h ./config.h
++--- ../tmp-orig/elvis-tiny-1.4/config.h 1991-08-04 23:20:32.000000000 +0200
+++++ ./config.h  2004-07-10 21:39:44.742474908 +0200
++@@ -178,13 +178,6 @@
++ # define uchar         unsigned char
++ #endif
++
++-/* Some compilers prefer to have malloc declared as returning a (void *) */
++-#if BSD
++-extern void *malloc();
++-#else
++-extern char *malloc();
++-#endif
++-
++ /* Most compilers could benefit from using the "register" storage class */
++ #if 1
++ # define REG   register
+--- elvis-tiny-1.4.orig/debian/wrapper.c
++++ elvis-tiny-1.4/debian/wrapper.c
+@@ -0,0 +1,72 @@
++/*
++ * vi-wrapper	Should be installed as /bin/vi. This program first
++ *		checks if /usr/bin/vi exists. If it does, it checks if
++ *		it isn't a link to /bin/vi, and executes it.
++ *
++ *		If /usr/bin/vi isn't present it does the same for
++ *		/bin/elvis-tiny.
++ *
++ *		Copyright 2000 Miquel van Smoorenburg miquels@cistron.nl
++ *		License: GPL v2 or later.
++ *
++ */
++#include <stdio.h>
++#include <unistd.h>
++#include <stdlib.h>
++#include <errno.h>
++#include <string.h>
++#include <sys/stat.h>
++
++#define REALVI	"/usr/bin/vi"
++#define TINYVI	"/bin/elvis-tiny"
++#define WRAPVI	"/bin/vi"
++
++/*
++ *	Avoid stdio - it saves a few hundred bytes, and so keeps the
++ *	size of the executable _just_ under 4096 bytes.
++ */
++#define err(x) write(2, x, sizeof(x) - 1)
++
++int main(int argc, char **argv)
++{
++	struct stat	real, tiny, wrap;
++	char		*r = NULL;
++	int		e;
++
++	if (stat(WRAPVI, &wrap) != 0) {
++		err("vi: wrapper should be installed as " WRAPVI "\n");
++		exit(1);
++	}
++	if (stat(REALVI, &real) == 0) {
++		if (real.st_dev == wrap.st_dev && real.st_ino == wrap.st_ino) {
++			err("vi: " REALVI
++				" is the same as the wrapper in "
++				WRAPVI "\n");
++			exit(1);
++		}
++		execv(REALVI, argv);
++		r = REALVI;
++		e = errno;
++	}
++	if (stat(TINYVI, &tiny) == 0) {
++		if (tiny.st_dev == wrap.st_dev && tiny.st_ino == wrap.st_ino) {
++			err("vi: " TINYVI
++				" is the same as the wrapper in "
++				WRAPVI "\n");
++			exit(1);
++		}
++		execv(TINYVI, argv);
++		r = TINYVI;
++		e = errno;
++	}
++
++	if (r) {
++		errno = e;
++		perror(r);
++		exit(1);
++	}
++	err("vi: wrapper couldn't execute " REALVI
++		" nor " TINYVI "\n");
++	return 1;
++}
++

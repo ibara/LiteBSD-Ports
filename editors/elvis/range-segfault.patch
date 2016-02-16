@@ -1,0 +1,55 @@
+Date: Mon, 17 Jan 2000 00:35:57 -0800
+To: bugs@debian.org
+From: Ross Boylan <RossBoylan@stanfordalumni.org>
+Subject: vi (?) segfaults
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+
+Package: boot-floppies
+Version: 2.2.4 (potato i386)
+
+I suspect this problem is really for elvis-tiny 1.4-7, which dpkg showed as
+installed, but I'm not 100% sure.  Please reassign as appropriate.  If I vi
+sources.list and execute the command
+        :1,44s/stable/potato/g
+I get a segmentation fault.  Using % in place of 1,44 works alright.
+
+After the seg fault, the file is locked, and can't be edited further.  I
+had to reboot the system (I know there's a better way; fee free to
+enlighten me) to access the file.  (Well, I also did a mv sources.list
+s.l.bak; cp s.l.bak sources.list; rm s.l.bak.  But there's a better way
+than that too, right?)
+
+But to return the original subject: the file doesn't have 44 lines.  But a
+segfault seems like a poor reaction to that problem...
+
+
+From: "David Douthitt" <ssrat@mailbag.com>
+To: miquels@cistron.nl
+Date: Wed, 13 Dec 2000 09:36:44 -0600
+Subject: elvis-tiny
+Message-ID: <3A37432C.147.3BB4F415@localhost>
+
+I have a few fixes for elvis-tiny, one for bug #55407 (vi segfaults) 
+and one for bug #73059 (substitute & fails on third substitution).
+
+I've included them in the text below.  They're two separate patches; 
+so cut them out into two files.
+
+I don't know if I qualify as "maintainer" but I'll see if I can keep 
+fixing and learning as time goes on.
+
+--- elvis-tiny-1.4/ex.c.orig	Sun Aug  4 23:20:37 1991
++++ elvis-tiny-1.4/ex.c	Sun Jan 14 16:25:29 2001
+@@ -390,6 +390,11 @@
+ 			msg("first address exceeds the second");
+ 			return;
+ 		}
++               if (markline(tomark) > markline(MARK_LAST))
++               {
++                       msg("there are only %d lines in the file", nlines);
++                       return;
++               }
+ 	}
+ 	isdfl = (scan == cmdbuf);
+ 
