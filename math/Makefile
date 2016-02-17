@@ -3,6 +3,6 @@
 #
 
 # Hook up all math ports
-SUBDIR=	bigint
+SUBDIR=	bigint pcg-c-basic
 
 .include <bsd.subdir.mk>

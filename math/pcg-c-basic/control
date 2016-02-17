@@ -1,0 +1,7 @@
+Package: pcg-c-basic
+Version: 2014
+Description: Demo programs of strong random number generator.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Apache 2.0
+Architecture: mipsel
+Installed-Size: 186781
