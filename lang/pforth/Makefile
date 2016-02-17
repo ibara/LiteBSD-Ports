@@ -113,7 +113,7 @@ $(PFORTHAPP): $(PFDICDAT) $(PFEMBOBJS)
 	@echo ""
 	@echo "Standalone pForth executable written to $(PFORTHAPP)"
 
-beforeinstall:
+do-install:
 	install -d ${DESTDIR}${PREFIX}/bin
 	install -c -m 555 pforth_standalone ${DESTDIR}${PREFIX}/bin/pforth
 
