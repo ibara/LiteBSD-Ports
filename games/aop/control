@@ -1,0 +1,7 @@
+Package: aop
+Version: 0.6
+Description: Arcade game in 64 lines of code.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2 only
+Architecture: mipsel
+Installed-Size: 212636
