@@ -1,0 +1,7 @@
+Package: gkermit
+Version: 1.00
+Description: Tiny implementation of the Kermit protocol.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2+
+Architecture: mipsel
+Installed-Size: 162768

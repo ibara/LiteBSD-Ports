@@ -3,6 +3,6 @@
 #
 
 # Hook up all net ports
-SUBDIR=	zmtx-zmrx
+SUBDIR=	gkermit zmtx-zmrx
 
 .include <bsd.subdir.mk>
