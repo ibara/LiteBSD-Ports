@@ -1,0 +1,88 @@
+.\" "%W% %G%"
+.TH AN\ 0.93 6
+.SH NAME
+an \- Anagram generator 
+.SH SYNOPSIS
+.B an
+[-w] [-c string] [-d dictionary] [-l number_words] [-m word_length] [-u string]
+[-n number_anagrams] [--words] [--contain string] [--dict dictionary]
+[--length number_words] [--minimum word_length]  [--used string] 
+[--number number_anagrams] [--help] [--version] PHRASE
+.SH DESCRIPTION
+.B an
+finds all anagrams which can be made from the letters in \fBPHRASE\fP, 
+using words in the specified dictionary (default=/usr/dict/words).
+.SH OPTIONS
+.TP
+.I \-w, --words
+Print words that \fBPHRASE\fP letters can make, then exit.
+.TP
+.I \-c, --contain string
+Only print anagrams which contain \fIstring\fP
+
+.TP
+.I \-d, --dict dictionary
+Use \fIdictionary\fP file to find words which letters in \fBPHRASE\fP can make
+
+.TP
+.I \-m, --minimum word_length
+Only uses words which are at least \fIword_length\fP long.
+
+
+.TP
+.I \-u, --used string
+Considers that letters in \fIstring\fP have allready used when analyzing
+letters in \fBPHRASE\fP
+
+.TP
+.I \-l, --length number_words
+Finds anagrams which have a maximum of \fInumber_words\fP words in them, 
+very useful when number of anagrams output is large.
+
+.TP
+.I \-n, --number number_anagrams
+Specifies \fInumber_anagrams\fP as the maximum number of anagrams to find.
+ 
+
+.TP
+.I \--help
+Print a usage message on standard output then exit
+
+.TP
+.I \--version
+Print version information on standard output then exit
+.SH EXAMPLE
+.PP
+an -c acid 'Richard Jones'
+.PP
+Finds anagrams for \fIRichard Jones\fP which contain the word \fIacid\fP
+.TP
+.TP
+.SH AUTHORS
+.PP
+\fIRichard Jones\fP (richard@deep-thought.org)
+  - Coding and algorithm design.
+.PP
+\fIJulian Assange\fP (proff@suburbia.net)
+.PP
+  - Algorithm design.
+
+.SH COPYRIGHT
+.PP
+Copyright (c) Free Software Foundation, 1996.
+
+Copyright (c) Richard Jones 1995, 1996, All rights reserved.
+.SH BUGS
+.PP
+Surely.
+
+Please report any bugs to richard@deep-thought.org
+
+Suggestions and contributions are also welcome.
+
+
+
+
+
+
+

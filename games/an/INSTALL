@@ -1,0 +1,16 @@
+If required modify MANDIR,BINDIR,CC and CFLAGS in Makefile to suit your
+system, then follow the instructions below. 
+
+Systems with GNU getopt
+~~~~~~~~~~~~~~~~~~~~~~~
+type:
+make install
+
+Systems without GNU getopt
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+type:
+make install-with-getopt
+
+Compilers which do not support the GNU C extensions used
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Uncomment the line #DEFS=-DFORCE_ANSI

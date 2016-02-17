@@ -1,0 +1,7 @@
+Package: an
+Version: 0.95
+Description: Very fast anagram generator.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2+
+Architecture: mipsel
+Installed-Size: 93529

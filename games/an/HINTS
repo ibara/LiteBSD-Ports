@@ -1,0 +1,12 @@
+     	With long anagrams it is suggested that either the --length (-l)
+or the --minimum (-m) option be used to limit the output (which can
+run into 10's of megabytes depending on the length of dictionary
+used.)
+	If you wish to only find anagrams which are meaningful for the
+phrase, then until a version of AN arrives which can do this
+automatically there are two methods available.  The first involves
+outputting the words than can be made to a file (using the --words
+(-w) option), and editing this file, removing words you do not wish
+to see in the resultant anagrams.  Alternatively, a word or groups of
+words that you would like to see apear in every anagram can specified
+using the --contain (-c) or --used (-u) options.

@@ -1,0 +1,15 @@
+In order of priority:
+1. Fix any bugs.
+2. Add option to produce all permutations of anagrams.
+3. If anyone thinks it is a good idea, I can add the option to remove
+   all single character words except "a" and "I", I have noticed
+   that some unix dictionaries contain an entry for every letter
+   in the alphabet, this produces many useless anagrams.  Perhaps "U"
+   should also be left in, does anyone have any further suggestions?
+4. Find some way of finding semantically/syntactically meaningful anagrams,
+   probably using one of the publicly available tagged dictionaries.
+5. Add a GUI.
+6. Repeat 1.
+
+If anyone would like to help with any of the above, please mail me at:
+richard@deep-thought.org

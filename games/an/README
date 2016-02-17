@@ -1,0 +1,16 @@
+an v0.94 - Anagram Generator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Generates anagrams for a phrase supplied by the user, the words used in the
+anagram are taken from a specified dictionary which should contain one
+word per line (default:/usr/dict/words).
+
+Read INSTALL for instructions on installing.
+
+Written by Richard Jones <richard@deep-thought.org>
+Many ideas contributed by Julian Assange (Let this be a lesson to you)
+Maintained by Paul Martin
+
+Please mail bug reports and any suggestions to:
+    pm@debian.org
+
