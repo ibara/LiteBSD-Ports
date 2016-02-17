@@ -1,0 +1,7 @@
+Package: cbmbasic
+Version: 8.00
+Description: Portable version of Commodore 64 version of Microsoft BASIC 6502.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 214532
