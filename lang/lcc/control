@@ -1,0 +1,7 @@
+Package: lcc
+Version: 4.2
+Description: Portable retargetable ANSI C compiler.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Non-commercial use
+Architecture: mipsel
+Installed-Size: 1456334

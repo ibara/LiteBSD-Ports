@@ -3,6 +3,6 @@
 #
 
 # Hook up all lang ports
-SUBDIR=	cbmbasic forth fpp mawk pforth tinyscheme
+SUBDIR=	cbmbasic forth fpp lcc mawk pforth tinyscheme
 
 .include <bsd.subdir.mk>
