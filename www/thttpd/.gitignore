@@ -1,0 +1,8 @@
+cgi-src/phf
+cgi-src/redirect
+cgi-src/ssi
+extras/htpasswd
+extras/makeweb
+mime_encodings.h
+mime_types.h
+thttpd

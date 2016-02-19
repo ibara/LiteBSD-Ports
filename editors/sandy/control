@@ -4,4 +4,4 @@ Description: Minimalist ncurses text editor from the suckless project.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: MIT
 Architecture: mipsel
-Installed-Size: nbytes
+Installed-Size: 356757

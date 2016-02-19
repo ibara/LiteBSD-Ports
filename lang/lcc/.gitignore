@@ -1,0 +1,13 @@
+alpha.c
+bprint-prog
+cpp-prog
+dagcheck.c
+lburg-prog
+lcc-prog
+liblcc.a
+librcc.a
+mips.c
+rcc-prog
+sparc.c
+x86.c
+x86linux.c

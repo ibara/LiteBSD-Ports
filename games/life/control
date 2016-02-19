@@ -4,4 +4,4 @@ Description: Conway's Game of Life simulator in ncurses.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: MIT
 Architecture: mipsel
-Installed-Size: 198315
+Installed-Size: 198367

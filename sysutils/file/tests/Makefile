@@ -106,7 +106,7 @@ test_DEPENDENCIES = $(top_builddir)/src/libmagic.la
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
-am__v_lt_1 = 
+am__v_lt_1 =
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -114,11 +114,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -132,7 +132,7 @@ LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CC = $(am__v_CC_$(V))
 am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
 am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
+am__v_CC_1 =
 CCLD = $(CC)
 LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -140,7 +140,7 @@ LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
+am__v_CCLD_1 =
 SOURCES = test.c
 DIST_SOURCES = test.c
 am__can_run_installinfo = \
@@ -183,18 +183,18 @@ CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
 CFLAG_VISIBILITY = -fvisibility=hidden
 CPP = gcc -std=gnu99 -E
-CPPFLAGS = 
+CPPFLAGS =
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
 DLLTOOL = false
-DSYMUTIL = 
+DSYMUTIL =
 DUMPBIN = :
-ECHO_C = 
+ECHO_C =
 ECHO_N = -n
-ECHO_T = 
+ECHO_T =
 EGREP = /bin/grep -E
-EXEEXT = 
+EXEEXT =
 FGREP = /bin/grep -F
 GREP = /bin/grep
 HAVE_VISIBILITY = 1
@@ -204,11 +204,11 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld
-LDFLAGS = 
+LDFLAGS =
 LIBOBJS =  ${LIBOBJDIR}strlcpy$U.o ${LIBOBJDIR}strlcat$U.o ${LIBOBJDIR}fmtcheck$U.o
-LIBS = -lz 
+LIBS = -lz
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
-LIPO = 
+LIPO =
 LN_S = ln -s
 LTLIBOBJS =  ${LIBOBJDIR}strlcpy$U.lo ${LIBOBJDIR}strlcat$U.lo ${LIBOBJDIR}fmtcheck$U.lo
 MAKEINFO = ${SHELL} /home/retrobsd/strip/litebsd/ports/sysutils/file/missing makeinfo
@@ -216,26 +216,26 @@ MANIFEST_TOOL = :
 MINGW = 0
 MKDIR_P = /bin/mkdir -p
 NM = nm
-NMEDIT = 
+NMEDIT =
 OBJDUMP = objdump
 OBJEXT = o
-OTOOL = 
-OTOOL64 = 
+OTOOL =
+OTOOL64 =
 PACKAGE = file
 PACKAGE_BUGREPORT = christos@astron.com
 PACKAGE_NAME = file
 PACKAGE_STRING = file 5.25
 PACKAGE_TARNAME = file
-PACKAGE_URL = 
+PACKAGE_URL =
 PACKAGE_VERSION = 5.25
 PATH_SEPARATOR = :
 RANLIB = ranlib
 SED = /bin/sed
-SET_MAKE = 
+SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 5.25
-WARNINGS = 
+WARNINGS =
 abs_builddir = /home/retrobsd/strip/litebsd/ports/sysutils/file/tests
 abs_srcdir = /home/retrobsd/strip/litebsd/ports/sysutils/file/tests
 abs_top_builddir = /home/retrobsd/strip/litebsd/ports/sysutils/file
@@ -245,12 +245,12 @@ ac_ct_CC = gcc
 ac_ct_DUMPBIN = link -dump
 am__include = include
 am__leading_dot = .
-am__quote = 
+am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
 build = i686-pc-linux-gnu
-build_alias = 
+build_alias =
 build_cpu = i686
 build_os = linux-gnu
 build_vendor = pc
@@ -285,7 +285,7 @@ sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
 sysconfdir = ${prefix}/etc
-target_alias = 
+target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
@@ -343,7 +343,7 @@ clean-checkPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
-test$(EXEEXT): $(test_OBJECTS) $(test_DEPENDENCIES) $(EXTRA_test_DEPENDENCIES) 
+test$(EXEEXT): $(test_OBJECTS) $(test_DEPENDENCIES) $(EXTRA_test_DEPENDENCIES)
 	@rm -f test$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_OBJECTS) $(test_LDADD) $(LIBS)
 
@@ -353,7 +353,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/test-test.Po
+#include ./$(DEPDIR)/test-test.Po
 
 .c.o:
 	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

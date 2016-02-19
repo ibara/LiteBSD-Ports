@@ -4,4 +4,4 @@ Description: Clone of 1970s RAND text editor.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: GPLv3+
 Architecture: mipsel
-Installed-Size: nbytes
+Installed-Size: 142142

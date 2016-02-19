@@ -4,4 +4,4 @@ Description: Portable Forth interpreter by Serge.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: BSD
 Architecture: mipsel
-Installed-Size: nbytes
+Installed-Size: 131291

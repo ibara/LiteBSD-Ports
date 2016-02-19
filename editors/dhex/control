@@ -4,4 +4,4 @@ Description: Console hex editor with diff support.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: GPLv2
 Architecture: mipsel
-Installed-Size: nbytes
+Installed-Size: 313677

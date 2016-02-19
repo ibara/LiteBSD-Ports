@@ -298,7 +298,7 @@ install-man:
 	ln -f vi.0 $(DESTDIR)$(MANDIR)/man1/vedit.0
 	ln -f vi.0 $(DESTDIR)$(MANDIR)/man1/view.0
 
-beforeinstall: all install-man
+do-install: all install-man
 	rm -f $(DESTDIR)$(BINDIR)/ex $(DESTDIR)$(BINDIR)/edit \
 		$(DESTDIR)$(BINDIR)/vedit $(DESTDIR)$(BINDIR)/vi \
 		$(DESTDIR)$(BINDIR)/view

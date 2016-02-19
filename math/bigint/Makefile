@@ -54,7 +54,7 @@ birsa:			birsa.o bigint.a
 birsa.o:		birsa.c bigint.h
 	$(CC) $(CFLAGS) -c birsa.c
 
-beforeinstall:
+do-install:
 	install -d $(DESTDIR)$(BINDIR)
 	install -d $(DESTDIR)$(PREFIX)/include
 	install -d $(DESTDIR)$(PREFIX)/lib

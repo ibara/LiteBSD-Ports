@@ -23,17 +23,17 @@ srcdir		= .
 srcdir_sl	= ./
 
 
-x               = 
+x               =
 o               = .o
 
 srcdir		= .
 
-CPPFLAGS	+= -I. -I$(srcdir) -DHAVE_CONFIG_H  -DLOCAL_REGEXP -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 
+CPPFLAGS	+= -I. -I$(srcdir) -DHAVE_CONFIG_H  -DLOCAL_REGEXP -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64
 CFLAGS          += -ffunction-sections -fdata-sections
 LIBS            = -lm -lc -lgcc
 
 BUILD_CC	= gcc
-BUILD_CFLAGS	= 
+BUILD_CFLAGS	=
 BUILD_CPPFLAGS	= -I. -I$(srcdir) -DHAVE_CONFIG_H ${CPPFLAGS}
 BUILD_LDFLAGS	=
 BUILD_LIBS	= ${LIBS}
@@ -47,8 +47,8 @@ YACC            = bison -y
 CTAGS		= ctags
 ETAGS		= etags
 
-LINT		= 
-LINTOPTS	= 
+LINT		=
+LINTOPTS	=
 
 INSTALL         = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -68,15 +68,15 @@ binary_PROG  = $(actual_PROG)
 OBJS = parse$o scan$o memory$o main$o hash$o execute$o code$o \
   da$o error$o init$o bi_vars$o cast$o print$o bi_funct$o \
   kw$o jmp$o array$o field$o split$o re_cmpl$o regexp$o zmalloc$o \
-  fin$o files$o scancode$o matherr$o fcall$o version$o 
+  fin$o files$o scancode$o matherr$o fcall$o version$o
 
 .SUFFIXES: .c .i $o
 
 .c.i :
-	
+
 	$(CPP) -C $(CPPFLAGS) $< >$@
 .c$o :
-	
+
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $<
 
 all :	mawk
@@ -123,7 +123,7 @@ scancode.c :  $(srcdir)/makescan.c  scancode.h nstd.h config.h
 MAWK_BIN = $(BINDIR)/$(binary_PROG)
 MAWK_MAN = $(MANDIR)/$(actual_PROG)1
 
-afterinstall :  mawk
+do-install :  mawk
 	install -d ${DESTDIR}${PREFIX}/bin
 	$(INSTALL_PROGRAM) mawk $(DESTDIR)$(BINDIR)
 

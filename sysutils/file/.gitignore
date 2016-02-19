@@ -1,0 +1,6 @@
+doc/file.1
+doc/libmagic.3
+doc/magic.4
+src/file
+src/libmagic.a
+src/magic.h

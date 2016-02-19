@@ -4,4 +4,4 @@ Description: Small multi-platform vi clone.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: BSD
 Architecture: mipsel
-Installed-Size: nbytes
+Installed-Size: 226124

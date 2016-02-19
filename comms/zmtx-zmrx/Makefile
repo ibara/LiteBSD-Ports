@@ -15,7 +15,7 @@ zmtx:	zmtx.o zmdm.o crctab.o
 zmrx:	zmrx.o zmdm.o crctab.o
 	$(CC) $(CFLAGS) $(LDFLAGS) zmrx.o zmdm.o crctab.o -o zmrx -lc -lgcc
 
-beforeinstall:
+do-install:
 	nroff -man zmrx.1 > zmrx.0
 	nroff -man zmtx.1 > zmtx.0
 	install -d ${DESTDIR}${PREFIX}/bin

@@ -4,4 +4,4 @@ Description: Terminal gopher client.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: ISC
 Architecture: mipsel
-Installed-Size: nbytes
+Installed-Size: 129332

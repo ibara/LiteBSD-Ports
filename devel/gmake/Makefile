@@ -1076,6 +1076,7 @@ installdirs-am:
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
+do-install: install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive

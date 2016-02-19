@@ -4,4 +4,4 @@ Description: MicroEMACS from RetroBSD.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: Public Domain
 Architecture: mipsel
-Installed-Size: nbytes
+Installed-Size: 185441

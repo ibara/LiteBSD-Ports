@@ -4,4 +4,4 @@ Description: Tiny implementation of the Kermit protocol.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: GPLv2+
 Architecture: mipsel
-Installed-Size: 116947
+Installed-Size: 116999

@@ -40,7 +40,7 @@ htpasswd:	htpasswd.o
 htpasswd.o:	htpasswd.c
 	$(CC) $(CFLAGS) -c htpasswd.c
 
-beforeinstall: all
+do-install: all
 	install -d ${DESTDIR}${BINDIR}
 	install -d ${DESTDIR}${MANDIR}1
 	install -d ${DESTDIR}${MANDIR}8
