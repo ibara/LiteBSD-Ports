@@ -1,0 +1,7 @@
+Package: blake2
+Version: 20160220
+Description: Fast and secure hash function checksum program.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: CC0
+Architecture: mipsel
+Installed-Size: 117796
