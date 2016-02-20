@@ -4,7 +4,7 @@ PORT= cgo
 PROG= ${PORT}
 
 CFLAGS+=-ffunction-sections -fdata-sections
-LDFLAGS+=-Wl,--gc-sections
+LDFLAGS+=-Wl,--gc-sections -s
 
 beforeinstall:
 	install -d ${DESTDIR}${PREFIX}/etc

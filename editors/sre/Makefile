@@ -6,6 +6,6 @@ NOMAN=
 SRCS= tag.c cmd.c file.c main.c misc.c init.c render.c setup.c srch.c
 
 CFLAGS+= -ffunction-sections -fdata-sections
-LDFLAGS+= -Wl,--gc-sections
+LDFLAGS+= -Wl,--gc-sections -s
 
 .include <bsd.port.mk>

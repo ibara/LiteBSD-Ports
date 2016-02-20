@@ -6,7 +6,7 @@ SRCS=	basic.c buffer.c display.c file.c fileio.c line.c main.c \
 	random.c region.c search.c tcap.c ttyio.c word.c
 
 CFLAGS+= -ffunction-sections -fdata-sections
-LDFLAGS+= -Wl,--gc-sections
+LDFLAGS+= -Wl,--gc-sections -s
 LDADD+= -ltermcap
 
 beforeinstall:

@@ -48,7 +48,7 @@
 #=======================================================================
 V                = 3.05
 PORT             = dired
-PROG             = dired
+PROG             = ${PORT}
 SRCS             = dired.c regexpr.c
 
 #local pathname for installed version
@@ -59,7 +59,7 @@ CFLAGS          += -ffunction-sections -fdata-sections $(DEFINES) \
 DEFINES		= -DHAVE_TERMIOS_H -DHAVE_DIRENT_H -DHAVE_TERM_H
 
 # A few systems need -lcurses too, but usually just -ltermlib suffices
-LDFLAGS        += -Wl,--gc-sections
+LDFLAGS        += -Wl,--gc-sections -s
 
 DPADD           = ${LIBTERMLIB}
 LDADD           = -ltermlib

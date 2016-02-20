@@ -10,7 +10,7 @@ SRCS=	main.c screen.c brac.c ch.c charset.c cmdbuf.c \
 	tags.c ttyin.c version.c  
 
 CFLAGS+= -I${.CURDIR} -ffunction-sections -fdata-sections
-LDFLAGS+= -Wl,--gc-sections 
+LDFLAGS+= -Wl,--gc-sections -s
 LDADD+= -lncurses
 
 .include <bsd.port.mk>

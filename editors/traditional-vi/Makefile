@@ -99,7 +99,7 @@ INSTALL		= install
 #
 CFLAGS+= -ffunction-sections -fdata-sections
 #CPPFLAGS =
-LDFLAGS+= -Wl,--gc-sections
+LDFLAGS+= -Wl,--gc-sections -s
 #LDADD	=
 
 #

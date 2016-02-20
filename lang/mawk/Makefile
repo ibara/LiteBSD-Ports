@@ -30,6 +30,7 @@ srcdir		= .
 
 CPPFLAGS	+= -I. -I$(srcdir) -DHAVE_CONFIG_H  -DLOCAL_REGEXP -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64
 CFLAGS          += -ffunction-sections -fdata-sections
+LDFLAGS		+= -Wl,--gc-sections -s
 LIBS            = -lm -lc -lgcc
 
 BUILD_CC	= gcc

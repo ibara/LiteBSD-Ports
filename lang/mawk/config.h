@@ -57,7 +57,7 @@ the GNU General Public License, version 2, 1991.
 /* #undef NO_LEAKS */
 #define SIZE_T_STDDEF_H 1
 /* #undef SIZE_T_TYPES_H */
-#define SYSTEM_NAME "linux-gnu"
+#define SYSTEM_NAME "litebsd"
 /* #undef TURN_OFF_FPE_TRAPS */
 /* #undef TURN_ON_FPE_TRAPS */
 /* #undef USE_IEEEFP_H */

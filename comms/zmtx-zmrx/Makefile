@@ -4,16 +4,16 @@ PORT= zmtx-zmrx
 MAN1= zmrx.0 zmtx.0
 CLEANFILES+=*.o zmrx zmtx
 
-CFLAGS+=-DSUNOS4 -ffunction-sections -fdata-sections
-LDFLAGS+=-Wl,--gc-sections
+CFLAGS+= -DSUNOS4 -ffunction-sections -fdata-sections
+LDFLAGS+= -Wl,--gc-sections -s
 
 all:	zmtx zmrx
 
 zmtx:	zmtx.o zmdm.o crctab.o
-	$(CC) $(CFLAGS) $(LDFLAGS) zmtx.o zmdm.o crctab.o -o zmtx -lc -lgcc
+	$(CC) $(CFLAGS) $(LDFLAGS) -o zmtx zmtx.o zmdm.o crctab.o -lc -lgcc
 
 zmrx:	zmrx.o zmdm.o crctab.o
-	$(CC) $(CFLAGS) $(LDFLAGS) zmrx.o zmdm.o crctab.o -o zmrx -lc -lgcc
+	$(CC) $(CFLAGS) $(LDFLAGS) -o zmrx zmrx.o zmdm.o crctab.o -lc -lgcc
 
 do-install:
 	nroff -man zmrx.1 > zmrx.0

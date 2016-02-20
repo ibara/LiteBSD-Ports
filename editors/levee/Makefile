@@ -8,7 +8,7 @@ SRCS=	blockio.c display.c editcor.c exec.c find.c \
 	version.c
 
 CFLAGS+= -ffunction-sections -fdata-sections
-LDFLAGS+= -Wl,--gc-sections
+LDFLAGS+= -Wl,--gc-sections -s
 LDADD+= -ltermcap
 
 .include <bsd.port.mk>

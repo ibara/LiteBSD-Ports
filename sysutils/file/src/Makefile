@@ -227,7 +227,7 @@ AUTOHEADER = ${SHELL} /home/retrobsd/strip/litebsd/ports/sysutils/file/missing a
 AUTOMAKE = ${SHELL} /home/retrobsd/strip/litebsd/ports/sysutils/file/missing automake-1.15
 AWK = mawk
 CCDEPMODE = depmode=gcc3
-CFLAGS += ${DEFS}
+CFLAGS += ${DEFS} -ffunction-sections -fdata-sections
 CFLAG_VISIBILITY = -fvisibility=hidden
 CPPFLAGS =
 CYGPATH_W = echo
@@ -250,7 +250,7 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld
-LDFLAGS +=
+LDFLAGS += -Wl,--gc-sections -s
 LIBOBJS =  ${LIBOBJDIR}strlcpy$U.o ${LIBOBJDIR}strlcat$U.o ${LIBOBJDIR}fmtcheck$U.o
 LIBS =
 LIBTOOL = $(SHELL) $(top_builddir)/libtool

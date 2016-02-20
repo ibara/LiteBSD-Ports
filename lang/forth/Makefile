@@ -6,7 +6,7 @@ NOMAN=
 SRCS= forth.c func.c
 
 CFLAGS+= -ffunction-sections -fdata-sections
-LDFLAGS+= -Wl,--gc-sections
+LDFLAGS+= -Wl,--gc-sections -s
 LDADD+= -lm
 
 .include <bsd.port.mk>

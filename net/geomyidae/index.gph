@@ -1,0 +1,6 @@
+comment
+tcomment
+[1|R-36|/|server|port]
+[0|file - comment|/file.dat|server|port]
+[h|http://www.heise.de|URL:http://www.heise.de|server|port]
+

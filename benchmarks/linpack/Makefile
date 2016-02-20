@@ -1,13 +1,10 @@
-#
 # linpack Makefile
-#
+V= 19960914
+PORT= linpack
+PROG= ${PORT}
+NOMAN=
 
-V=	19960914
-PORT=	linpack
-PROG=	linpack
-NOMAN=	Yes
-
-CFLAGS+=-ffunction-sections -fdata-sections
-LDFLAGS+=-Wl,--gc-sections
+CFLAGS+= -ffunction-sections -fdata-sections
+LDFLAGS+= -Wl,--gc-sections -s
 
 .include <bsd.port.mk>

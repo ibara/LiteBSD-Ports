@@ -4,8 +4,8 @@ PORT= multitail
 PROG= ${PORT}
 SRCS= utils.c mt.c error.c my_pty.c term.c scrollback.c help.c mem.c cv.c selbox.c stripstring.c color.c misc.c ui.c exec.c diff.c config.c cmdline.c globals.c history.c xclip.c
 
-CFLAGS+=-funsigned-char -ffunction-sections -fdata-sections -DLiteBSD -DVERSION=\"$(V)\" -DCONFIG_FILE=\"$(CONFIG_FILE)\" -D_FORTIFY_SOURCE=2
-LDFLAGS+= -Wl,--gc-sections
+CFLAGS+= -funsigned-char -ffunction-sections -fdata-sections -DLiteBSD -DVERSION=\"$(V)\" -DCONFIG_FILE=\"$(CONFIG_FILE)\" -D_FORTIFY_SOURCE=2
+LDFLAGS+= -Wl,--gc-sections -s
 LDADD+= -lpanel -lncurses -lutil -lm
 
 CONFIG_FILE=$(DESTDIR)$(PREFIX)/etc/multitail.conf

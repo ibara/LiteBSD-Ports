@@ -8,12 +8,12 @@ SRCS=	basic.c bind.c buffer.c bug.c cinfo.c cmode.c \
 	random.c regexp.c region.c rsearch.c search.c spawn.c tty.c \
 	ttyio.c vers.c version.c window.c word.c
 
-HOST=	mipsel-unknown-litebsd
+HOST= mipsel-unknown-litebsd
 DOCDIR=	${PREFIX}/lib/ce
-CFLAGS+=-DHAVE_CONFIG_H -I${.CURDIR}
-CFLAGS+=-DLIBDIR=\"$(DOCDIR)\" -DHOSTINFO=\"$(HOST)\"
-CFLAGS+=-ffunction-sections -fdata-sections
-LDFLAGS+=-Wl,--gc-sections
+CFLAGS+= -DHAVE_CONFIG_H -I${.CURDIR}
+CFLAGS+= -DLIBDIR=\"$(DOCDIR)\" -DHOSTINFO=\"$(HOST)\"
+CFLAGS+= -ffunction-sections -fdata-sections
+LDFLAGS+= -Wl,--gc-sections -s
 LDADD+=	-ltermcap
 
 .include <bsd.port.mk>

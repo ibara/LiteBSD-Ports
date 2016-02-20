@@ -1,0 +1,43 @@
+A gopherd for Linux/BSD.
+
+Features:
+	* gopher menus (see index.gph for an example)
+	* dir listings (if no index.gph was found)
+	* cgi support (.cgi files are executed)
+	* search support in CGI files
+	* logging (-l option) and loglevels (-v option)
+
+Usage:
+
+	geomyidae [-d] [-l logfile] [-v loglvl] [-b htdocs] [-p port] [-o sport]
+		  [-u user] [-g group] [-h host] [-i IP]
+		-d		don't fork into background
+		-l logfile	setting this will turn on logging into logfile
+		-v loglevel	see below (default 7) 
+		-b htdocs	the htdocs root for serving files (default
+				/var/gopher)
+		-p port		set the port where geomyidae should listen on
+				(default 70)
+		-o sport	set the port that should be shown in the dir
+				listings
+		-u user		which user rights the serving children should get
+		-g group	which group rights the serving children should get
+		-i IP		IP which geomyidae should bind to
+		-h host		host that should be used in the dir listings
+
+Loglevels:
+
+	0 - no logging
+	1 - served plain files
+	2 - dir listings
+	4 - HTTP redirects
+	8 - not found queries
+
+	1 + 2 + 4 = 7 (files + dir listings + HTTP)
+
+Init scripts:
+	The rc.d directory includes startup scripts for various distributions.
+
+
+Have fun!
+

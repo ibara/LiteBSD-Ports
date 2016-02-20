@@ -24,7 +24,7 @@ PFDICDAT     = pfdicdat.h
 PFORTHAPP    = pforth_standalone
 
 # This is needed to get pForth to build on Snow Leopard and other 64 bit platforms.
-WIDTHOPT= -Wl,--gc-sections
+WIDTHOPT= -Wl,--gc-sections -s
 
 FULL_WARNINGS =  \
 	-std=c89 \

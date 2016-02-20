@@ -6,8 +6,8 @@
 #
 V=	3.7.1
 PROG=	screen
-PORT=	screen
-NOMAN=	1
+PORT=	${PORT}
+NOMAN=
 
 srcdir = .
 
@@ -53,8 +53,8 @@ OPTIONS=
 
 SHELL=/bin/sh
 
-CFLAGS+=-ffunction-sections -fdata-sections
-LDFLAGS+=-Wl,--gc-sections
+CFLAGS+= -ffunction-sections -fdata-sections
+LDFLAGS+= -Wl,--gc-sections -s
 
 CFILES=	screen.c ansi.c fileio.c mark.c misc.c resize.c socket.c \
 	search.c tty.c term.c window.c utmp.c loadav.c putenv.c help.c \

@@ -1,0 +1,7 @@
+Package: geomyidae
+Version: 0.26
+Description: Gopher protocol daemon.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 188626
