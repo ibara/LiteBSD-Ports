@@ -39,7 +39,7 @@ char *com[] =  { LCCDIR "rcc", "-target=mips/litebsd", "$1", "$2", "$3", "", 0 }
 char *include[] = { "-I" LCCDIR "include", "-I/usr/local/include",
 	"-I/usr/include", 0 };
 char *as[] = { "/usr/bin/as", "-o", "$3", "$1", "$2", 0 };
-char *ld[] = { "/usr/bin/ld", "-o", "$3", LIBDIR "crt0.o", "$1", "$2", "", "-L" LIBDIR, "-lc", "-llcc", 0 };
+char *ld[] = { "/usr/bin/ld", "-o", "$3", LIBDIR "crt0.o", "$1", "$2", "", "-L" LIBDIR, "-lc", "-L/usr/local/lib", "-llcc", 0 };
 
 extern char *concat(char *, char *);
 
