@@ -1,0 +1,7 @@
+Package: picocom
+Version: 2.2a
+Description: Minimal dumb-terminal emulation program.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2+
+Architecture: mipsel
+Installed-Size: 185461
