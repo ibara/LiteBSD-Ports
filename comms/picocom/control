@@ -4,4 +4,4 @@ Description: Minimal dumb-terminal emulation program.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: GPLv2+
 Architecture: mipsel
-Installed-Size: 185461
+Installed-Size: 173173
