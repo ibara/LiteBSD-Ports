@@ -1,6 +1,0 @@
-GNU make program
-Maintainer: Brian Callahan <bcallah@devio.us>
-License: GPLv3+
-###
-bin/gmake
-man/man1/gmake.0

@@ -51,4 +51,8 @@ sysutils/less/less
 sysutils/lsx/lsx
 sysutils/multitail/multitail
 sysutils/screen/screen
+textproc/dos2unix/dos2unix
+textproc/dos2unix/mac2unix
+textproc/dos2unix/unix2dos
+textproc/dos2unix/unix2mac
 www/httpsrv/httpsrv

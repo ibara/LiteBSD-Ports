@@ -1,5 +1,0 @@
-The smallest functional Emacs in less than 2000 lines of C.
-Maintainer: Brian Callahan <bcallah@devio.us>
-License: Public Domain
-###
-bin/atto

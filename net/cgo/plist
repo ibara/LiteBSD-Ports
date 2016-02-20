@@ -1,7 +1,0 @@
-Terminal gopher client.
-Maintainer: Brian Callahan <bcallah@devio.us>
-License: ISC
-###
-bin/cgo
-etc/cgorc
-man/man1/cgo.0

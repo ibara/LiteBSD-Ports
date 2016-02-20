@@ -1,6 +1,0 @@
-Easy editor
-Maintainer: Brian Callahan <bcallah@devio.us>
-License: BSD
-###
-bin/ee
-man/man1/ee.0

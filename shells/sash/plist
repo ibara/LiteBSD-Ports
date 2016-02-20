@@ -1,7 +1,0 @@
-A stand-alone shell with many built-in commands.
-Maintainer: Brian Callahan <bcallah@devio.us>
-License: BSD-like
-###
-bin/sash
-man/man1/sash.0
-pkg/messages/sash-3.8

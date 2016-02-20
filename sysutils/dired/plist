@@ -1,6 +1,0 @@
-Terminal-based directory editor.
-Maintainer: Brian Callahan <bcallah@devio.us>
-License: Assumed GPLv2 (1997)
-###
-bin/dired
-man/man1/dired.0

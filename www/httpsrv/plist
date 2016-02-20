@@ -1,5 +1,0 @@
-Minimalist HTTP/1.0 server for static content
-Maintainer: mferrera@cssiberica.com
-License: BSD
-###
-bin/httpsrv
