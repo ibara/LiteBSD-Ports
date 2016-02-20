@@ -1,0 +1,16 @@
+Type "make" to build the starlanes binaries, then "make fakeinstall"
+which will, uh, pretend to install everything.  If all the commands that
+it's going to execute look correct, go ahead and type "make install" (as
+root) to install the goods.
+
+Sorry about the one big source, but it's only a game.  :-)
+
+This is a port to C from a version of Starlanes for the Osborne 1.  The
+original source is from a First Osborne Group (FOG) disk that I probably
+picked up in 1982.  The author isn't identified.  Based on comments in
+a TRS-80 version I picked up off the web, it would appear that it was
+first published in Creative Computing magazine.
+
+-Beej
+beej@ecst.csuchico.edu
+

@@ -1,0 +1,7 @@
+Package: starlanes
+Version: 1.2.2
+Description: Classic space-age stock trading game.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2+
+Architecture: mipsel
+Installed-Size: 257310
