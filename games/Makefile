@@ -3,6 +3,6 @@
 #
 
 # Hook up all gamess ports
-SUBDIR=	an aop cpat life
+SUBDIR=	an aop cpat curseofwar life
 
 .include <bsd.subdir.mk>

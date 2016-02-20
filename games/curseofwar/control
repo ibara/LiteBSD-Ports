@@ -1,0 +1,7 @@
+Package: curseofwar
+Version: 1.2.1
+Description: Fast-paced real time strategy game.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv3+
+Architecture: mipsel
+Installed-Size: 268728

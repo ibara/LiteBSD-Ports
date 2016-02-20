@@ -1,0 +1,181 @@
+/******************************************************************************
+
+  Curse of War -- Real Time Strategy Game for Linux.
+  Copyright (C) 2013 Alexey Nikolaev.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+******************************************************************************/
+
+#include "network.h"
+
+void *get_in_addr(struct sockaddr *sa) {
+  return &(((struct sockaddr_in*)sa)->sin_addr);
+}
+
+/* returns port number */
+in_port_t get_in_port(struct sockaddr *sa) {
+  return (((struct sockaddr_in*)sa)->sin_port);
+}
+
+#define SIZE6 16
+/* Equality of two arrays of size SIZE6 (two IPv6 addresses) */
+int eq_6_addr (uint8_t s1[SIZE6], uint8_t s2[SIZE6]) {
+  int i;
+  for(i=0; i<SIZE6; ++i) {
+    if (s1[i] != s2[i]) return 0;
+  }
+  return 1;
+}
+
+/* Equality of two addresses (both IP number and port number) */
+int sa_match (struct sockaddr_storage *sa1, struct sockaddr_storage *sa2) {
+  struct sockaddr *s1 = (struct sockaddr*) sa1;
+  struct sockaddr *s2 = (struct sockaddr*) sa2;
+  return (
+      /* IPv4 equality */
+      ( s1->sa_family == AF_INET && s2->sa_family == AF_INET &&
+        ((struct sockaddr_in*)s1)->sin_addr.s_addr == ((struct sockaddr_in*)s2)->sin_addr.s_addr ) 
+    )
+    &&
+    ( get_in_port(s1) == get_in_port(s2) );
+}
+
+
+/* Initialize server socket */
+int server_init (int *p_sfd, char*str_port) { 
+  struct addrinfo hints;
+  struct addrinfo *result, *rp;
+  int s;
+
+  memset(&hints, 0, sizeof(struct addrinfo));
+  hints.ai_family = AF_UNSPEC;    /* Allow IPv4 or IPv6 */
+  hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
+  hints.ai_flags = AI_PASSIVE;    /* For wildcard IP address */
+  hints.ai_protocol = 0;          /* Any protocol */
+  hints.ai_canonname = NULL;
+  hints.ai_addr = NULL;
+  hints.ai_next = NULL;
+
+  s = getaddrinfo(NULL, str_port, &hints, &result);
+  if (s != 0) {
+    fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+    return -1;
+  }
+
+  /* getaddrinfo() returns a list of address structures.
+  *  Try each address until we successfully bind(2).
+  *  If socket(2) (or bind(2)) fails, we (close the socket
+  *  and) try the next address. */
+
+  for (rp = result; rp != NULL; rp = rp->ai_next) {
+    *p_sfd = socket(rp->ai_family, rp->ai_socktype,
+    rp->ai_protocol);
+    if (*p_sfd == -1)
+      continue;
+
+    if (bind(*p_sfd, rp->ai_addr, rp->ai_addrlen) == 0)
+    break;                  /* Success */
+
+    close(*p_sfd);
+  }
+
+  if (rp == NULL) {               /* No address succeeded */
+    fprintf(stderr, "Could not bind\n");
+    return -1;
+  }
+
+  freeaddrinfo(result);           /* No longer needed */
+  return 0;
+}
+
+/* initialize client socket, and fill struct addrinfo *srv (split into two functions!) */
+int client_init_session (int *p_sfd, char* str_my_port, struct addrinfo *srv, char *str_server_addr, char *str_server_port) { 
+  struct addrinfo hints;
+  struct addrinfo *result, *rp;
+  int s;
+
+  memset(&hints, 0, sizeof(struct addrinfo));
+  hints.ai_family = AF_UNSPEC;    /* Allow IPv4 or IPv6 */
+  hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
+  hints.ai_flags = AI_PASSIVE;    /* For wildcard IP address */
+  hints.ai_protocol = 0;          /* Any protocol */
+  hints.ai_canonname = NULL;
+  hints.ai_addr = NULL;
+  hints.ai_next = NULL;
+
+  s = getaddrinfo(NULL, str_my_port, &hints, &result);
+  if (s != 0) {
+    fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+    return -1;
+  }
+
+  /* getaddrinfo() returns a list of address structures.
+  *  Try each address until we successfully bind(2).
+  *  If socket(2) (or bind(2)) fails, we (close the socket
+  *  and) try the next address. */
+
+  for (rp = result; rp != NULL; rp = rp->ai_next) {
+    *p_sfd = socket(rp->ai_family, rp->ai_socktype,
+    rp->ai_protocol);
+    if (*p_sfd == -1)
+      continue;
+
+    if (bind(*p_sfd, rp->ai_addr, rp->ai_addrlen) == 0)
+    break;                  /* Success */
+
+    close(*p_sfd);
+  }
+
+  if (rp == NULL) {               /* No address succeeded */
+    fprintf(stderr, "Could not bind\n");
+    return -1;
+  }
+
+  freeaddrinfo(result);           /* No longer needed */
+
+
+  /* Second half */
+
+  /* get info about the server */
+  memset(&hints, 0, sizeof(struct addrinfo));
+  hints.ai_family = AF_UNSPEC;    /* Allow IPv4 or IPv6 */
+  hints.ai_socktype = SOCK_DGRAM; /* Datagram socket */
+  hints.ai_flags = 0;
+  hints.ai_protocol = 0;          /* Any protocol */
+
+  s = getaddrinfo(str_server_addr, str_server_port, &hints, &result);
+  if (s != 0) {
+    fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+    return -1;
+  }
+  /*
+  for (rp = result; rp != NULL; rp = rp->ai_next) {
+    int tmp_df = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
+    if (tmp_df == -1) continue;
+    close(tmp_df);
+  }
+  */
+  rp = result;
+
+  if (rp == NULL) {               /* No address succeeded */
+    fprintf(stderr, "Could not connect\n");
+    return -1;
+  }
+  *srv = *rp;
+
+  return 0;
+}
+
+
