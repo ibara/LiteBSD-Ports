@@ -1,0 +1,7 @@
+Package: libb2
+Version: 1.2.0
+Description: BLAKE2 reference library.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: CC0
+Architecture: mipsel
+Installed-Size: 49524

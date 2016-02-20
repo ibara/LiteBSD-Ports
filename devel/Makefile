@@ -3,6 +3,6 @@
 #
 
 # Hook up all devel ports
-SUBDIR=	gmake
+SUBDIR=	gmake libb2
 
 .include <bsd.subdir.mk>
