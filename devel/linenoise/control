@@ -1,0 +1,7 @@
+Package: linenoise
+Version: 1.0
+Description: Small self-contained alternative to readline and libedit.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 34074
