@@ -1,0 +1,7 @@
+Package: ucpp
+Version: 1.3
+Description: ISO-C99 compliant C preprocessor (OpenBSD version).
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 145705
