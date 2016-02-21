@@ -1,0 +1,66 @@
+ABOUT:
+"atto" is the SI-prefix for Quintillionth/Trillionth.
+This reflects the size of this scripting language compared to others. :-P
+It is in many ways a severely limited language, but provides some useful
+features not available by conventional scripting on some platforms.
+It uses only basic C library functions and should therefore be easy to port.
+
+
+
+INSTALLATION:
+Since no special libraries are used, it should be enough to just compile
+it on the command line like this with the GNU C Compiler:
+gcc -o attoscript attoscript.c
+
+
+
+PROPERTIES, FEATURES, LIMITATIONS AND SYNTAX RULES:
+* Very resilient to errors, only gives an warning and then continues.
+* Syntax is case insensitive.
+* All variables are global.
+* No looping constructs. (Can be simulated with if and goto though.)
+* There are hard-coded limits for variable space and names.
+  (Can be changed through recompilation if necessary.)
+* Variables are numeric only.
+* Variable and label names cannot contain numbers, meaning only characters a-z.
+* Strings are defined by starting and ending with a double-quote.
+* Numbers contains only numbers of course.
+* Negative numbers cannot be set. (Because of limitations in atoi().)
+  Decrementing a variable below zero is possible though.
+* Variables can be interpolated in strings by enclosing the variable name
+  with the $ character on both sides.
+* Execution is terminated automatically when end of script is reached.
+* The return keyword only remembers one position.
+* If-operators available: eq (Equal), ne (Not-equal), gt (Greater), lt (Lesser).
+
+
+
+KEYWORDS/COMMANDS:
+#                         Comment. (Skips everything to end of line.)
+end                       Terminate execution of script.
+var <name>                Declare new variable.
+set <name> <value/name>   Set value to variable. (Or copy from other variable.)
+echo <string/name>        Print a message (or variable value) on standard-out.
+sleep <second>            Pause execution.
+incr <name>               Increment value in variable.
+decr <name>               Decrement value in variable.
+rand <name> <from> <to>   Put a random value in variable.
+input <name>              Gather user input from standard-in into variable.
+sys <name> <string>       Run a system command put return code in variable.
+label <label>             Make a label at that position.
+goto <label>              Jump (redirect execution) to another place.
+if <value/name> <operator> <value/name> <label>   Conditional goto.
+return                    Return to position jumped from if possible.
+
+
+
+EXAMPLE SCRIPT:
+var count
+rand count 5 15
+label loop
+echo "There are $count$ bottles of prune juice on the wall."
+decr count
+if count ne 0 loop
+
+
+

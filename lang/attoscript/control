@@ -1,0 +1,7 @@
+Package: attoscript
+Version: 0.1
+Description: Very small programming language alternative for batch files.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2+
+Architecture: mipsel
+Installed-Size: 92993

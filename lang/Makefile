@@ -3,6 +3,7 @@
 #
 
 # Hook up all lang ports
-SUBDIR=	cbmbasic forth fpp lcc mawk pforth retro tinyscheme tradcpp ucpp
+SUBDIR=	attoscript cbmbasic forth fpp lcc mawk \
+	pforth retro tinyscheme tradcpp ucpp
 
 .include <bsd.subdir.mk>
