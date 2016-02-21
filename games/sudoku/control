@@ -1,0 +1,7 @@
+Package: sudoku
+Version: 0.1
+Description: Automatic sudoku solver.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 185212
