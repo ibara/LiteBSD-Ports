@@ -3,6 +3,6 @@
 #
 
 # Hook up all gamess ports
-SUBDIR=	an aop cpat curseofwar life starlanes sudoku
+SUBDIR=	an aop cmatrix cpat curseofwar life starlanes sudoku
 
 .include <bsd.subdir.mk>

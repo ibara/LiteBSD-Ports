@@ -1,0 +1,7 @@
+Package: cmatrix
+Version: 1.2a
+Description: Show a scrolling Matrix-like screen.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv1+
+Architecture: mipsel
+Installed-Size: 249326
