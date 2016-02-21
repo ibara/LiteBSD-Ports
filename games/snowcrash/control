@@ -1,0 +1,7 @@
+Package: snowcrash
+Version: 20131201
+Description: Screensaver that puts random characters on screen like TV snow.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Unknown
+Architecture: mipsel
+Installed-Size: 181124
