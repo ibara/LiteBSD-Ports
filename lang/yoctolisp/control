@@ -1,0 +1,7 @@
+Package: yoctolisp
+Version: 20150730
+Description: Tiny scheme-like lisp interpreter.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: ISC
+Architecture: mipsel
+Installed-Size: 95025
