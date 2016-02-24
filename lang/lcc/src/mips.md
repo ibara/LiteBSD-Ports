@@ -915,11 +915,16 @@ static void global(Symbol p) {
                 else
                         print( ".comm %s,%d\n", p->x.name, p->type->size);
         } else {
-                if (p->u.seg == DATA
-                && (p->type->size == 0 || p->type->size > gnum))
+                /*
+                 * Serge as doesn't handle .sdata so only emit .data
+                 * if (p->u.seg == DATA
+                 * && (p->type->size == 0 || p->type->size > gnum))
+                 *         print(".data\n");
+                 * else if (p->u.seg == DATA)
+                 *         print(".sdata\n");
+                 */
+                if (p->u.seg == DATA)
                         print(".data\n");
-                else if (p->u.seg == DATA)
-                        print(".sdata\n");
                 print(".align %c\n", ".01.2...3"[p->type->align]);
                 print("%s:\n", p->x.name);
         }
