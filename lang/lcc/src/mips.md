@@ -882,8 +882,11 @@ static void export(Symbol p) {
         print(".globl %s\n", p->x.name);
 }
 static void import(Symbol p) {
-        if (!isfunc(p->type))
-                print(".extern %s %d\n", p->name, p->type->size);
+        /*
+         * Don't emit .extern -- GNU & Serge as both ignore it.
+         * if (!isfunc(p->type))
+         *         print(".extern %s %d\n", p->name, p->type->size);
+         */
 }
 static void defsymbol(Symbol p) {
         if (p->scope >= LOCAL && p->sclass == STATIC)
