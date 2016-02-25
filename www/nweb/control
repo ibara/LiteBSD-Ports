@@ -1,0 +1,7 @@
+Package: nweb
+Version: 23
+Description: Tiny static page only web server.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: Uncopyrightable, free to use for any purpose
+Architecture: mipsel
+Installed-Size: 69916
