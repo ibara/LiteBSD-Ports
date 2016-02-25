@@ -13,10 +13,10 @@ static char rcsid[] = "$Id$";
 
 char *suffixes[] = { ".c", ".i", ".s", ".o", ".out", 0 };
 char inputs[256] = "";
-char *cpp[] = { "/usr/libexec/cpp", "-D__STDC__=1",
+char *cpp[] = { LCCDIR "cpp", "-D__STDC__=1",
 	"-DLANGUAGE_C",
 	"-DMIPSEL",
-	"-D__LITEBSD__",
+	"-D__LiteBSD__",
 	"-D_CFE",
 	"-D_LANGUAGE_C",
 	"-D_MIPSEL",
@@ -36,8 +36,7 @@ char *cpp[] = { "/usr/libexec/cpp", "-D__STDC__=1",
 	"-Dunix",
 	"$1", "$2", "$3", 0 };
 char *com[] =  { LCCDIR "rcc", "-target=mips/litebsd", "$1", "$2", "$3", "", 0 };
-char *include[] = { "-I" LCCDIR "include", "-I/usr/local/include",
-	"-I/usr/include", 0 };
+char *include[] = { "-I/usr/include", "-I/usr/local/include", 0 };
 char *as[] = { "/usr/bin/as", "-o", "$3", "$1", "$2", 0 };
 char *ld[] = { "/usr/bin/ld", "-o", "$3", LIBDIR "crt0.o", "$1", "$2", "", "-L" LIBDIR, "-lc", "-L/usr/local/lib", "-llcc", 0 };
 

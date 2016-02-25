@@ -288,6 +288,7 @@ do-install:
 	install -d ${DESTDIR}${PREFIX}/lib
 	install -d ${DESTDIR}${PREFIX}/libexec/lcc
 	install -c -m 555 lcc$E ${DESTDIR}${BINDIR}/lcc
+	install -c -m 555 cpp$E ${DESTDIR}${PREFIX}/libexec/lcc/cpp
 	install -c -m 555 rcc$E ${DESTDIR}${PREFIX}/libexec/lcc/rcc
 	install -c -m 555 bprint$E ${DESTDIR}${BINDIR}/bprint
 	install -c -m 444 liblcc.a librcc.a ${DESTDIR}${PREFIX}/lib
