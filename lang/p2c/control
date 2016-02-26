@@ -1,0 +1,7 @@
+Package: p2c
+Version: 1.21a
+Description: Pascal to C translator.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv1+
+Architecture: mipsel
+Installed-Size: 724873
