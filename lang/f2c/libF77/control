@@ -1,0 +1,8 @@
+Package: 
+Version: 
+Description: Put a description of the package here.
+    Multiple lines allowed.
+Maintainer: Your Name <your@email.com>
+License: BSD, MIT, ISC, GPLv2, GPLv2+, GPLv3, GPLv3+, LGPLv2.1+, etc.
+Architecture: mipsel
+Installed-Size: 
