@@ -1,0 +1,7 @@
+Package: cgames
+Version: 2.2a
+Description: Suite of ncurses console games. (Blocks/Minesweeper/Sokoban)
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2 only
+Architecture: mipsel
+Installed-Size: 689230

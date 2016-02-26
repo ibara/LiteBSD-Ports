@@ -1,0 +1,57 @@
+The programs in this distribution are re-implementations of games for
+the Linux console.
+
+Three games are included with this distribution:
+
+* cblocks (sliding-block puzzles),
+* cmines (a minesweeper-based game), and
+* csokoban (sokoban).
+
+Alternate versions are included, which do not need to be played on the
+console. However, these versions lack the font-altered images and full
+mouse support.
+
+INSTALLING
+
+To build and install all the games, the usual incantation will
+suffice: ./configure ; make ; make install.
+
+Useful arguments to ./configure include: --bindir, which defaults to
+/usr/local/games, --mandir, which defaults to /usr/local/man, and
+--datadir, which defaults to /usr/local/share.
+
+In addition, you can use --with-ncurses to build the ncurses-based
+versions of the programs instead of the Linux console versions, and
+--disable-mouse to build the programs without mouse support.
+
+See the README files in each directory for more information.
+
+JUSTIFICATION
+
+One day I was playing Xsokoban when it struck me that this game
+clearly was originally created for a text terminal. Curious, I did
+some hunting around, and finally found one curses-based implementation
+of sokoban, a Linux 1.x port from Minix code (which in turn had been
+ported at least once before). I realized that the X version of the
+game had completely eclipsed its origins at the terminal.
+
+I'm not a big fan of GUIs for the sake of graphics. Pretty pictures
+are nice, but text mode is where I spend most of my time. And the
+Linux console has many extremely advanced features for a text
+terminal, yet I just don't see many programs taking advantage of them.
+
+I decided to rewrite some of my favorite games for the Linux console,
+so I could play them without X, pretty pictures and all.
+
+THE FINE PRINT
+
+The programs in this distribution are free software. The software is
+distributed under the terms of the GNU General Public License version
+2 (or, at your option, any later version). See COPYING for specifics.
+
+Bug reports and other comments should be directed to myself.
+
+Share and enjoy.
+
+Brian Raiter <breadbox@muppetlabs.com>
+September, 2000
