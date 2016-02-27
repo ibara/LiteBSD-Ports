@@ -1,0 +1,7 @@
+Package: sc
+Version: 7.16
+Description: Terminal spreadsheet calculator.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 763014

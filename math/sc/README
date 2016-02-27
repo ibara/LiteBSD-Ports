@@ -1,0 +1,10 @@
+===============================
+SC - The Spreadsheet Calculator
+===============================
+
+SC is a curses-based spreadsheet, written in the ancient times by James
+Gosling.  This tree is forked off the 7.16 release, with the goal of
+updating the code to modern standards, pruning obsolete cruft (like VMS
+support, who still has those?), and just cleaning the heck out of it.
+
+To build, clone the repository, configure && make install. Run sc.
