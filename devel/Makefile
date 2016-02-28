@@ -3,6 +3,6 @@
 #
 
 # Hook up all devel ports
-SUBDIR=	gmake libb2 linenoise
+SUBDIR=	9cc gmake libb2 linenoise
 
 .include <bsd.subdir.mk>

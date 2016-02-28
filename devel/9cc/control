@@ -1,0 +1,7 @@
+Package: 9cc
+Version: 20160222
+Description: Plan9 development suite.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 848908
