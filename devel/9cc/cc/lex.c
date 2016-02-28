@@ -2,7 +2,7 @@
 #include	"y.tab.h"
 
 #ifndef	CPP
-#define	CPP	"/bin/cpp"
+#define	CPP	"/usr/local/libexec/lcc/cpp"
 #endif
 
 /*
@@ -50,6 +50,7 @@ main(int argc, char *argv[])
 	ndef = 0;
 	outfile = 0;
 	include[ninclude++] = ".";
+	setinclude("/usr/include");
 	ARGBEGIN {
 	default:
 		c = ARGC();
