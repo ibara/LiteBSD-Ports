@@ -1,0 +1,7 @@
+Package: tty-clock
+Version: 2
+Description: Digital clock in ncurses.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 213750
