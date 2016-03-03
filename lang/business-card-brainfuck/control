@@ -1,0 +1,7 @@
+Package: business-card-brainfuck
+Version: 20151203
+Description: Tiny Brainfuck interpreter.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 56503
