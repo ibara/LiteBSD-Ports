@@ -1,0 +1,7 @@
+Package: lazyk
+Version: 20160301
+Description: Interpreter for the Lazy K language.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2+
+Architecture: mipsel
+Installed-Size: 95698
