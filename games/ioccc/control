@@ -1,0 +1,7 @@
+Package: ioccc
+Version: 2014
+Description: Collection of winning IOCCC programs.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: CC-BY-SA 3.0 Unported
+Architecture: mipsel
+Installed-Size: 386080
