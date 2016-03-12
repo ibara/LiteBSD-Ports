@@ -1,0 +1,7 @@
+Package: noice
+Version: 0.5
+Description: Small ncurses-based file browser. 
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 236946
