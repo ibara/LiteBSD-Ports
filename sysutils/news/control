@@ -1,0 +1,7 @@
+Package: news
+Version: 0.2
+Description: Implementation of the SysV news(1) command.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 141501

@@ -1,0 +1,92 @@
+.\" Copyright (c) 2004 Jan Schaumann
+.\" All rights reserved.
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\" 1. Redistributions of source code must retain the above copyright
+.\"    notice, this list of conditions and the following disclaimer.
+.\" 2. Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\" 3. Neither the name of the author nor the names of any contributors
+.\"    may be used to endorse or promote products derived from this software
+.\"    without specific prior written permission.
+.\"
+.\" THIS SOFTWARE IS PROVIDED BY THE AUTHOR  ``AS IS'' AND ANY EXPRESS OR
+.\" IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES
+.\" OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+.\" IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+.\"  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+.\" TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+.\" PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+.\" LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+.\" NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+.\" SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+.\"
+.\"
+.Dd September 2, 2004
+.Dt NEWS 1
+.Os
+.Sh NAME
+.Nm news
+.Nd print news items
+.Sh SYNOPSIS
+.Nm
+.Op Fl ans
+.Op Ar items
+.Sh DESCRIPTION
+The
+.Nm
+utility prints news items stored in
+.Pa /var/news .
+When invoked without any arguments,
+.Nm
+prints the name and timestamp of each current item followed by its contents,
+most recent first.
+An item is considered ``current'' if it has a modification time newer than the
+file
+.Pa ~/.news_time ,
+a file that
+.Nm
+creates if it does not exist.
+If that file does exist,
+.Nm
+will update the timestamp on that file each time it is run.
+.Pp
+Any
+.Ar items
+passed to
+.Nm
+are interpreted as filenames (either relative to
+.Pa /var/news
+or absolute) to display.
+.Pp
+The following options are available:
+.Bl -tag -width Fl
+.It Fl a
+All available items are displayed, regardless of their ``currency''.
+.It Fl n
+Only the names and modification times of the current items are displayed.
+Overrides
+.Fl s .
+.It Fl s
+Report only how many news items are current.  Overrides
+.Fl n .
+The timestamp of
+.Pa ~/.news_time
+is not updated if
+.Fl s
+is specified.
+.El
+.Sh AUTHORS
+The
+.Nm
+utility was written by Jan Schaumann <jschauma@NetBSD.org> following the
+manual page from an IRIX system.
+.Sh ENVIRONMENT
+The
+.Nm
+utility uses the
+.Ar HOME
+environment variable.

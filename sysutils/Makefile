@@ -3,6 +3,7 @@
 #
 
 # Hook up all sysutils ports
-SUBDIR=	arch deco dir dired file less lsx mudecode multitail noice screen
+SUBDIR=	arch deco dir dired file less lsx \
+	mudecode multitail news noice screen
 
 .include <bsd.subdir.mk>
