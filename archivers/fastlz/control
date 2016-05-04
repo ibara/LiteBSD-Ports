@@ -1,0 +1,7 @@
+Package: fastlz
+Version: 0.1.0
+Description: Free, open-source, portable real-time compression suite.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 112824
