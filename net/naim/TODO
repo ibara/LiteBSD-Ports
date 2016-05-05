@@ -1,0 +1,47 @@
+add a "search by email" feature, if TOC supports it
+make it easier to make function-specific aliases, a la function-specific bind's alread in conio_bind_set()
+make event descriptions more abstracted, possibly using separated strings and variable interpolation
+fix /offer in IRC
+fix tab complete to work for differently-typed arguments
+
+
+Standalone naim "1.0"
+	[0.9]
+	closed
+
+	[0.10]
+	closed
+
+	[0.11.0, 0.11.1, 0.11.2, 0.11.3, 0.11.4, 0.11.5, 0.11.6]
+	closed
+
+	[0.11.7]
+	Only proven feature additions and bug fixes.
+
+Modular naim "1.1" or "2.0"
+	[0.11.8 series]
+	Continue to revise and extend the module API by encouraging more third-party extension modules to be created.
+
+	[0.11.9 series]
+	Move all core functionality into modules.
+
+	[0.11.10 series]
+	The naim binary should be simply a command line argument parser and a module loader.
+
+
+naim
+ |- naim_commandline
+ |   `- getopt
+ `- zmod_core
+     `- naim_core
+         |- net_chat_core
+         |   |- TOC
+         |   |- IRC
+         |   `- SLCP
+         |- console_core
+         |   `- ncurses
+         `- naim_ui
+             |- naim_tracking
+             |- naim_encryption
+             |   `- crypt_core
+             `- naim_handlecmd

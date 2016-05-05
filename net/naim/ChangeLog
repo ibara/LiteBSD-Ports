@@ -1,0 +1,608 @@
+Summary of changes from 0.11.4.13 to 0.11.5 [2002-12-10]
+============================================
+[pkg fea] New Spanish README.es.
+[UI  fea] AUTOCRYPT, naim will automatically encrypt messages sent to other naim users.
+[UI  fea] /save will now store [practically] *all* configuration settings.
+[UI  fea] Newer, more transparent client to client protocol.
+[UI  fea] Ability to control what types of events cause a window to become yellow, via the $chatter variable:
+	# Private messages: +1
+	# You kicked, oped, or deoped in a chat: +2
+	# Anyone else kicked or deoped in a chat: +4
+	# Public messages to a chat: +8
+	# Topic changes, or anyone oped in a chat: +16
+	# Anyone joining, parting, changing nicknames, or quitting altogether: +32
+[UI  fea] The nsocket module has been expanded to better illustrate naim's powerful module interface.
+
+Summary of changes from 0.11.5 to 0.11.5.1 [2002-12-21]
+============================================
+[UI  fea] Links now appear somewhat cleaner, and redundant links, such as ``<a href="http://something/">http://something/</a>'' do not appear as links (to de-WinAIM messages).
+[pkg bug] Many autoconf-related cleanups.
+[Lil fea] Minor Lily enhancements to address grossly cross-posted messages.
+
+Summary of changes from 0.11.5.1 to 0.11.5.2-2003-01-01-2004
+============================================
+[UI  FEA] Time zone information is exchanged during autopeer negotiation.
+[UI  fea] Small fixes in the original HTML parser, new HTML parser included (but not yet used).
+[UI  fea] The time stamps prepended to messages are now based on the format specified in $timeformat, rather than a hardcoded "[%H:%M:%S]&nbsp;".
+[pkg bug] The new user course has been temporarily removed until it can be completed.
+[UI  FEA] The window list window now uses ASCII line drawing symbols to promote state.
+[UI  fea] Primitive menuing added in (accessed with Escape). Incomplete.
+[UI  bug] Apparently /alias actually works; added autohelp message for it.
+[UI  fea] Buddy Tab completion will match real names as well as screen names (so "/j<Tab>dani<Tab>" will expand to "/jump RPIDan ", since my real name is set to "Daniel Reed").
+[UI  BUG] High ASCII input will no longer cause the input handler to reset itself; it is simply ignored now.
+[UI  bug] Home and End will work to switch buddy windows even inside the status window (F1).
+[UI  fea] If you are in paste mode, the status bar will identify that fact, and tell you how to get out of it.
+
+Summary of changes from 0.11.5.2-2003-01-01-2004 to 0.11.5.2-2003-01-03-0149
+============================================
+[UI  bug] /set completion fixed.
+[UI  bug] KEY_RESIZE handler corrected.
+
+Summary of changes from 0.11.5.2-2003-01-03-0149 to 0.11.5.2-2003-01-04-2111
+============================================
+[AIM FEA] Profiles that are too long to meet the server's size limits will be truncated to fit, and a warning will be sent to the user.
+[UI  bug] Small bugs fixed in the /quit cleanup code (so /disconnect works again).
+[UI  fea] Tab complete now fills in connection windows if no commands match. /set completion makes Even More Sense(TM) now.
+
+Summary of changes from 0.11.5.2-2003-01-04-2111 to 0.11.5.2-2003-01-06-1445
+============================================
+[UI  fea] When naim joins a chat, people already in the chat will be displayed in one message (rather than one message per person).
+[Lil bug] Fixed a seg fault if you weren't in any chats on startup.
+[UI  bug] Screen names exactly as wide as the window list window would have the last character replaced with a '>'. Fixed.
+[UI  fea] Up-arrow completion now has the ghost effect /-commands have as of 0.11.5.
+[UI  FEA] New $awaylog. If set, all messages received while /away will be mirrored in an :AWAYLOG window (for people who detach for days and lose messages from the 500 line scrollback limit).
+
+Summary of changes from 0.11.5.2-2003-01-06-1445 to 0.11.5.2-2003-01-07-0336
+============================================
+[Yah fea] Preliminary Yahoo! Messenger support begun.
+[pkg fea] New --enable-firetalk-msn and --enable-firetalk-yahoo, both default to disabled. Once these protocol drivers are able to successfully sign on and send/receive IMs, they will always be built.
+[UI  fea] :-windows (such as :RAW, :AWAYLOG, :REVIEW) are now fully treated as special cases in naim, and naim won't attempt to join them on signon.
+[AIM bug] Chat name normalization bug squashed.
+[UI  FEA] New $autosave. If set (default currently off), naim will /save when the user /quits.
+[UI  fea] New /winlist command. Allows the user to set the state of the window list window, a la F4. /save uses this command to restore your F4 state on start-up.
+[UI  FEA] People who are /ignored will be ignored in group chats as well. This is mainly so I can /ignore stupid bots in channels I frequent, but others have requested this in the past.
+[UI  fea] $awaylog has been expanded: A value of 1 logs only private messages received, while a value greater than 1 logs private messages sent and chat messages.
+
+Summary of changes from 0.11.5.2-2003-01-07-0336 to 0.11.5.2-2003-01-07-0515
+============================================
+[UI  fea] Misc. UI cleanups. Due to popular request, names are now colourized in the :AWAYLOG window.
+
+Summary of changes from 0.11.5.2-2003-01-07-0515 to 0.11.5.2-2003-01-08-1249
+============================================
+[Lil fea] The RPI Lily community dislikes naim's UI, and fears its proliferation will be the downfall of Lily. In any event, naim now combines multiple /joins. Emote discussions are now treated properly (messages are prepended with ", emotes are not prepended with /me).
+[UI  bug] -01-04-2111 lied. /quit and /disconnect *really* work correctly now.
+
+Summary of changes from 0.11.5.2-2003-01-08-1249 to 0.11.5.2-2003-01-10-0308
+============================================
+[pkg fea] New --disable-nirc-manlink. If specified, the nirc man page symlink will not be installed (for FreeBSD).
+[UI  bug] Time zone negotiation has been made to work under FreeBSD.
+[ECS bug] Since the last time I used it, Solaris' log10(0) stopped returning 0. Workaround included.
+[pkg fea] New commands.txt, keyboard.txt, and various existing documentation files now installed with naim. Thanks to Ken Bloom <kabloom@ucdavis.edu> for keyboard.txt, and the motivation to finish conio's auto-documentation.
+[UI  fea] ~/.naimlog subdirectories will now be created mode 0700 instead of 0755, for privacy reasons.
+[UI  fea] /set completion now searches default values first, and provides descriptions if available.
+
+Summary of changes from 0.11.5.2-2003-01-10-0308 to 0.11.5.2-2003-01-12-0206
+============================================
+[UI  bug] Sending queued messages no longer resets your idle time.
+[UI  fea] Preliminary support for context-sensitive Tab completion, for example /set completes variables, /readprofile completes file names, /jump completes window names, /open completes buddy names, etc. Incomplete.
+[UI  fea] /bind and /set's list modes are much more thorough now, including descriptions for all current settings.
+[UI  FEA] /help system drastically revamped. Now reads from pkgdocdir/*.txt files, and uses current settings for the output of ``/help keys'' and ``/help variables''. ``/help commands'' now has accurate information.
+[UI  bug] </font> tag now resets bold status if <font> changed it.
+[UI  fea] All configuration variables are now fully documented.
+
+Summary of changes from 0.11.5.2-2003-01-12-0206 to 0.11.5.2-2003-01-13-1733
+============================================
+[pkg fea] contrib/sendim.sh is now installed into bindir.
+[IRC bug] Certain types of messages could cause an infinite loop in the de-HTMLizer. Fixed.
+[Lil bug] Certain types of messages could cause an infinite loop in the de-HTMLizer. Fixed.
+[Lil bug] Queued join structure wasn't being properly initialized in all situations. Fixed.
+[UI  bug] /set's list mode and the variable completion mechanisms confused each other, and could cause an infinite loop in some situations. Fixed.
+[UI  bug] ``/help commands'' incorrectly listed some required /-command arguments as optional. Fixed.
+[UI  bug] A mis-paste in /save kept string variables from being properly recorded. Fixed.
+[UI  fea] ``/dlsym dltest hello there'' added as an example for the /dlsym command.
+[UI  bug] Colons in non-command strings (most notably $conn:setting variables) confused Tab completion. Fixed.
+
+Summary of changes from 0.11.5.2-2003-01-12-0206 to 0.11.5.2 [2003-01-14]
+============================================
+[UI  fea] Slight UI tweaks.
+
+Summary of changes from 0.11.5.2 to 0.11.5.3 [2003-01-15]
+============================================
+[pkg bug] On systems that lacked dlopen() (some MacOS X), src/conio.c would fail to compile due to a header file being incorrectly not included. Fixed.
+[UI  BUG] AUTOCRYPT key negotiation failed under some circumstances due to improperly terminated strings. Fixed.
+[UI  BUG] Command completion caused unpleasantness when arguments were given to argless commands (such as /quit). Fixed.
+
+Summary of changes from 0.11.5.3 to 0.11.5.4-2003-01-17-1717
+============================================
+[pkg bug] On systems with a dlopen() in libc (some FreeBSD), -rdynamic was not being included in the LDFLAGS, breaking /modload. Fixed.
+[Lil bug] Lily does some strange things when you are /ignored by another user, which really confused FireTalk. Fixed.
+[UI  fea] Lag check is now to the tenth of a second.
+[UI  fea] /help now describes /-commands if given as an argument.
+[UI  fea] /ignore displays your ignore list if no arguments are given.
+[UI  fea] Profile now includes extended interface information.
+
+Summary of changes from 0.11.5.4-2003-01-17-1717 to 0.11.5.4-2003-01-18-0141
+============================================
+[UI  fea] History scrollback now leaves the cursor at the end of the line, without affecting partial matching.
+[UI  bug] AUTOCRYPT key negotiation failed under some circumstances involving peers not starting on each other's buddy lists. Fixed.
+[UI  fea] Passing a command line argument to naim starting with a dash is now an error.
+
+Summary of changes from 0.11.5.4-2003-01-18-0141 to 0.11.5.4-2003-01-20-1216
+============================================
+[pkg fea] New --with-pkgdocdir to control the location documentation files are installed to (which is also where naim's /help command looks for them).
+[pkg fea] New --enable-firetalk-lily-ctcpmagic, experimental.
+[IRC bug] Adding a buddy caused an immediate signon notification, which caused confusing problems down the line. Fixed.
+[Lil fea] Improved support for /REVIEW and /MEMO (without requiring --enable-debug). Try ``/alias review /m :raw /REVIEW $args1*'' and ``/alias memo /m :raw /MEMO $args1*''.
+[UI  fea] $im_prefix and $im_suffix are now documented and will be stored in .naimrc with /save.
+
+Summary of changes from 0.11.5.4-2003-01-20-1216 to 0.11.5.4-2003-01-25-1257
+============================================
+[pkg fea] --enable-firetalk-lily-ctcpmagic removed, now enabled by default.
+[UI  fea] ``/help topics'' expanded.
+[IRC fea] Buddy tracking drastically rewritten. Small known bugs to be fixed at a later date.
+[IRC fea] Server errors during sign-on are now passed along to the client.
+[Lil fea] Handles nickname changes now.
+[Lil bug] CTCP magic would be falsely enabled in some situations. Fixed.
+[UI  fea] Short informational blurb displayed in window list window when offline.
+[UI  fea] Window list window will be permanently displayed until the user signs on.
+[UI  bug] /closeall was broken at some point due to other code changes. Fixed.
+[UI  fea] Command completion now checks for /aliases first, then fixed commands.
+[UI  fea] Previously-typed text completion now informs the user how to enable it in the status bar.
+
+Summary of changes from 0.11.5.4-2003-01-25-1257 to 0.11.5.4-2003-01-28-1950
+============================================
+[MSN fea] Now able to sign on fully, but does not handle private messages properly. Use at your own risk.
+[UI  fea] File transfer status is a bit more verbosely reported now.
+[UI  bug] Blurbs and timezones were not cleared on signoff. Fixed.
+[UI  fea] Previously-typed text completion now kicks in after 5 characters (previously 20), but caches previous searches to minimize search impact.
+[UI  bug] When editting text in the input window, moving the cursor to the last character on a line caused screen artifacts. Fixed.
+[UI  fea] ~/.naimlog files will be flushed to disk at regular intervals (every $tprint minutes).
+[UI  bug] Automatic messages weren't being displayed the same way as user-typed messages (for example, $timeformat was being ignored). Fixed.
+[UI  bug] If a user supplied a text colour that matched your IM window's background colour, the text could disappear. Fixed, though note that for purposes of this logic, the CLEAR background colour is thought to correspond to the BLACK foreground colour, so those of you using xterms with white backgrounds are still SOL.
+[UI  fea] As an experiment, I'm allowing high ASCII characters in IMs to be displayed to the screen raw. Let me know if this causes problems for any terminal types.
+
+Summary of changes from 0.11.5.4-2003-01-28-1950 to 0.11.5.4-2003-01-30-1604
+============================================
+[IRC fea] Buddy tracking drastically rewritten [again]. Now uses FireTalk's internal state machine exclusively (and shaved off 400 lines from irc.c).
+[UI  fea] New colours for buddies with queued messages and specially tagged by the user. New background colour for the status bar.
+[UI  fea] /setcol now takes a third argument, which can be either BOLD or DULL, to force that attribute on text of that type.
+[UI  bug] When /delbuddying a peer that had previously negotiated AUTOPEER, naim would mistakingly re-add them to your buddy list. Fixed.
+
+Summary of changes from 0.11.5.4-2003-01-30-1604 to 0.11.5.4-2003-02-05-0107
+============================================
+[IRC bug] Kick messages mistakingly identified the target as the source (i.e., *** user has been kicked by user). Fixed.
+[IRC fea] Code cleanups.
+[IRC bug] ircd-ratbox (irc.servercentral.net on EFnet) does not collapse cmode +ov into @user in /names output (it displays @+user), which violates RFC. naim is now more tolerant of such noncompliance.
+[IRC fea] Unknown server messages and numerics are now sent along to the user with a source of :RAW, originally they were simply ignored. This is mainly to motivate me to track down all standard commands and numerics that aren't properly handled.
+[IRC fea] Users by default contain no flags, so they will not be identified as "AOLamer" in /whois.
+[Lil bug] Usernames were not properly escaped (i.e. spaces converted to underscores) during renames. Fixed.
+[Lil bug] /MEMO output contained duplicate identification messages interspersed with the actual output. Fixed.
+[UI  fea] New /tagbuddy command. When used to set a tag for a particular buddy, the buddy in question becomes distinct in your buddy list.
+[UI  fea] UI cleanups (all example commands are now green).
+[UI  fea] You no longer need to enter paste mode in order to paste multi-line messages, they will automatically be consolidated.
+[UI  fea] Auto-responses will only be sent at a maximum rate of once every other second, to thwart clone flood attacks.
+[UI  bug] Tab completion for filenames could cause extraneous whitespace to be added to the end of file paths, which confuse commands like /readprofile. Fixed.
+
+Summary of changes from 0.11.5.4-2003-02-05-0107 to 0.11.5.4-2003-02-05-1851
+============================================
+[FT  bug] Sending messages to :RAW weren't always being treated as a special event. Fixed.
+[IRC fea] Server notices are now treated as a special case.
+[IRC fea] A number of "meaningless" numeric responses are now properly ignored.
+[IRC fea] Unrecognized messages are sent to a :RAW pseudo-chat.
+
+Summary of changes from 0.11.5.4-2003-02-05-1851 to 0.11.5.4-2003-02-07-1416
+============================================
+[pkg fea] Removed stale irc_match.[ch].
+[IRC fea] Added ircu's 396 numeric ("x is now your hidden host") to ignore list.
+[IRC fea] Reformatted 352 numeric before passing along as unhandled.
+[Lil fea] IRC-style "unhandled" notification introduced.
+[UI  fea] Tab is now magically caught during pastes, a la the Enter key.
+[UI  bug] Enter key catching sometimes caused inappropriate blank lines to be sent to the user. Fixed.
+[UI  fea] All random messages are now prefixed with the connection window they occur in. For example, CTCPs sent from EFnet will be marked as such, even if you are in AIM.
+
+Summary of changes from 0.11.5.4-2003-02-07-1416 to 0.11.5.4 [2003-02-07]
+============================================
+[pkg fea] Minor documentation updates.
+
+Summary of changes from 0.11.5.4 to 0.11.5.5-2003-02-11-1505
+============================================
+[IRC bug] ^O did not properly clear attributes. Fixed.
+[IRC fea] Added 307 numeric ("x has identified for this nick") to ignore list.
+[Lil fea] Unhandled messages now more useful.
+[Lil bug] Change in naim behaviour broke Lily driver's ability to send :RAW commands. Fixed.
+[UI  FEA] ^R and ^Y scroll back and forward now, for OS 10 Terminal.app users who have no PgUp/PgDown.
+[UI  FEA] SIGHUP, SIGUSR1, and SIGUSR2 are now caught as pseudo-keys, handled by /bind.
+[UI  fea] /connect will attempt to catch when you specify a server instead of a nickname, and adjust its behaviour accordingly.
+[UI  FEA] Extended ASCII input now handled more gracefully.
+[Lil bug] Previous feature breaks Lily support. Continuing bug, expecting fix soon at the server level.
+[UI  fea] All locally echoed messages will be echoed to the status window as well.
+[UI  fea] &#xxx; characters now handled properly.
+[UI  BUG] --enable-detach was broken in 0.11.5.4. Fixed.
+[UI  fea] Variables listed in /set are now left-justified.
+
+Summary of changes from 0.11.5.5-2003-02-11-1505 to 0.11.5.5-2003-02-14-2157
+============================================
+[UI  FEA] The "AIM/TOC" protocol name has been renamed to "TOC", since it works for both AIM and ICQ. "AIM/TOC" will still be accepted so as not to break existing .naimrcs.
+[mod fea] New "nstatus" module distributed with naim, as a simpler example module.
+[pkg FEA] ``make install'' now installs symlinks for nirc, nicq, and nlily which all have different startup behaviours.
+[UI  fea] Tab completion for buddies now works more transparently when dealing with buddy realnames (as opposed to screen names).
+[UI  fea] Slight UI tweaks.
+[pkg fea] The doc/*.txt files are now actually plain text.
+[UI  FEA] All /help topics have been moved back to being internal to naim (i.e., the doc/*.txt files are no longer used).
+[UI  fea] /names ON and /names OFF will now display online and offline buddies, respectively.
+[UI  BUG] naim would automatically /load ~/.${0}rc at start, but /save would always save to ~/.naimrc. /save now saves to ~/.${0}rc, which I consider to be fixed.
+[UI  FEA] When a buddy has a "realname" (the third argument to /addbuddy), that will be used in query windows instead of their screen name. This is primarily for ICQ, where it doesn't make much sense any other way.
+[UI  FEA] Built-in default naimrc now fits nicely into an 80x25 screen.
+
+Summary of changes from 0.11.5.5-2003-02-14-2157 to 0.11.5.5-2003-02-18-0908
+============================================
+[pkg fea] Autoconf now displays the protocol drivers enabled at compile time.
+[UI  fea] /newconn now accepts "AIM", "AIM/TOC", "ICQ", and "ICQ/TOC" as synonyms for "TOC".
+[UI  fea] Autopaste will not engage when typing a command.
+[UI  fea] Variables with overlong descriptions in ``/help settings'' now have separate, left-justified lines.
+
+Summary of changes from 0.11.5.5-2003-02-18-0908 to 0.11.5.5-2003-02-18-0940
+============================================
+[Lil bug] /parting a non-existent discussion (such as :RAW) would cause an unidentified error to be sent to :RAW. Fixed.
+
+Summary of changes from 0.11.5.5-2003-02-18-0940 to 0.11.5.5-2003-02-22-0034
+============================================
+[Lil bug] /createing an existing discussion (such as -ctcpmagic) would cause an unidentified error to be sent to :RAW. Fixed.
+[UI  fea] New $winlistheight, to set the percentage of the screen height to use for the window list window. Default of 75.
+[UI  fea] When redrawing windows (such as during start-up), naim now updates the status bar to keep you informed.
+[UI  fea] New $logtprint, 1 = log daily timestamps, 2 = log all timestamps. Default of 1.
+[UI  fea] When flushing log files (every $tprint minutes), naim now updates the status bar to keep you informed.
+[pkg bug] Some of the generation scripts used "%i", while some awks only accept "%d" for integers. Fixed.
+[UI  fea] All "special" status bar messages now use a different background/foreground pair for extra visibility.
+
+Summary of changes from 0.11.5.5-2003-02-22-0034 to 0.11.5.5 [2003-02-22]
+============================================
+[UI  bug] Pressing Enter without any text in the line caused strange behaviour. Fixed.
+
+Summary of changes from 0.11.5.5 to 0.11.5.6-2003-03-02-1423
+============================================
+[pkg fea] New --enable-firetalk-lily-binary-link, defaults to disabled. The RPI Lily server needs some modifications before enabling.
+[Lil fea] Support for %depermit, %permit, and %destroy notifies (kick other, invite, and kick you).
+[TOC FEA] AOL's TOC servers do not properly handle whitespace before or after command arguments, so FireTalk's TOC quoting mechanism will now strip it to work around.
+[TOC BUG] FireTalk's TOC name comparator did not properly handle whitespace after nicknames, so "/delbuddy RPIDan " would transparently fail. Fixed.
+[UI  fea] /delbuddy's error reporting is now more verbose, to catch problems such as the previous one.
+[mod fea] /modload nsocket, naim's telnet server, will now take an optional second argument to /modload, the port number to use.
+[UI  bug] /close NotABuddy would fail, while /jump NotABuddy;/close would succeed. Fixed.
+[UI  bug] /names would display "Buddy list:" before every invocation of /names, even if it ended up displaying a channel's membership. Fixed.
+[UI  fea] /save and /sync are more descriptive as to where they are saving settings to.
+
+Summary of changes from 0.11.5.6-2003-03-02-1423 to 0.11.5.6-2003-03-02-2359
+============================================
+[pkg fea] New --enable-firetalk-toc-old-spec-idle, defaults to disabled. I have been informed AOL's TOC servers now keep track of idle time properly, so FireTalk will only upload your idle time once. This option reverts to the traditional behaviour.
+[UI  fea] The "Lily" protocol name has been renamed to "SLCP". "Lily" will still be accepted so as not to break existing .naimrcs.
+[UI  BUG] --enable-detach was not fixed in 0.11.5.5. Fixed. Gentoo, don't you have this enabled by default?
+[UI  fea] I set my $winlistheight to 90%, so I've changed the default from 75% to 90%.
+
+Summary of changes from 0.11.5.6-2003-03-02-2359 to 0.11.5.6-2003-03-10-1552
+============================================
+[pkg fea] man page updates.
+[TOC FEA] AOL's primary TOC server (toc-m01.blue.aol.com) went down at approximately 2003-03-10T1420; this has temporarily been replaced with toc-m02.blue.aol.com, I shall investigate using a round robin DNS name for future redundancy.
+[Lil BUG] Discussion destructions were not properly being handled. Fixed.
+[UI  BUG] IM handling routines were not properly handling buddies with alternate names set (the third argument to /addbuddy), causing away messages to be misdirected. Fixed.
+[UI  FEA] New $autoreconnect. If set, whenever naim is disconnected from a service, it will attempt to reconnect automatically. For services that require a password, you may wish to /set servicename:password "your password" in order to allow naim to reconnect while unattended (for example, /set AIM:password "my pass").
+[UI  fea] The command line argument handling code has been rewritten for the fourth time.
+
+Summary of changes from 0.11.5.6-2003-03-10-1552 to 0.11.5.6 [2003-03-10]
+============================================
+[TOC fea] Default server is now toc.oscar.aol.com.
+
+Summary of changes from 0.11.5.6 to 0.11.5.7-2003-03-25-1323
+============================================
+[UI  FEA] /save now saves /aliased commands.
+[TOC bug] /me actions in chat rooms were not being properly identified 100% of the time. Fixed.
+[UI  fea] $tprint is now based on the beginning of time, rather than the beginning of the hour, to allow tprints measured in hours or even days rather than just minutes.
+[pkg fea] New --disable-de-irc, defaults to enabled. Disables the /filter functionality, see below.
+[pkg fea] Built-in backtrace capture support for glibc machines.
+[Lil bug] Discussion renames weren't properly handled, causing possible corruption from dangling pointers. Fixed.
+[Lil fea] /nick command now renames you on Lily.
+[Lil fea] Thanks to a recent server change, lag check messages are now sent in a way that does not reset your idle time.
+[UI  FEA] New /filter command to manipulate internal filter tables.
+[UI  fea] New REPLACE filter table with example entries (previously these were hard-coded).
+[mod bug] If /modload nsocket was unable to bind its listening socket, it could cause possible corruption in naim from a dangling pointer. Fixed.
+[UI  fea] Log files are now created with mode 0600 due to a user request.
+[UI  FEA] New /namebuddy command. If you use /namebuddy, or attempt to /addbuddy someone already in your list, naim will allow you to modify their "real name".
+[UI  FEA] Auto-messages (for /away) are only sent if you are actually idle, so people using /away as a kind of "blurb" won't send auto-responses. If you mark /away and actually leave, auto-responses are sent immediately. If you send any IMs after marking /away, you won't send auto-responses until you are idle for at least 10 minutes.
+[UI  bug] An error in the auto-response rate limiting code also caused queued messages to sometimes not be delivered, even though the interface claimed they had been. Fixed.
+[UI  BUG] --enable-detach was not fixed in 0.11.5.6. Fixed. For real this time.
+
+Summary of changes from 0.11.5.7-2003-03-25-1323 to 0.11.5.7-2003-03-31-1435
+============================================
+[TOC BUG] /sync was broken in 0.11.5.6-2003-03-02-1423. FireTalk's TOC quoting mechanism will now only strip space characters, rather than all forms of whitespace.
+[UI  fea] New $autoquery. Well, re-introduced in a working state. If 1 (the default), whenever a buddy signs on, a window will be opened for them.
+[UI  fea] Log file flushes are now performed at midnight, rather than every $tprint minutes.
+[UI  fea] AUTOPEER has not required two pokes since the early 0.11.5s, which no longer work properly, so AUTOPEER will now only send one poke.
+[UI  fea] $im_prefix and $im_suffix will now be applied to auto-responses in addition to manual messages.
+[UI  fea] The minimum number of rows has been reduced from 20 lines to 10 lines.
+
+Summary of changes from 0.11.5.7-2003-03-31-1435 to 0.11.5.7-2003-04-18-0052
+============================================
+[pkg fea] FAQ updates.
+[pkg fea] Upgraded to autoconf 2.54, automake 1.7.3, and stayed the hell away from libtool 1.5. Re-did parts of configure.in.
+[FT  fea] New FC_CHAT_KEYCHANGED callback.
+[IRC fea] Support for channel keys improved.
+[IRC fea] /etc/passwd information will be used for IRC "real name", etc.
+[UI  FEA] Support for channel keys improved. /save will now record channel keys in .naimrc, and will rejoin keyed channels properly.
+[Lil bug] In some situations a depermit can be generated with an invalid source, which previously caused problems in naim. Fixed.
+[Lil fea] -ctcpmagic is now marked with the "invulnerable" flag on RPI's Lily server, so the /create -ctcpmagic has been removed from the start-up procedure.
+[UI  fea] buddywin_t, buddylist_t, and chatlist_t flag attributes are now one bit wide, allowing more efficient packing.
+[UI  fea] Menu-driven code has been completely removed, so it can be re-implemented in a more general way in the future.
+[UI  fea] echof() works differently from before, as documented in naim-user mailing list archives.
+[UI  FEA] New distinction between "permanent" buddies, those manually added with /addbuddy or stored in your server profile, and "auto-added" buddies, those added because they contacted you while $autobuddy was set.
+[UI  fea] ^ /closeing a buddy's window marks them as no longer "permanent."
+[UI  fea] ^ Non-permanent buddies will not have windows opened for them at sign-on, regardless of $autoquery.
+[UI  FEA] ^ New $autoclose. If set, naim will /close and /delbuddy non-permanent buddies $autoclose minutes after they sign off. If their window has unread messages, autoclose will be delayed until they have been read. If the buddy has queued messages pending, autoclose is cancelled altogether.
+[UI  bug] Buddies who did not have windows open for them were not being tracked properly. Fixed.
+[UI  FEA] New /names (/buddylist) behaviour to show much more relevant information about your buddy list.
+[UI  FEA] New /resize command to change the length of the scrollback buffers.
+[UI  fea] /filter is a bit cleaner now. /save will now record /filter entries.
+[UI  fea] New $echostyle to control /echo behaviour:
+	# Log to status window: +1
+	# Log ONLY to status window: +2
+	# Do not record messages in log files: +4
+[UI  fea] New $autopaste to control whether to enter paste mode automatically or not.
+
+Summary of changes from 0.11.5.7-2003-04-18-0052 to 0.11.5.7 [2003-04-23]
+============================================
+[pkg fea] contrib/extractbuddy.sh works with .naimrc files now, and can output to .blt format if the --blt option is given.
+[IRC bug] Mode direction is now assumed to be positive (+) by default.
+[Lil bug] detach and attach events used to be shown as signoffs in private messages, but not in chats. Lily treats them similar to going away, so FireTalk now does also.
+[ICQ fea] CTCP messages will not be sent for ICQ (the TOC driver considers you to be in ICQ if your user name begins with a digit, and AIM otherwise).
+[UI  bug] An echo statement in /namebuddy had a bug causing mild potential stack corruption. Fixed.
+[UI  fea] /addbuddy will cause a non-permanent buddy to become a permanent buddy, and will generate a different response message depending on the action it has taken.
+[UI  bug] If you ``/filter replace :flush'' and didn't add any new entries to the replace table, /save would not record the flush event. Fixed.
+[UI  fea] $autoclose now informs you when it is cleaning a non-permanent buddy's window in your status window.
+[UI  BUG] On disconnect, your buddy list would be re-added by naim. This has caused some problems during signon, and had the side-effect of marking all non-permanent buddies as permanent. Fixed.
+
+Summary of changes from 0.11.5.7 to 0.11.5.8-2003-05-30-1521
+============================================
+[pkg fea] Preliminary support for using site-installed FireTalk, rather than forcing use of the version distributed with naim.
+[pkg fea] Cleaned up documentation describing methods of contacting me.
+[pkg fea] Added check for new-style ncurses use_default_colors().
+[FT  fea] Minor cosmetic changes to the API to allow FireTalk to compile under Cygwin.
+[FT  fea] New argument to firetalk_set_away() to denote whether this is an auto-away or a manual /away in the UI.
+[FT  fea] New argument to FC_IM_GOTINFO callback to include user's online time.
+[Lil bug] Not all state information was being properly cleared on disconnect. Fixed.
+[Lil fea] Support for new %drename (discussion rename) event.
+[Lil fea] Support for new auto-away status: Automatic aways will not change your blurb, manual aways will continue to.
+[TOC fea] Userinfo processor rewritten, adding support for online time parsing.
+[TOC FEA] Addbuddy requests will always be consolidated between calls to firetalk_select(), evading the "You are sending messages too fast" error users with very large buddy lists receive during reconnect.
+[TOC fea] Support for :RAW added, to aid in tracking down undocumented TOC features.
+[UI  FEA] Buddies in the special "User" group will always be treated as "non-permanent", and will be subject to $autoclose. Buddies in any other group will be considered "permanent" and will only be removed through manual intervention. Note that buddies added due to $autobuddy are put into the "User" group by default.
+[UI  FEA] Window to logfile mapping has been made more explicit, removing the need for a costly tree search per message and greatly reducing logfile playback time.
+[UI  fea] The last remnants of the failed "menu" code has been removed.
+[UI  fea] Non-permanent buddies show up as "NON-PERMANENT" instead of "AUTO-ADDED" in /names, since buddies may be made non-permanent with /addbuddy.
+[UI  FEA] Window logfile playback is now always delayed, to significantly reduce initial startup time. Windows will be played back once per minute, or as you Tab or /jump to them.
+[UI  FEA] If your $TERM is set to "ansi", display a warning, 5 second delay, and switch it to "linux".
+[UI  bug] SIGCHLD handler wasn't being installed properly, causing the children of /exec to hang around as zombies. Fixed.
+[UI  fea] New $autoreply. Set to the number of minutes to wait before sending additional automessages.
+[UI  fea] $beeponim and $beeponsignon can be set to the value 2 now to force beeping even while /away.
+[UI  fea] Updates the version string after screen size changes.
+
+Summary of changes from 0.11.5.8-2003-05-30-1521 to 0.11.5.8-2003-05-31-0959
+============================================
+[UI  fea] Colorized all references to buddies and users in the user interface, to help reduce monotony in status messages.
+[UI  bug] Username combiner was made to compare names as literal strings, rather than protocol names. Fixed.
+[UI  FEA] Added basic stack support to the HTML renderer to allow embedded <font> tags, etc.
+[UI  FEA] Added BGCOLOR support to the HTML renderer.
+
+Summary of changes from 0.11.5.8-2003-05-31-0959 to 0.11.5.8-2003-06-01-1155
+============================================
+[FT  bug] Some systems have inet_pton() but not inet_aton(). It boggles the mind.
+[UI  FEA] New $winlistchars. Sets the number of characters can be displayed per line in the window list window.
+[UI  fea] $im_prefix and $im_suffix will now appear on your screen when sending messages.
+[UI  bug] When $autoreconnect was set to 1, /disconnect and /quit would both trigger a reconnect event. Fixed.
+[UI  fea] $tprint now defaults to 30 (was 20), $logtprint now defaults to 2 (was 1).
+
+Summary of changes from 0.11.5.8-2003-06-01-1155 to 0.11.5.8-2003-06-03-1123
+============================================
+[pkg fea] New --enable-experimental-buddy-grouping. If specified, experimental buddy grouping code will be enabled, but it won't be pretty.
+[FT  fea] FireTalk now handles determining whether characters are passable or not, so the problems some users experience on Lily and IRC related to autocrypt should be corrected.
+[TOC fea] The /unblock command did not do anything on TOC, as there does not appear to be any mechanism for simply removing someone from your block list in TOC. However, a workaround has been devised which adds the user to your permit list (which moves you into "privacy mode"), then adding an empty entry to your deny list (moving you back into normal mode).
+[UI  fea] FireTalk's per-connection name comparator is now used to compare account names.
+[UI  bug] Buddies who were online but did not have windows /open would not be properly cleaned up during a /quit or after disconnect. Fixed.
+[UI  fea] The command handler now strips extra whitespace at the end of lines, which fixes quite a few problems throughout naim's UI.
+
+Summary of changes from 0.11.5.8-2003-06-03-1123 to 0.11.5.8 [2003-06-04]
+============================================
+[UI  bug] /clearall would be overruled by the new delayed logfile playback. Fixed.
+
+Summary of changes from 0.11.5.8 to 0.11.5.8.1 [2003-06-07]
+============================================
+[UI  BUG] If only one window was open, the buddy for that window signed off, the window was marked keep-after-signoff, and was cleaned up after $autoclose minutes, the event handler would enter an infinite loop or possibly cause untrackable stack corruption. Fixed.
+
+Summary of changes from 0.11.5.8.1 to 0.11.5.9 [2003-06-07]
+============================================
+[TOC fea] Default server is now toc.n.ml.org. Once AOL has fixed its servers and/or its DNS, this host will be CNAMEd back to toc.oscar.aol.com.
+
+Summary of changes from 0.11.5.9 to 0.11.6 [2003-06-24]
+============================================
+[pkg FEA] naim is now able to build binary release tarballs (naim-VERSION-ARCH.tgz) and Cygwin/Windows releases (naim-VERSION-cygwinrelease.tbz2).
+[pkg fea] naim will now build a separate naim_core library (cygnaim_core-0.dll) under Cygwin/Windows, to facilitate the dynamic module system.
+[pkg FEA] The dynamic module system uses GNU libtool's libltdl, and now works on all platforms actively supported by naim.
+[pkg fea] Several small documentation updates.
+[pkg fea] Major header files are now installed in a global installation directory.
+[con bug] Small bugs in contrib/sendim.sh found and fixed.
+[UI  fea] Chat "hilites" added: If a member of a room/channel/discussion mentions your name, their message will be highlighted.
+[UI  bug] A small bug in the /away routine has been fixed, allowing your /away status to be preserved across re/connects.
+[UI  bug] .naimprofile will now be read for all connections in the event that multiple connections are declared in .naimrc.
+[pkg bug] A "#warning" directive was misnamed "#warn" and has been corrected.
+[Lil fea] Discussion retitles are now treated as a /topic change on IRC.
+[TOC bug] /me processing in chat rooms was broken. Fixed.
+[pkg FEA] The default modules have been removed, and are now distributed in a separate "naim-modules" package available from the naim web site.
+[UI  fea] All internal routines are now declared "static," to clean up the module interface.
+[UI  FEA] All major dependencies on ncurses in the main UI code have been isolated to src/win.c, to provide for easy migration to modular user interface routines.
+[UI  FEA] New /chains command to display all event chains.
+[UI  FEA] Newly rewritten /modload and new /modunload to completely control loadable modules.
+[UI  FEA] New /modlist command to display currently loaded modules and their vital statistics.
+[UI  FEA] Queued messages are now saved when you /save.
+[UI  fea] Minor improvements to the HTML renderer.
+
+Summary of changes from 0.11.6 to 0.11.6.1 [2003-09-23]
+============================================
+[pkg fea] Packages are now compressed with bzip2 rather than GNU zip.
+[FT  FEA] (backported from 0.12) /names now displays the entire, correct list in all situations, including initial join.
+[IRC fea] (backported from 0.12) Unhandled numerics used in WHOIS now show up in /whois output.
+[TOC fea] AIM Directory entry is now forced clear on connect.
+[TOC fea] Messages that are too long to send are now rejected.
+[UI  FEA] Messages that have been rejected by a protocol driver (for example because they are too long) are returned to the sender.
+[UI  fea] (backported from 0.12) The idea of a "generic" window has been removed, and you can no longer /delbuddy someone with an open window (you must /close the window first).
+[UI  fea] (backported from 0.12) New $nameformat and $nameformat_name to control the format names appear as in the window list window, and elsewhere.
+[UI  fea] (backported from 0.12) New $autosort. 0 means no window list sorting, 1 means sort by name, 2 means sort into groups, then by name (this obviates the --enable-experimental-buddy-grouping option to ./configure)
+[UI  fea] New /status command, including naim version and information about window status.
+[UI  bug] Online help for /save did not show the file name argument. Fixed.
+[UI  fea] SIGHUP now re-reads .naimprofile by default.
+[UI  bug] Possible reference to free()d memory in certain uncommon situations pointed out by Michael Wilson. Fixed.
+[UI  fea] (backported from 0.12) /jump now accepts connection:window syntax (/jump EFnet:#naim works the same as /EFnet:jump #naim).
+[UI  fea] /open now takes you to newly opened windows, removing the need to /jump after /open.
+[UI  fea] /closeall now skips windows with queued messages pending.
+[UI  bug] Potential NULL pointer dereference in Tab completion found. Fixed.
+[UI  fea] The protocol drivers already take care of populating empty buddy lists when that was a problem, so naim no longer adds you to your own buddy list if you don't have one at startup.
+[UI  fea] Various cleanups in the HTML renderer to handle stacked tags with missing close tags.
+
+Summary of changes from 0.11.6.1 to 0.11.6.2 [2003-10-22]
+============================================
+[pkg fea] nicq.1, nirc.1, and nlily.1 are now stub man pages pointing to naim.1. In the past they were created as symlinks by a postinstall script. The --disable-nirc-manlink option has been removed from configure.
+[pkg fea] Cygwin-specific README has been moved from ${prefix}/doc/Cygwin to ${datadir}/doc/Cygwin.
+[pkg fea] `make check' will now compile and execute an adapted version of Ian Gulliver's FireTalk test suite.
+[IRC bug] When supplied with an extra-long nickname on sign-on, some IRC servers silently truncate the nickname to fit into their limits. This confused FireTalk. Fixed.
+[Lil bug] The /topic command sent a non-existent /TOPIC command to the server instead of the proper /RETITLE command. Fixed.
+[pkg fea] Several Makefiles have been rewritten for improved compatibility.
+[UI  bug] Potential buffer underflow in logfile playback identified. Fixed.
+[UI  BUG] Potential buffer overflow in spelling correction code identified. This is thought to be responsible for several reports of the recvfrom chain "losing" its hooks, stopping incoming messages from being displayed to the user. Fixed.
+[UI  fea] Small improvements to the HTML renderer.
+
+Summary of changes from 0.11.6.2 to 0.11.6.3 [2003-10-29]
+============================================
+[pkg bug] Cygwin packaging code cleaned up.
+[pkg fea] More Makefile rewrites for improved compatibility.
+[FT  bug] Long-standing connection-deletion routine has been addressed. This is a partial backport of the complete rewrite for 0.12.
+[FT  fea] Default servers for IRC and SLCP are now "irc.n.ml.org" and "slcp.n.ml.org", respectively.
+[FT  fea] Incoming messages containing links to www.candidclicks.com are automatically ignored and the sender is automatically warned.
+[FT  bug] Several memory leaks have been corrected.
+[Lil bug] When someone retitles a discussion, a window would be opened for it even if you were not a member. Fixed.
+[Lil bug] Potential buffer underflow in signon code identified. Fixed.
+[Lil fea] New line-receiving code backported from 0.12.
+[Lil fea] New line-parsing code backported from 0.12.
+[UI  bug] Potential use of uninitialized buffer in statusbar code identified. Work-around implemented.
+[UI  bug] If two windows had identical presentations due to modifying $nameformat/$nameformat_named, Tab would stop working. Fixed.
+[UI  bug] When leaving a chat generated an error, partial stack corruption occurred. Fixed.
+[UI  bug] Double-join protection kept users from joining channels with an open window that they were not actually inside. Fixed.
+[UI  bug] Potential heap corruption from realloc()ing a string and then copying it into itself identified. Fixed.
+[UI  FEA] New key-handling code dramatically improves responsiveness for laggy connections and when pasting large blocks of text.
+
+Summary of changes from 0.11.6.3 to 0.11.6.4 [2003-12-01]
+============================================
+[pkg fea] infodir and mandir have been changed from PREFIX/info and PREFIX/man to DATADIR/info and DATADIR/man, respectively. This means that manual pages will be installed to /usr/local/share/man/man1 instead of /usr/local/man/man1 by default.
+[IRC fea] Small cleanups to prevent mIRC colors in /whois from disturbing other screen text.
+[UI  bug] In some circumstances, /open buddyname could cause multiple windows to open for buddyname in IRC and Lily. Fixed.
+[UI  fea] /groupbuddy will allow Tab completion for existing buddy names.
+[UI  fea] (backported from 0.12) New $showraw. If non-zero, messages that are not understood by the protocol drivers will be displayed in the :RAW window.
+[UI  fea] The recvfrom chain no longer stops execution when incoming private/public messages are displayed. This allows hooks from modules to have a weight heavier than 150.
+[UI  fea] In some situations, AOL's servers can forcibly remove you from chat rooms. naim will now automatically rejoin them, re-creating them if need be.
+[UI  fea] More small cleanups in the HTML renderer.
+[UI  bug] The dtime() routine did not allocate enough space for some possible strings, causing displeasing truncation. Fixed.
+[ECS BUG] In certain situations, $-variable expansion could result in an improperly-terminated string, causing out-of-bounds memory access. This is thought to only produce screen corruption. Fixed.
+
+Summary of changes from 0.11.6.4 to 0.11.6.5-2003-12-06-0121
+============================================
+[FT  FEA] (backported from 0.12) All individual protocol drivers have been rewritten as permanent modules. Transient (/modloaded) modules can add new protocol drivers dynamically.
+[UI  fea] /newconn now lists all available protocol drivers when no arguments are given.
+[TOC FEA] (backported from 0.12) /sync now preserves group names, and saved group names are restored when naim retrieves your permanent buddy list from the TOC server.
+[UI  fea] The HTML renderer has been tweaked to improve state tracking. State is no longer preserved across multiple writes to the screen, but is tracked more effectively within individual writes. Multiple writes split among several windows will no longer confuse the renderer.
+[UI  fea] The user interface no longer marks users online during autobuddy events. The protocol interface is now responsible for this.
+[UI  fea] naim now uses getopt_long() if available. Please let me know if your system does not support getopt_long().
+[UI  fea] The screen initialization routines are much more verbose.
+
+Summary of changes from 0.11.6.5-2003-12-06-0121 to 0.11.6.5-2003-12-30-1133
+============================================
+[pkg fea] New --enable-raw-irc-modes, defaults to disabled. If specified, channel mode changes on IRC will be sent to the user interface as-presented. The default behavior is to translate "n has set mode +o naimtest" to "naimtest has been oped by n", and ignore most other mode changes. Based on a patch by meatmanek.
+[pkg fea] New --enable-forceascii, defaults to disabled. If specified, a new $forceascii setting will be available. When non-zero, naim will use alternate characters (+-|) in place of super ASCII line-drawing characters. Patch by Igor Pechtchanski.
+[TOC bug] Group-tracking support introduced a memory leak in the /sync code. Fixed.
+[UI  fea] /names will now display your buddy list in special :-chats.
+[UI  fea] (backported from 0.12) /addbuddy and /groupbuddy will match case and spacing for existing groups. This is required for persistent group support.
+[UI  bug] Some /-commands only make sense in specific situations, but a bug was allowing them to be used anywhere. Fixed. (Bug reported by Walter Venable.)
+
+Summary of changes from 0.11.6.5-2003-12-30-1133 to 0.11.6.5-2004-01-22-1419
+============================================
+[pkg bug] Cygwin build script used gunzip on a .bz2 file. Fixed.
+[FT  fea] New firetalk_debase64() to decode BASE64-encoded strings.
+[Lil bug] Apparently it is possible to receive a value-less token with an equal sign; this was previously believed to be impossible. Fixed.
+[UI  fea] /newconn will accept one argument (and pick the appropriate driver name) if it recognizes the connection name.
+
+Summary of changes from 0.11.6.5-2004-01-22-1419 to 0.11.6.5
+============================================
+[pkg fea] New --enable-dnsupdate, defaults to disabled. If specified, naim will periodically check for the availability of a newer version of itself.
+[UI  FEA] New /jumpback command, also available as M-b and F7. Allows the user to do a reverse /jump (to the previous window).
+[UI  fea] In Cygwin, naim will force $CYGWIN to include the string "codepage:oem" on startup. This should eliminate the unsightly border around the window list window.
+
+Summary of changes from 0.11.7.1 to 0.11.7.2
+============================================
+[TOC bug] Online time is presented in localized time from AOL's servers. FireTalk now de-localizes (from UTC-0400) and re-localizes to the user's time zone.
+[UI  fea] naim now sets the xterm title whenever you have a message waiting.
+[UI  fea] naim now differentiates between window changes due to chatter and changes due to your being addressed. Chatter window will remain colored BUDDY_WAITING while addressed windows will be BUDDY_ADDRESSED. (Both foregrounds default to YELLOW/BROWN.)
+[UI  fea] The current window has a unique background color in the window list window: WINLISTHIGHLIGHT, which defaults to CLEAR/BLACK.
+[UI  bug] If you had both ~/.naimlog/AIM/nmlorg and ~/.naimlog/AIM/nmlorg.html, naim would silently rename the former over the latter. naim now issues a warning message and refuses to perform the rename.
+[UI  bug] If $color is set to 0 at start, logfile playback would not be rendered properly. Fixed.
+[UI  fea] The most-common commands now appear at the end of /help commands.
+[UI  fea] Tab completion has been modified to support name completion in auditorium windows. To use, begin typing the name of a participant and press Tab.
+[UI  fea] If naim is suspended and then resumed (with ^Z and fg or otherwise), the system block cursor reappears. naim now uses a workaround to ensure the block cursor remains hidden after suspend.
+[pkg fea] --enable-detach and /detach now function regardless of whether screen is installed at compile time. Patch by James Vega.
+[FT  bug] Destroying connections (for /delconn or /quit) could cause a freed-pointer dereference in debugging mode. Fixed.
+[UI  fea] If a buddy has a name set with /namebuddy, that name will always be used in the window list window. This is useful to override how people reformat their names.
+[UI  bug] The status bar was not rendered properly in all situations. Fixed.
+[UI  bug] If /save was used in a connection that had at one time been connected, but at /save was not, /save would write a .naimrc that would attempt to connect at startup. Fixed.
+[UI  bug] The "curconn" symbol was not exported properly, which broke some modules. Fixed.
+[UI  bug] In some situations, the default abbreviated window playback did not quite cover the entire screen. Work around implemented.
+[UI  bug] If ncurses determined that your terminal supported more than 16 colors, but only provided 256 color pairings, naim would refuse to run. Fixed (naim only counts up to 16 colors).
+[UI  bug] If a buddy was signed on and away but did not have a window open, and became unaway, naim would dereference a NULL pointer. Fixed.
+
+Summary of changes from 0.11.8 to 0.11.8.1
+==========================================
+[UI  fea] The /wi command now displays buddy client capabilities.
+[UI  fea] The status bar now displays "TYPING" when your buddy is in the middle of typing a message to you. (Only if your buddy's client sends typing notifications, which naim does not do.)
+[UI  fea] Warning levels for yourself and for your buddies are now displayed in the UI.
+[UI  fea] New /setpriv command. Use to change between ALLOW ALL, BLOCK ALL, ALLOW PERMIT, BLOCK DENY, or ALLOW BUDDY. The default is BLOCK DENY.
+[FT  fea] Joshua Wise <joshua@joshuawise.com> updated the IPv6 code to work with the modern code base. If you have an IPv6 connection, you should be able to /connect to an IPv6 hostname without any special configuration.
+[IRC fea] The IRC driver now accepts incoming lines that end in a naked "\n". (The spec. requires lines to end in "\r\n", but Jon Postel would roll over in his grave if he heard we required such stringent protocol conformity. That and some poorly-maintained ircds do send naked "\n" characters.)
+[UI  fea] /names now sorts users before displaying them.
+[TOC fea] Friendly names (/namebuddy) are now stored to and retrieved from your server-side buddy list.
+[TOC bug] /delbuddy did not always correctly remove the user from your server-side buddy list. Fixed.
+[UI  bug] If you had a user with the same friendly name as another user's account name, naim would become unstable when the second user signed on. Fixed.
+[TOC fea] (ported from 0.11.7.3) Online time is presented in localized time from AOL's servers. FireTalk now de-localizes (from UTC-0400) and re-localizes to the user's time zone.
+
+Summary of changes from 0.11.8.1 to 0.11.8.2
+============================================
+[FT  fea] CTCP requests and replies will now be stacked onto outgoing messages and autoreplies, respectively. This feature applies to both IRC and AIM.
+[TOC fea] Preliminary support for having multiple clients connected to the same screen name on AIM. naim is now able to keep buddy lists synchronized between all clients. Eliminates warnings about unknown INSERTED2 and DELETED2 messages.
+[FT  fea] Misc. code cleanups and simplifications backported from ngnaim.
+[TOC bug] Apparently, some users can sign on to AIM in such a way as to mask their signon time. FireTalk used a signon time of 0 to designate "offline", which led to some confusion when users signed on with an actual reported signon time of 0. This led to assertion failures in toc2.c. Fixed.
+[IRC fea] A user's user@host is now displayed when the user joins a channel on IRC.
+[FT  bug] In some cases, CTCP requests were compared to the list of known types case insensitively, sometimes case sensitively. The spec. requires sensitivity to case. Fixed.
+[IRC fea] All messages sent without a source are treated as coming from a pseudo-target of ":SERVER".
+[IRC fea] All messages sent before client signon is completed that are not handled by the signon parser are passed to the normal parser. This allows forced joins, CTCP handling from bots during signon, etc.
+[FT  fea] Some IRC servers send CTCP VERSION requests during signon, before 001 (IRC's "you are now signed on and can send messages" protocol message), and demand a reply. naim was naively replying, but FireTalk was suppressing the reply (since it hadn't been told it could send messages yet). A hack has been put in place to allow CTCP replies to go through before signon has completed.
+[IRC bug] The /SETPRIV command did not have a handler in irc.c. This causes a reliable crash. Fixed.
+[UI  bug] In some situations, naim could report a negative number of lines left to play back during scrollback. Workaround implemented.
+[UI  fea] /open WINDOW now jumps you to WINDOW if WINDOW already exists.
+[UI  fea] Overusing nickname completion now only complains to you a few times, then stops. Previously it complained forever unless an obscure setting was toggled.
+[UI  fea] New $ctcpverbose. If set, unknown CTCP requests are displayed in the UI.
+[pkg bug] Most tail utilities accept either "tail +3 file" or "tail -n +3 file" the same. Some only accept "tail -n +3 file". Others only accept "tail +3 file". naim's packaging no longer uses the tail utility, at all.
+[UI  fea] The /sync command has been removed.
+[pkg fea] The --firetalk-lily-binary-link configure option has been removed, along with all code paths that depended on it.
+[UI  fea] Improved error condition reporting backported from ngnaim.
+[UI  bug] In some situations, file transfers could report incorrect completion statistics due to integer overflow. All calculations are performed using floating point now, though the UI still only displays whole numbers.
+[UI  bug] A change in how windows were looked up made in 0.11.8.1 caused all messages to both users and chats to be sent using the send-to-user API. This did not cause problems on IRC or Lily, but did cause chat room messages to be silently eaten on AIM. Fixed.
+[UI  fea] At some point since the 0.11.8.1 release, AOL's servers began changing bare \n characters in profiles to the string <br/>\n, which naim did not understand. naim now treats <br/> as a synonym for <br>.
+[UI  fea] The dynamic library subsystem is initialized before .naimrc is parsed, allowing your .naimrc to use the modload command.
+
+Summary of changes from 0.11.8.2.1 to 0.11.8.3
+============================================
+[UI  fea] Simple heuristics for disabling and reenabling encryption based on whether naim thinks you're talking to someone logged in to naim or to a second client.
+[TOC fea] Availability messages are now decoded and passed along to the UI.
+[TOC fea] The TOC2 driver now uses toc_locate_user instead of toc_get_info to retrieve profile information. This both fixes profile viewing, which has been broken since late 2006, and adds the ability to retrieve away messages for non-naim users, which has not been possible since 0.10.
+[UI  bug] The string <a href="target"></a> would previously be rendered as " [target]" in naim, while graphical AIM clients would render it as an empty string. A recent version of AIM for Windows introduced a bug where outgoing messages included these empty hyperlinks in some situations. Fixed.

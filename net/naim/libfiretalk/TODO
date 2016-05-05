@@ -1,0 +1,18 @@
+v0.1.x:
+	* IPv6
+	* IRC mode compression
+	* IRC color <- <font> support
+	* Queued rate limiting
+	* Ban support
+	* Friends/shit list handling
+	* AIM native file receive handling
+
+v0.2.x:
+	* MSN IM
+	* Yahoo IM
+
+v0.3.x:
+	* AIM/OSCAR
+	* ICQ/OSCAR
+	* SILC?
+	* Avatar support

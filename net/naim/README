@@ -1,0 +1,153 @@
+naim(1)              AIM/ICQ/IRC/Lily Communication Client             naim(1)
+
+
+
+NAME
+       naim - console mode chat client
+
+SYNOPSIS
+       naim
+       nicq
+       nirc [nickname [server]]
+       nlily
+
+DESCRIPTION
+       naim  is the original ncurses AIM client. It uses the TOC protocol, and
+       features many commonly-requested features  found  nowhere  else,  while
+       still providing an intuitive chat interface.
+
+
+OPTIONS
+       If  a  `.naimrc' file exists in your home directory, naim executes that
+       and ignores all command line options. Otherwise...
+
+       When invoked as `naim', naim will create a connection of  type  AIM/TOC
+       and  will  display  some  helpful  information to the screen (but won't
+       actually try to sign you on).
+
+       When invoked as `nicq', naim will create a connection of  type  ICQ/TOC
+       and  will  display  some  helpful  information to the screen (but won't
+       actually try to sign you on).
+
+       When invoked as `nirc', naim will create a connection of type  IRC  and
+       will attempt to sign you on using the nickname and server, if provided.
+
+       When invoked  as  `nlily',  naim  will  create  a  connection  of  type
+       Lily/SLCP  and will display some helpful information to the screen (but
+       won't actually try to sign you on).
+
+
+ADDITIONAL CONNECTIONS
+       Once you have naim started, you can easily  create  additional  connec-
+       tions  by  using  the /newconn command. For example, to visit me on the
+       EFnet IRC network, you might type:
+       /newconn EFnet IRC
+       /connect naimuser irc.servercentral.net
+       /join #naim
+       (note that if you start naim as `nirc' it will run  the  previous  com-
+       mands automatically)
+
+       If you wanted to sign on to AIM more than once, you might type:
+       /newconn AIM2 AIM
+       /connect othername
+
+       If  you start naim as `naim' it will issue `/newconn AIM TOC' automati-
+       cally. If you start naim as `nicq' it will  issue  `/newconn  ICQ  TOC'
+       automatically.  If  you  start  naim as `nlily' it will issue `/newconn
+       Lily SLCP' automatically.  The first argument to /newconn is  the  con-
+       nection "name", which can be anything you dream up (it might make sense
+       to use your screen name if you are going to be connecting to  the  same
+       service  more  than  once),  and  the second argument is the connection
+       type. AIM and ICQ both use the same connection type (TOC).
+
+       By default, the Ins and Del keys will switch between  connections.  See
+       `/help  keys'  for additional information, including how to change your
+       key bindings.
+
+
+SETTINGS
+       Once you have setup naim the way you like it (see `/help settings'  and
+       `/help  keys'),  use  the `/save' command to have naim create a .naimrc
+       file in your home directory. From then on, naim will  always  start  up
+       configured  the  way  it is currently configured, including all of your
+       current settings (/set), key bindings  (/bind),  and  open  connections
+       (/newconn). Feel free to load the generated .naimrc file in a text edi-
+       tor for further tweaking.
+
+
+ONLINE HELP
+       Online help is available by typing /help at the console.
+
+
+EXITING
+       Use the /quit command.
+
+
+AUTHOR
+       Daniel Reed <n@ml.org>, with notable contributions  from  Ian  Gulliver
+       <ian@penguinhosting.net> and Joshua Wise <joshua@joshuawise.com>.
+
+
+UPDATES
+       The   latest   version   of   naim   will   always  be  available  from
+       http://naim.n.ml.org/ . If you ever use naim, you are strongly  encour-
+       aged to subscribe to the naim-announce mailing list. This is a low-vol-
+       ume mailing list used exclusively to announce new releases of  naim  or
+       changes  in the AIM service that affects naim users. To subscribe, sim-
+       ply send a blank email to <naim-announce-subscribe@n.ml.org> and  reply
+       to the confirmation message you will receive.
+
+
+BUG REPORTS
+       Before reporting any bugs, please review Simon Tatham (of PuTTY)'s won-
+       derful essay, How to Report Bugs Effectively at http://www.chiark.gree-
+       nend.org.uk/~sgtatham/bugs.html.
+
+       To  report  issues  with  the front end (things having to do with buddy
+       windows, colors, .naimrc, and anything else  "user  oriented")  contact
+       the naim maintainer, Daniel Reed <n@ml.org>.
+
+       To  report issues with the protocol library (problems connecting, error
+       messages while connected, and anything else not a  part  of  the  front
+       end)  contact the FireTalk maintainer, now also Daniel Reed <n@ml.org>.
+
+       To  report  issues  with  the  FreeBSD  port,  contact  Ryan  T.   Dean
+       <rtdean@cytherianage.net>.
+
+
+FEATURE REQUESTS
+       If  you  would  like  to  suggest  new features or significant behavior
+       changes, subscribe to the naim-users mailing list and suggest it there.
+       I  get  a  lot  of mail every day, and non-bug reports get a fairly low
+       priority. The best way to make sure something you want  is  implemented
+       is  to  post  it  to naim-users whenever I ask for them on the list. To
+       subscribe, send a blank email  to  <naim-users-subscribe@n.ml.org>  and
+       reply to the confirmation message you will receive.
+
+
+PATCHES
+       If you would like to participate to naim's development in a more active
+       role, feel free to submit patches either to myself or to the naim-users
+       mailing  list.  Patches in context output format are prefered. In order
+       to work on naim, you may wish to extract naim twice, and  perform  your
+       builds in a third directory, as in:
+        tar -jxvf naim-0.11.8.tar.bz2
+        mv naim-0.11.8 naim-0.11.8,original
+        tar -jxvf naim-0.11.8.tar.bz2
+        mkdir naim-0.11.8-objdir
+        cd naim-0.11.8-objdir
+        ../naim-0.11.8/configure --prefix=/usr
+
+       Then  you may modify the files in ../naim-0.11.8, compile, test, modify
+       again, recompile, test, etc. until your are satisfied, then:
+        cd ..
+        diff -rcN naim-0.11.8,original naim-0.11.8 > \
+              naim-0.11.8.feature1.patch
+
+       And submit  `naim-0.11.8.feature1.patch'.  Do  not  gzip  or  otherwise
+       encode patches, so they may be reviewed from within a mail client.
+
+
+
+
+naim-0.11.8                       2005-10-26                           naim(1)

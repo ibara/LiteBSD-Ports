@@ -1,0 +1,504 @@
+How do I send an IM?
+How do I add someone to my buddy list?
+
+To simply send an IM to someone who is not in your buddy list, just type `/msg
+buddyname hello there'. However, if you would like to engage in a conversation
+with someone, you should first add them to your buddy list and create a "window"
+for them. Just type `/addbuddy buddyname' or `/addbuddy "buddy name"' to add
+them to your list. If they are online, a window will be created automatically
+for them. If they are not online, you can type `/open buddyname' to open a
+window for them manually.
+
+Once a window has been opened for a buddy, you can use the Tab, Home, and End
+keys to cycle through your list of windows to find them, or type `/jump
+buddyname' to go directly to their window. Once you are in their window,
+anything you type that doesn't start with a "/" will be IM'd to them. If the
+buddy is not online when you type your message, the message will be saved and
+sent the next time your buddy signs on.
+
+
+
+===NAVIGATION
+
+Can I make the userlist and/or status messages "sticky"?
+How do I get the buddy list to not disapear?
+
+The window list window and the status window both default to "autohide" mode:
+Whenever either one of them changes, they will appear on the screen for
+$autohide seconds, then disappear again. However, if you would like to make the
+window list window stay visible permanently, you can use F4 or Ctrl-F to cycle
+between autohide, always hidden, and always visible modes. There is also a
+/winlist command which will allow you to specify a setting to use in your
+.naimrc file.
+
+
+Are there any short cuts to help make talking to multiple people easier?
+
+naim separates each conversation into a different window, which you can cycle
+through using Tab, Home, End, and the /jump command. Your windows will be listed
+in the window list window in the upper-right corner of your screen, which is
+usually hidden when you're talking to someone. However, if you are in buddyA's
+window, and buddyC sends you a message, the window list window will unhide
+itself, buddyC's name will appear in yellow, and the []'s around his name will
+turn into ()'s. This means buddyC's window has changed since the last time you
+have seen it. In order to make chatting with multiple buddies easier, the /jump
+command will take you to the next "yellow" buddy if no name is provided.
+Therefore, if you send a message to buddyA and are waiting for a response, and
+buddyC sends you an IM in the meantime, you can just type `/jump' to take you
+directly to buddyC's window. If buddyA sends you a message while you are then
+talking to buddyC, typing `/jump' again will take you back to buddyA's window.
+
+The keys F8 and Ctrl-N do the same thing as typing `/jump' with no arguments, to
+make chatting even easier.
+
+
+How can I jump to the beginning of the line when running naim in screen?
+
+Under normal convention, Ctrl-A jumps to the beginning of the input line and
+Ctrl-E jumps to the end. GNU Screen uses the Ctrl-A key for detaching, switching
+windows, etc.  To jump to the beginning of the line when running naim under
+screen, simply press Ctrl-A a (that is, hold Ctrl, press 'a', let go of Ctrl,
+and press 'a' a second time).
+
+
+When using /bind, what keys are A1, A3, B2, C1, and C3?
+
+According to the ncurses header file, these keys correspond to the Home, End,
+PgUp, and PgDn keys on the numeric keypad, as such:
+	/* The keypad is arranged like this: */
+	/* a1    up    a3   */
+	/* left   b2  right  */
+	/* c1   down   c3   */
+
+I have never used a computer keyboard which used these bindings instead of
+KEY_PGUP, etc., but I included them in naim's /bind "just in case."
+
+
+Is there a way to go backwards in my buddy list?
+Why can't I use Shift-Tab to go back through my buddy list?
+
+Home, Alt-Tab, and Shift-Tab will cycle backwards through your window list.
+
+However, on my system at least, Shift-Tab generates the same control sequence as
+Tab by itself. Typing:
+	loadkeys -d
+	keycode 15 = Tab Tab
+	alt keycode 15 = Meta_Tab
+	shift keycode 15 = F26
+	string F26 ="\033[Z"
+into the command prompt on my machine before running naim allows Shift-Tab to
+work like Home. This affects other curses programs (including Lynx) as well, so
+you may consider adding that to your system boot scripts.
+
+
+
+===CONFIGURATION
+
+How can I configure naim?
+
+Many aspects of naim's operation are configurable through the use of variables,
+such as $autohide (which controls how long the status window and window list
+window will appear on the screen when one changes). To change these variables,
+use the /set command. For example, to make both windows wait around for 10
+seconds, instead of the default 3, just type `/set autohide 10'.
+
+For most other configurable pieces, there are specific /-commands to use, which
+will be described in `/help commands'. For example, to add me to to your buddy
+list, just type `/addbuddy nmlorg' or `/addbuddy "n ml org"'.
+
+
+Is there a way to have naim save my configuration settings for the next time I
+  start naim?
+Where can I get a default .naimrc (naim configuration file)?
+
+naim will read start-up commands from a file called .naimrc in your home
+directory, so all of your configuration commands can be placed there. naim
+includes a /save command, which will attempt to create a suitable .naimrc file
+based on your current settings, so once you have configured naim to your liking,
+just type `/save' and naim will use the same settings the next time it starts up
+(including your buddy list, channels you have joined on IRC, etc.). The
+generated .naimrc is also auto-documented, so feel free to use /save to create a
+"default" .naimrc, and customize it by hand using a text editor.
+
+You can `/set autosave 1' to have naim automatically write .naimrc whenever you 
+`/quit'.
+
+
+Is it possible to disable the timestamps? Not the per-message ones, but the
+  automated timestamps every 20 minutes kind of annoy me.
+
+Type `/set tprint 0'.
+
+
+Is there a way to disable sounds in naim?
+
+The only sounds naim should make are for $beeponim or $beeponsignon, so you can
+just `/set beeponim 0', etc. to shut them off.
+
+
+How do I change the colors?
+
+The /setcol command will let you manipulate the colors. Type `/setcol' by itself
+to see what the current values are, then `/setcol buddy blue', etc.  to change
+them.
+
+
+Does naim support inverse/blinking text, or changing the background for specific
+  buddy types separately from the whole buddy list?
+
+At present, no. If enough people request that ability, I will add it to the next
+release.
+
+
+Why do some people I talk to have blue text? I tried to set all the foreground 
+  colors to white but I still get their text in blue.
+If the other person is using WinAIM and sets their text color to blue would naim
+  also show the text as blue?
+
+naim's default behavior is to honor <font color="..."> tags sent by other users,
+which can unfortunately lead to situations in which the other user has chosen a
+font color that clashes with your background. You can either use the /setcol
+command to change your own background, ask them to pick a less offensive
+foreground, or `/set color 0' in naim to disable <font> tag processing.
+
+
+
+===PROFILES
+
+How can I get someone's profile?
+
+naim includes a /whois (/wi, /info) command to retrieve all information AIM
+keeps on AIM users, including the profile. Unfortunately, AOL users' profiles
+are not visible to AIM users through any mechanism.
+
+
+How can I set my own profile?
+
+If you have a file called .naimprofile in your home directory when naim starts, 
+naim will use its contents instead of the built-in default. You can send SIGHUP 
+(killall -HUP naim) from the command line or type `/readprofile .naimprofile' 
+while naim is running to reload your .naimprofile.
+
+
+Is there a way to view a user's away message other than sending them an IM?
+
+Unfortunately, the TOC protocol does not appear to have such a capability. naim
+uses a workaround (it puts your away message in your profile when you go /away),
+so naim can view other naim users' away messages, but I am unfamiliar with any
+mechanism to retrieve a WinAIM, etc. user's message (other than sending them an
+IM and hoping they send back an autoresponse).
+
+
+How does Gaim get the away message when you do the GetInfo
+Why does naim use TOC instead of Oscar? Isn't Oscar newer?
+
+Many other AIM clients use an alternative protocol, Oscar, which does have this
+capability. The original AIM protocol was Oscar, and AOL later created TOC to
+serve the needs of their Java client. In 1998 AOL released a public document
+specifying details of the TOC protocol, for use by third-party clients such as
+naim. Since then, they have made many significant changes to the Oscar protocol
+to discourage third-party client maintainers from using Oscar. It is possible
+for third-party clients to use the Oscar protocol, but I would prefer to spend
+my time working on new features to spending it in keeping up with AOL's latest
+protocol revisions, rush-testing new releases, and publicizing the problem and
+availability of corrected versions.
+
+
+
+===BUDDY LIST
+
+How do I remove someone from my buddy list? /delbuddy isn't working.
+Can you make /delbuddy also close the buddy window?
+
+The /addbuddy and /delbuddy commands are used to manipulate your buddy list, not
+your window list. naim includes a feature called "autoquery" which makes naim
+open windows for buddies who are online when you sign on, and for buddies that
+sign on after you; this is why /addbuddy'ing someone causes a window to open for
+them. To disable this feature, type `/set autoquery 0'.
+
+If you /close a window for a buddy, naim will keep them on your buddy list; if
+they sign on again, naim will open a window for them. However, immediately after
+you /close a window, you can type /delbuddy to remove that individual from your
+buddy list.
+
+
+Every time I start up naim, your name (naim help) is always added to my buddy
+  list! How can I stop that?
+
+naim will read start-up commands from a file called .naimrc in your home
+directory. If this file doesn't exist, a built-in default is used instead, and
+one of the things it does is add my screen name to your buddy list. If you don't
+like this behavior, you can `/delbuddy naimhelp', then `/save' to write-out a
+.naimrc which will not contain me in your buddy list. If you have used /save in
+the past without first removing me, your .naimrc will include an addbuddy
+naimhelp, which you will need to remove manually (or /delbuddy me and type
+`/save' again).
+
+
+One of my contacts *always* shows up offline, even when he is talking to me. 
+  What is wrong?
+Some of my contacts show up as offline even though I can see them online from 
+  another client. What is wrong?
+
+There are several possibilities. If you have not received any messages from the 
+buddy:
+  1. Your buddy has you blocked. This will prevent your buddy from seeing you
+online, and will prevent you from seeing your buddy online. Neither of you will
+be able to send messages to each other or retrieve each other's profile. You can
+check for this by using the "/info buddyname" command from two accounts at the
+same time. If one "/info buddyname" fails while the other succeeds, it is likely
+your contact has blocked the account where /info fails.
+  2. You have your buddy blocked. Blocking has the same effects regardless of 
+which user is doing the blocking. You can check to see if you have blocked the 
+buddy by checking /ignore (which provides a list).
+  3. Your buddy has privacy mode enabled and has not added you to the allow 
+list. Privacy mode makes it so only people on a special "allow" list can 
+communicate with the user, and all other users are treated as if they are 
+blocked (as with 1. or 2.). Many clients use their buddy list as the "allow" 
+list. You can tell this is happening if you are able to "/info buddyname" from 
+one account but not from any others.
+
+If you have or have not received messages from the buddy in question, it may be 
+one of the following:
+  4. You have exceeded the maximum number of buddies for your account. At the
+time of writing, AOL's Instant Messenger servers limit each account to 200
+simultaneous buddies. The protocol does not declare this limit and the server
+does not emit an error message if you go over it; your buddy tracking simply
+starts behaving erratically. You can check for this by using the "/names"  
+command and manually counting entries.
+  5. Your buddy is using the "invisible" feature of AOL Instant Messenger. This 
+feature is similar to the "privacy" feature mentioned in 3., but only blocks 
+tracking information. Userinfo requests and private messages can still be sent 
+between clients. Unfortunately, this clashes with naim's automatic message 
+queueing features, and causes the unfortunate side effect of not being able to 
+send messages to "invisible" users. You can tell this is happening if you have 
+less than 200 buddies, a user is showing up as "offline", but the user is also 
+able to send you messages (and you are unable to reply).
+  6. The AIM service is experiencing technical difficulties and your session has 
+become unstable. This happens from time to time, and breaks naim's session 
+tracking ability in the same way as the "invisible" feature. You can not usually 
+confirm or rule out this possibility.
+
+
+
+===CONNECTIONS
+
+I read somewhere naim is an IRC client as well, is this true? Will it allow me 
+  to be on IRC and AIM simultaneously?
+Is there a way to juggle two open connections? I noticed that if I have an
+  AIM/TOC connection open, and then open an IRC connection, then I can't switch 
+  to any of the windows of the old connection with the normal keys (Tab, Home, 
+  and End).
+
+naim supports the TOC1 (AIM and ICQ), IRC (EFnet and Undernet), and SLCP (The
+lily CMC) protocols. naim also supports multiple simultaneous connections,
+allowing you to have as many open connections as your system supports.
+
+For example, type `/newconn Undernet IRC' to create a separate connection window
+for IRC called "Undernet", then `/connect nickname us.undernet.org' to connect.
+Use the Ins and Del keys to switch between connections. Your current connection
+will appear on the right side of the status bar next to the amount of time you
+have been connected. Active windows will show up regardless of which connection
+window you are in, and Ctrl-N will cross connections to jump to the next active
+window.
+
+
+Does naim support connecting to AIM through a proxy server?
+
+naim does not have specific proxy support, but all is not lost! The ProxyChains
+utility "allows you to use SSH, TELNET, VNC, FTP and any other Internet
+application from behind HTTP(HTTPS) and SOCKS(4/5) proxy servers. This
+'proxifier' provides proxy server support to any app." As of this writing,
+ProxyChains is available from http://proxychains.sf.net/ .
+
+
+Do you happen to know of any Yahoo!, MSN Messenger, etc. clients similar to 
+  naim?
+
+naim already supports IRC (http://www.irchelp.org/), and work is underway at
+adding Yahoo! and MSN Messenger support. Please contact me if you are anxiously
+waiting for these, or any other protocols, so our available energies can be
+directed where they are most desired.
+
+
+
+===LOGGING
+
+How does logging work in naim? Does is support per connection, or per 
+  buddy logging?
+
+To enable session logging for connection AIM, type `/set AIM:logfile aim.log'
+and then `/set AIM:log 1'.
+
+naim also includes support for per-window logging, which is always enabled. naim
+will log all window activity into a ~/.naimlog/<conn>/<name>.html file by
+default. For example, any messages you exchange with "naim help" will be logged
+to ~/.naimlog/AIM/naimhelp.html .
+
+
+
+===IRC
+
+Can I set modes in IRC?
+
+naim supports several basic channel-operator commands, including `/op', `/deop',
+`/kick', and `/topic', but is not intended to be used as a channel maintenance
+client (a task usually better left handled by "IRC bots," which usually will not
+ban their friends after getting into arguments with them).
+
+
+Can I at least send a raw command to the IRC server?
+
+At present, yes. Send a private message to the special target ":RAW", i.e.
+/msg :RAW MODE #channel +s
+Note that you will not be able to see the side-effects of most :RAW commands
+unless you have compiled naim with --enable-debug.
+
+
+
+===KEYBOARD INPUT
+
+Is there any way to get naim to not automatically escape the ampersand?
+Can I insert newlines into my messages?
+
+naim includes a "paste mode" which changes naim's escaping behavior. In normal
+input mode, the keys < > & are all translated to &lt; &gt; &amp;. When in paste
+mode, < > & are left alone, but multiple spaces are converted to &nbsp; and the
+Enter key becomes <br>. To toggle paste mode press `Ctrl-P'.
+
+
+
+===CONSOLE DISPLAY ISSUES
+
+My Linux console displays + and | instead of the line-drawing characters in the 
+  window list window. How do I fix this?
+My Linux console displays bold text as regular text. How do I fix this?
+My Linux console does not display line-drawing characters at all, leaving holes 
+  on my screen. How do I fix this?
+The window list window appears distorted on my screen, and does not slide off 
+  cleanly. How do I fix this?
+
+This is a deficiency in the Linux kernel's console driver related to UTF-8
+(internationalization) support. If you are using Red Hat Linux 8.0 or newer, or
+Fedora Core, or any other distribution based on either of these, you need to
+disable UTF-8 in your console session. Open /etc/sysconfig/i18n and remove the
+".UTF-8" suffix in the LANG setting and comment out the SYSFONT line entirely.
+Reboot your system. If you live outside of the U.S., I am sorry; you can either 
+have pretty text or internationalization support. Please lodge your complaint 
+with the Linux kernel maintainers; I have no control over this.
+
+
+
+===SUPPORT
+
+I think I've found a bug, what do I do?
+
+First, check the BUGS file that is distributed with naim. If you see the bug
+listed and marked with a high priority, keep a look out for new versions at the
+distribution site, or through your package maintainer.
+
+If your bug is marked low priority, then evaluate whether it is of high or low
+priority to you. If you feel this is a significant issue, go ahead and send me
+an email asking me to get a move on the fix. If it's just a minor inconvenience,
+the fact that it is in BUGS means I am aware of it already, so you won't need to
+bring it to my attention.
+
+If it is not in the BUGS file at all, contact the appropriate maintainer (which
+may be me) to let them know, and carbon copy the message to me so I can keep
+track of its resolution progress.
+
+
+How do I figure out who to contact for issues regarding naim?
+
+The README file should contain the most up-to-date contact information for the
+people responsible for naim (including the maintainers of various package
+distributions, for FreeBSD, Debian, etc.).
+
+
+
+If you have any questions or concerns regarding naim, feel free to contact me at
+Daniel Reed <n@ml.org> directly.
+
+If you are interested in the development of naim, feel free to subscribe to the
+naim-users mailing list, which I use to propose/discuss significant changes, and
+answer common problems. Simply send a blank email to
+<naim-users-subscribe@n.ml.org>, then reply to the confirmation message you will
+receive.
+
+If you would like to stay up-to-date with new releases, or critical updates,
+feel free to subscribe to the moderated naim-announce mailing list. Simply send
+a blank email to <naim-announce-subscribe@n.ml.org>, then reply to the
+confirmation message you will receive.
+
+
+
+Where can I download naim from?
+
+	http://naim.n.ml.org/
+
+
+
+I saw your away message on "RPI Dan," and I was curious, why do you
+  regret attending RPI?
+
+My away message on the "RPI Dan" account is:
+  For help using naim, IM naimhelp; to contact Daniel Reed to chat, IM
+  nmlorg; I regret attending the Rensselaer Polytechnic Institute
+  [http://shell.n.ml.org/n/why-regret].
+
+I was admitted to RPI and began attending as a full time student in August,
+1999, for the class of 2003. May 2003 Commencement has come and gone and I have
+not graduated, nor am I still considered a student. I do not have a degree, but
+my student loans are coming up due. Since shortly before May Commencement I have
+been trying to resolve the issues below with the administration of the
+university, but have so far been utterly unsuccessful.
+
+I was enrolled in an accelerated BS/MS program, which would allow me to receive
+my Bachelor's and Master's degrees in Computer Science in four years. Normally a
+student takes four years to receive a Bachelor's degree, and an additional one
+to two years to receive a Master's degree. The time requirements of the
+accelerated program made it difficult to take a specific course required for the
+BS. Going into my final semester at RPI, my faculty advisor recommended I
+petition for a waiver of this course, and focus on my research, as that was a
+fairly common situation. In fact, for 2 years I sat on the Undergraduate
+Curriculum Committee, the body that approves such waiver requests, so I was very
+familiar with the process. I have taken a dozen graduate courses (for my MS)
+which are not being counted towards anything (not even free electives), as I
+have already exceeded the raw credit requirements for my degree. In addition, I
+have been involved in many large software projects (such as naim), so I felt
+confident a waiver petition I filed would be approved.
+
+As you may have assumed, my waiver petition was rejected by the committee. After
+discussing the situation with the department's officers, I was informed that I
+could take any course named "software design" at a local community college and
+transfer it in, and then receive my degree from RPI. What I find disconcerting,
+however, is that they are willing to transfer in credits from any other college,
+but not those awarded from their own graduate program.
+
+During follow-up conversations, I was informed by one administrator that no
+transfer credits would be accepted by the university, and that my only option
+was to take the specific required course at RPI in the Fall semester. Another
+administrator went into my academic records and marked the course as already
+having been waived. Yet another administrator has forwarded paperwork to me
+detailing the procedure for transferring credits. At this point, most
+administrators who have been involved in the past no longer return my phone
+calls or requests for conferences, and it is impossible for me to ascertain what
+my academic standing is, nor how to proceed if it continues to be disfavorable.
+
+This is unfortunately merely the latest in a series of problems I have had at or
+in relationship to RPI. In the four years I have attended RPI, I estimate that I
+have spent one full year on my research interests (including the development of
+naim), one half-year on academic persuits (course work), one half-year on social
+entertainment (movies, get-togethers), and fully one year engaging the staff and
+administration of the school.  Many of my research interests in networking,
+quality-of-life improvements, and general utility have been hampered by a lack
+of support, or outright opposition from various departments that serve support
+(rather than administrative) roles in the school. During my time at RPI, perhaps
+a dozen large projects I was involved in were stalled indefinitely thanks to the
+undue time constraints necessary to "fight" the staff or administration. I never
+allowed these set-backs to discourage me, and I have been proud to use the name
+"RPI Dan" on AIM since my freshman year. For my tenacity, I have been presented
+with several awards, including the Rensselaer Founders' Award of Excellence, an
+award for a student's particular contributions. This latest set-back, however,
+is quite serious, and has the potential to radically alter my future in terms of
+earning potential and quality of life.

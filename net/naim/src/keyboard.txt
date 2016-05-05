@@ -1,0 +1,99 @@
+To know what will happen if you hit a specific key on your keyboard
+right now, use the command `/bind` to see the full list of keybindings
+
+KEY NAMES.
+
+To bind a key when pressed with the control key, prepend the
+letter on that key with a ^
+To bind a key when pressed with the alt or meta key, prepend
+the letter on that key with a M-
+If the key is to be pressed with alt and meta, prepend the
+letter on the key with M-^
+
+Capitalization of key names does not count.
+
+These are some cryptically named keys
+DC = the delete key (not the backspace key)
+IC = the insert key
+NPAGE = page down
+PPAGE = page up
+
+Here are other useful keys that should be self explanatory.
+TAB SPACE ESCAPE DOWN UP LEFT RIGHT HOME BACKSPACE ENTER END BTAB
+There are other weird keys that you can look up in the source code
+in conio_keys.h if your keyboard has weird keys.
+
+KEYBINDING COMMANDS.
+You can execute the following commands (I call them :commands)
+as the result of a key press. You an also execute /commands
+(see /help commands) for more information.
+
+:BUDDY_NEXT                       Move to the previous and next buddies
+:BUDDY_PREV                       in your buddy list.
+
+:BUDDY_SCROLL_BACK                These scroll the conversation window
+:BUDDY_SCROLL_FORWARD             forward and backward by a page, so
+                                  you can see what you and your buddy 
+                                  said earlier in the conversation.
+
+:CONN_NEXT                        Move to the previous and next 
+:CONN_PREV                        connections in your buddy list
+
+:INPUT_BACKSPACE                  General editing keys while you're
+:INPUT_CURSOR_END                 composing lines to send.
+:INPUT_CURSOR_HOME                :INPUT_ENTER sends the message
+:INPUT_CURSOR_HOME_END
+:INPUT_CURSOR_LEFT
+:INPUT_CURSOR_RIGHT
+:INPUT_DELETE
+:INPUT_ENTER
+
+:INPUT_ENT_BOLD            Bold and Italic formatting
+:INPUT_ENT_ITALIC
+
+:INPUT_KILL                Erases everything on the current input line
+:INPUT_KILL_EOL            Erases everything after the cursor
+:INPUT_KILL_WORD           Erases the whole word, but only up to the 
+                           cursor. (To erase a whole word, put the 
+                           cursor in the space immediately preceding
+                           that word.)
+                           
+
+:INPUT_PASTE               Using this command enters paste mode, 
+                           where you may enter a long multi-line 
+                           message. To send that message, hit the
+                           paste-mode key again, then hit your usual
+                           send key (:INPUT_ENTER)
+
+:INPUT_SCROLL_BACK         These two commands can be used to scroll
+:INPUT_SCROLL_FORWARD      through a history of what you have typed
+                           on the input line, so you can send those
+                           lines of text, or enter the same commands
+                           again.
+
+:INPUT_SYM_AMP             The ampersand, greater than, and less than
+:INPUT_SYM_GT              symbols have special uses in HTML. Because
+:INPUT_SYM_LT              naim uses HTML for formatting, naim is bound 
+                           by default so that < > and & generate the
+                           correct HTML codes to show a literal < > or &
+                           These are the commands behind that binding.
+
+:REDRAW                    This redraws the screen
+
+:SPACE_OR_NBSP             This inserts a space on the input line
+                           (by default, it is bound to the space bar)
+
+:STATUS_DISPLAY            Displays the status window until you hit
+                           :STATUS_DISPLAY again
+
+:STATUS_POKE               Displays the status window for a few seconds
+
+:TAB                       I haven't figured out how :TAB_BUDDY_NEXT is
+:TAB_BUDDY_NEXT            different from :BUDDY_NEXT, but :TAB is the 
+                           will insert the HTML control codes for 5 
+                           non-breaking spaces into your input line,
+                           so that you can 
+
+:WINLIST_HIDE              Would you like to see the buddy list? This 
+                           toggles through its three states: always 
+                           visible, always hidden, and auto-hiding

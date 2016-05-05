@@ -1,0 +1,247 @@
+Automatically generated list of commands for naim.
+
+COMMAND: jump
+  DESCRIPTION: Go to the specified window or the next 'active' one
+  SYNTAX: /jump [winname]
+
+COMMAND: msg
+  ALIASES: m, im
+  DESCRIPTION: Send a message; as in /msg naimhelp naim is cool!
+  SYNTAX: /msg name message
+
+COMMAND: addbuddy
+  ALIASES: add, friend, groupbuddy
+  DESCRIPTION: Add someone to your buddy list or change their group membership
+  SYNTAX: /addbuddy account [group [realname]]
+
+COMMAND: exit
+  ALIASES: quit
+  DESCRIPTION: Disconnect and exit naim
+  SYNTAX: /exit
+
+COMMAND: save
+  DESCRIPTION: Write current settings to ~/.naimrc to be loaded at startup
+  SYNTAX: /save [filename]
+
+COMMAND: connect
+  DESCRIPTION: Connect to a service
+  SYNTAX: /connect [name [server [port]]]
+
+COMMAND: jumpback
+  DESCRIPTION: Go to the previous window
+  SYNTAX: /jumpback
+
+COMMAND: info
+  ALIASES: whois, wi
+  DESCRIPTION: Retrieve a user profile
+  SYNTAX: /info [name]
+
+COMMAND: eval
+  DESCRIPTION: Evaluate a command with $-variable substitution
+  SYNTAX: /eval script
+
+COMMAND: say
+  DESCRIPTION: Send a message to the current window; as in /say I am happy
+  SYNTAX: /say message
+
+COMMAND: me
+  DESCRIPTION: Send an 'action' message to the current window; as in /me is happy
+  SYNTAX: /me message
+
+COMMAND: open
+  ALIASES: window
+  DESCRIPTION: Open a query window
+  SYNTAX: /open name
+
+COMMAND: close
+  ALIASES: endwin, part
+  DESCRIPTION: Close a query window or leave a discussion
+  SYNTAX: /close [winname]
+
+COMMAND: closeall
+  DESCRIPTION: Close stale windows for offline buddies
+  SYNTAX: /closeall
+
+COMMAND: ctcp
+  DESCRIPTION: Send Client To Client Protocol request to someone
+  SYNTAX: /ctcp name [requestname [message]]
+
+COMMAND: clear
+  DESCRIPTION: Temporarily blank the scrollback for the current window
+  SYNTAX: /clear
+
+COMMAND: clearall
+  DESCRIPTION: Perform a /clear on all open windows
+  SYNTAX: /clearall
+
+COMMAND: load
+  DESCRIPTION: Load a command file (such as .naimrc)
+  SYNTAX: /load filename
+
+COMMAND: away
+  DESCRIPTION: Set or unset away status
+  SYNTAX: /away [message]
+
+COMMAND: names
+  ALIASES: buddylist
+  DESCRIPTION: Display buddy list or members of a chat
+  SYNTAX: /names [chat]
+
+COMMAND: join
+  DESCRIPTION: Participate in a chat
+  SYNTAX: /join chat [key]
+
+COMMAND: namebuddy
+  DESCRIPTION: Change the real name for a buddy
+  SYNTAX: /namebuddy name [realname]
+
+COMMAND: tagbuddy
+  ALIASES: tag
+  DESCRIPTION: Mark a buddy with a reminder message
+  SYNTAX: /tagbuddy name [note]
+
+COMMAND: delbuddy
+  DESCRIPTION: Remove someone from your buddy list
+  SYNTAX: /delbuddy [name]
+
+COMMAND: op
+  DESCRIPTION: Give operator privilege
+  SYNTAX: /op name
+
+COMMAND: deop
+  DESCRIPTION: Remove operator privilege
+  SYNTAX: /deop name
+
+COMMAND: topic
+  DESCRIPTION: View or change current chat topic
+  SYNTAX: /topic [topic]
+
+COMMAND: kick
+  DESCRIPTION: Temporarily remove someone from a chat
+  SYNTAX: /kick name [reason]
+
+COMMAND: invite
+  DESCRIPTION: Invite someone to a chat
+  SYNTAX: /invite name [chat]
+
+COMMAND: help
+  ALIASES: about
+  DESCRIPTION: Display topical help on using naim
+  SYNTAX: /help [topic]
+
+COMMAND: unblock
+  ALIASES: unignore
+  DESCRIPTION: Remove someone from the ignore list
+  SYNTAX: /unblock name
+
+COMMAND: block
+  DESCRIPTION: Server-enforced /ignore
+  SYNTAX: /block name [reason]
+
+COMMAND: ignore
+  DESCRIPTION: Ignore all private/public messages
+  SYNTAX: /ignore [name [reason]]
+
+COMMAND: chains
+  ALIASES: tables
+  DESCRIPTION: Manipulate data control tables
+  SYNTAX: /chains [chain]
+
+COMMAND: filter
+  DESCRIPTION: Manipulate content filters
+  SYNTAX: /filter [table [target [action]]]
+
+COMMAND: warn
+  DESCRIPTION: Send a warning about someone
+  SYNTAX: /warn name
+
+COMMAND: nick
+  DESCRIPTION: Change or reformat your name
+  SYNTAX: /nick name
+
+COMMAND: echo
+  DESCRIPTION: Display something on the screen with $-variable expansion
+  SYNTAX: /echo script
+
+COMMAND: readprofile
+  DESCRIPTION: Read your profile from disk
+  SYNTAX: /readprofile filename
+
+COMMAND: accept
+  DESCRIPTION: EXPERIMENTAL Accept a file transfer request in the current window
+  SYNTAX: /accept filename
+
+COMMAND: offer
+  DESCRIPTION: EXPERIMENTAL Offer a file transfer request to someone
+  SYNTAX: /offer name filename
+
+COMMAND: setcol
+  DESCRIPTION: View or change display colors
+  SYNTAX: /setcol [eventname [colorname [colormodifier]]]
+
+COMMAND: setpriv
+  DESCRIPTION: Change your privacy mode
+  SYNTAX: /setpriv mode
+
+COMMAND: bind
+  DESCRIPTION: View or change key bindings
+  SYNTAX: /bind [keyname [script]]
+
+COMMAND: alias
+  DESCRIPTION: Create a new command alias
+  SYNTAX: /alias commandname script
+
+COMMAND: set
+  DESCRIPTION: View or change the value of a configuration or session variable; see /help settings
+  SYNTAX: /set [varname [value [dummy]]]
+
+COMMAND: newconn
+  DESCRIPTION: Open a new connection window
+  SYNTAX: /newconn [label [protocol]]
+
+COMMAND: delconn
+  DESCRIPTION: Close a connection window
+  SYNTAX: /delconn [label]
+
+COMMAND: server
+  DESCRIPTION: Connect to a service
+  SYNTAX: /server [server [port]]
+
+COMMAND: disconnect
+  DESCRIPTION: Disconnect from a server
+  SYNTAX: /disconnect
+
+COMMAND: winlist
+  DESCRIPTION: Switch the window list window between always visible or always hidden or auto-hidden
+  SYNTAX: /winlist [visibility]
+
+COMMAND: exec
+  DESCRIPTION: Execute a shell command; as in /exec -o uname -a
+  SYNTAX: /exec command
+
+COMMAND: detach
+  DESCRIPTION: Disconnect from the current session
+  SYNTAX: /detach
+
+COMMAND: dlsym
+  SYNTAX: /dlsym symbol
+
+COMMAND: modlist
+  DESCRIPTION: Search for and list all potential and resident naim modules
+  SYNTAX: /modlist
+
+COMMAND: modload
+  DESCRIPTION: Load and initialize a dynamic module
+  SYNTAX: /modload module [options]
+
+COMMAND: modunload
+  DESCRIPTION: Deinitialize and unload a resident module
+  SYNTAX: /modunload module
+
+COMMAND: resize
+  DESCRIPTION: Resize all windows
+  SYNTAX: /resize [height]
+
+COMMAND: status
+  DESCRIPTION: Connection status report
+  SYNTAX: /status [connection]

@@ -1,0 +1,57 @@
+Nu 2 U
+New To Unix
+ /\   \ \   /
+/  \  /  \/
+
+Welcome to the naim New User Hazard Course. Through this course my goal is 
+to help you familiarize yourself with naim's user interface. This course 
+does not depend on any pre-configuration, so don't worry if you've heard 
+of a ``.naimrc'' file and haven't set one up yet (we'll set one up 
+together towards the end of the course). If you would like to jump right 
+into naim, I won't get in your way. However, if you'd like to continue the 
+course, type ``/newconn Hazard Course'' and press Enter.
+
+===== Welcome_to_the_course =====
+Welcome again to the naim New User Hazard Course. If you have arrived here by mistake, just type ``/delconn'' and press Enter to exit. Otherwise, let's get started!
+-
+*
+* Commands
+*
+In order to talk to naim, you will need to speak in a way it understands. naim is not capable of holding thoughtful conversation (at least not yet), and due to poor self esteem, does not like to think on its own. Therefore, everything you say to naim will be a command to perform some action. naim has been taught some limited English, but would not presume to try and guess as to when you were talking to it and when you were trying to chat with a buddy online. Therefore, whenever you are online, naim will expect you to let it know you are talking to it by prefixing your statement with a forward slash, which looks like ``/''. Let's test this by telling naim to move on to the next page. Type ``/Show me the next page.'' and press Enter.
+-
+===== Commands_Intro =====
+-
+As you can see, naim interpreted what you typed as a command, but had no idea what you wanted it to do.
+naim knows some English, but only enough to get by, so to effectively talk to naim you will need to familiarize yourself with the commands it knows (and the abbreviations it knows them by). Right off the bat you should be able to think of at least one abbreviation, /NEWCONN, the one that took you here. You may have also noticed me mention /DELCONN to your classmates which would take them away from here. These are the abbreviations for the New Connection and Delete Connection commands. There are dozens of commands naim understands, and I could list all of the commands and their abbreviations here, then quiz you on them later to make sure you have memorized them, but instead I'll give you a neat trick. If you keep in mind that naim knows all of the commands it understands, the trick should be pretty easy: Ask naim! And what is it you are asking for? Help!
+Let's try asking naim for help before continuing with the course. Type ``/Help'' and press Enter.
+===== Commands_Getting_Help =====
+As you can see, without asking for anything in particular, naim tries to be as helpful as possible and touches on all things of interest. Let's ask for help on the commands naim understands.
+Type ``/Help Commands'' and press Enter.
+===== Commands_Find_it_yourself =====
+Wow, that's an awful lot of commands. Too many commands, in fact, since most of the list has scrolled off our screen. The last paragraph of the help suggests the solution, however: Use the scroll keys, located on the numeric keypad along the right side of your keyboard. Whenever you are in naim, the key marked PgUp (for Page Up) will cause the screen to move "upwards," allowing you to see messages that have been replaced by newer ones. The key marked PgDn (for Page Down) will scroll back down to the newer messages.
+Use these keys to try and find the command you would use to Add a Buddy to your buddy list, then use it to add naimhelp to your buddy list to continue (Hint: it's near the top).
+===== Configuration_Variables =====
+-
+*
+* Configuration Variables
+* 
+naim is a friendly program, and like all friendly programs, wants to make sure you get exactly what you want. Therefore almost every aspect of naim's appearance is changeable, from the types of messages it displays down to the colors it uses. Most of the configurable parts of naim are controlled by "variables" which you can manipulate using the ``/set'' command. For example, you may have noticed the white bar below that's been letting you know where you've been in the tutorial. This is called the status bar, and is controlled by the $statusbar variable.
+Type ``/set'' to view a list of existing variables, then type ``/set statusbar "Hello there"'' to continue.
+-
+===== s1 =====
+-
+*
+* The Status Display
+*
+naim is pretty talkative, and lets you know whenever interesting things happen, such as when your buddies sign on or when someone says something to you. However, there are some things you might like to be aware of without wanting repeated messages about them. naim includes a status dislay bar along the bottom of your screen, right above where commands you type appear. Right now it should show you the phrase ``Hello there,'' but we're going to make it a bit more informative together.
+The first thing we're going to want to display is the current time. To do that, type ``/set statusbar " %H:%M "''.
+-
+===== s2 =====
+The New User Hazard Course is not yet complete, but you should have enough basic skills to use naim on your own.
+Feel free to check out http://128.113.139.111/~n/naim-0.11.4/FAQ for more quickstart information. Once you sign on, you should have a buddy window opened for naim help, the authour of naim. Feel free to let him know if you have any questions or suggestions for naim.
+Type ``/continue'' to restore your statusbar.
+===== s3 =====
+To proceed from this point, type ``/delconn'' to close this connection window, then type ``/connect yourscreenname'' to sign on to AIM.
+===== s4 =====
+-
+... piece $statusbar together piece by piece, explain the auto-hiding buddy list, explain the status window and how it hides itself, ...

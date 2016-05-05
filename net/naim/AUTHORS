@@ -1,0 +1,30 @@
+AUTHOR
+       Daniel Reed <n@ml.org>, with notable contributions  from  Ian  Gulliver
+       <ian@penguinhosting.net> and Joshua Wise <joshua@joshuawise.com>.
+
+
+BUG REPORTS
+       Before reporting any bugs, please review Simon Tatham (of PuTTY)'s won-
+       derful essay, How to Report Bugs Effectively at http://www.chiark.gree-
+       nend.org.uk/~sgtatham/bugs.html.
+
+       To  report  issues  with  the front end (things having to do with buddy
+       windows, colors, .naimrc, and anything else  "user  oriented")  contact
+       the naim maintainer, Daniel Reed <n@ml.org>.
+
+       To  report issues with the protocol library (problems connecting, error
+       messages while connected, and anything else not a  part  of  the  front
+       end)  contact the FireTalk maintainer, now also Daniel Reed <n@ml.org>.
+
+       To  report  issues  with  the  FreeBSD  port,  contact  Ryan  T.   Dean
+       <rtdean@cytherianage.net>.
+
+
+FEATURE REQUESTS
+       If  you  would  like  to  suggest  new features or significant behavior
+       changes, subscribe to the naim-users mailing list and suggest it there.
+       I  get  a  lot  of mail every day, and non-bug reports get a fairly low
+       priority. The best way to make sure something you want  is  implemented
+       is  to  post  it  to naim-users whenever I ask for them on the list. To
+       subscribe, send a blank email  to  <naim-users-subscribe@n.ml.org>  and
+       reply to the confirmation message you will receive.

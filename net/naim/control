@@ -1,0 +1,7 @@
+Package: naim
+Version: 0.11.8.3.2
+Description: Console AIM, ICQ, IRC, and Lily client.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: GPLv2
+Architecture: mipsel
+Installed-Size: 2338882

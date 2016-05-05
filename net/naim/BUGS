@@ -1,0 +1,46 @@
+F4 (or whatever other key) doesn't work. What do I do?
+
+This is likely an issue with your terminal emulator program (PuTTy, SecureCRT,
+Commercial SSH, etc.) or with your $TERM environment variable.  If some keys
+work while others generate strange characters in your input window, the problem
+is likely with your $TERM or your system's termcap file. Try re-running naim
+with $TERM set to "linux", and if that doesn't work, ask your system
+administrator for terminal types that are compatible with ncurses.
+
+If pressing control keys appear to do nothing, your terminal emulator program
+may be catching them, rather than sending them to your shell.  Review your
+program's documentation to determine if there is a way to pass control (or
+"meta") keys through to remote sessions.
+
+If that does not resolve the issue, try using the /bind command to bind a key
+that does work to the action you want taken. For example, to have `Ctrl-D'
+perform the same operation as `F4', you would type `/bind' to find out that `F4'
+is bound to `:WINLIST_HIDE', then type `/bind ^D :WINLIST_HIDE' to bind
+`Ctrl-D'.
+
+
+
+What are "assertion errors," and how do I avoid them?
+
+Unfortunately, this almost certainly a bug. Assertions are a tool used in
+computer programming to declare some condition as "true," incapable of being
+false, in order to catch bugs elsewhere in the software. naim has an assertion
+stating that if it receives notification that it has successfully connected to a
+server, then it can not already be connected (`conn->online == 0'), but FireTalk
+is known to generate connection notifications without first generating a
+disconnect notice. This is a medium priority issue with FireTalk. There is no
+work-around at this time.
+
+
+
+Why are there two cursors on my input line?
+Why does naim use its own cursor rather than the so-called "hardware cursor?"
+
+ncurses uses many optimizations for screen updates, and is able to redraw the
+screen more efficiently if it can control the location of the "hardware cursor."
+By making the hardware cursor invisible, and emulating its presence in software,
+naim allows ncurses to redraw the screen more optimally. Some terminal
+emulators, such as rxvt, do not allow naim to completely disable the visibility
+of the hardware cursor, and will show extra symbols on the screen. In most of
+these situations, manipulating the $TERM environment variable will cause the
+hardware cursor to disappear.
