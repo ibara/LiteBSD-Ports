@@ -3,7 +3,7 @@
 #
 
 # Hook up all gamess ports
-SUBDIR=	an aop cgames cmatrix cpat curseofwar \
+SUBDIR=	2048 an aop cgames cmatrix cpat curseofwar \
 	ioccc life snowcrash starlanes sudoku
 
 .include <bsd.subdir.mk>

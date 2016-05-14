@@ -1,0 +1,7 @@
+Package: 2048
+Version: 20150806
+Description: Console version of 2048 game.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: MIT
+Architecture: mipsel
+Installed-Size: 58460
