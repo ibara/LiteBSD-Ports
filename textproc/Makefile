@@ -3,6 +3,6 @@
 #
 
 # Hook up all textproc ports
-SUBDIR=	dos2unix
+SUBDIR=	discount dos2unix
 
 .include <bsd.subdir.mk>

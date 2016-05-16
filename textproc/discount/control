@@ -1,0 +1,7 @@
+Package: discount
+Version: 2.2.0
+Description: Implementation of markdown in C.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 742121
