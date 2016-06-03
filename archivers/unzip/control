@@ -1,0 +1,7 @@
+Package: unzip
+Version: 1.22
+Description: Minimal unzip program from NetBSD and FreeBSD.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: BSD
+Architecture: mipsel
+Installed-Size: 145264
