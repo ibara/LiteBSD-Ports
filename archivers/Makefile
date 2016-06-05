@@ -3,6 +3,6 @@
 #
 
 # Hook up all archivers ports
-SUBDIR=	fastlz unzip
+SUBDIR=	fastlz pdlzip unzip
 
 .include <bsd.subdir.mk>

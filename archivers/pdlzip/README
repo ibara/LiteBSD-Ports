@@ -1,0 +1,62 @@
+Description
+
+Pdlzip is a lossless data compressor with a user interface similar to
+the one of lzip, bzip2 or gzip.
+
+Pdlzip uses the lzip file format; the files produced by pdlzip are
+(hope)fully compatible with lzip-1.4 or newer. Pdlzip is in fact a
+permissively licensed implementation of the lzip data compressor,
+intended for those who can't distribute (or even use) GPL licensed Free
+Software. (The name of pdlzip comes from "public domain lzip").
+
+The lzip file format is designed for data sharing and long-term
+archiving, taking into account both data integrity and decoder
+availability:
+
+   * The lzip format provides very safe integrity checking and some data
+     recovery means. The lziprecover program can repair bit-flip errors
+     (one of the most common forms of data corruption) in lzip files,
+     and provides data recovery capabilities, including error-checked
+     merging of damaged copies of a file.
+
+   * The lzip format is as simple as possible (but not simpler). The
+     lzip manual provides the code of a simple decompressor along with a
+     detailed explanation of how it works, so that with the only help of
+     the lzip manual it would be possible for a digital archaeologist to
+     extract the data from a lzip file long after quantum computers
+     eventually render LZMA obsolete.
+
+   * Additionally the lzip reference implementation is copylefted, which
+     guarantees that it will remain free forever.
+
+A nice feature of the lzip format is that a corrupt byte is easier to
+repair the nearer it is from the beginning of the file. Therefore, with
+the help of lziprecover, losing an entire archive just because of a
+corrupt byte near the beginning is a thing of the past.
+
+Pdlzip is also able to decompress legacy lzma-alone (.lzma) files.
+Lzma-alone is a very bad format; it is essentially a raw LZMA stream.
+If you keep any lzma-alone files, it is advisable to recompress them to
+lzip format. Lziprecover can convert lzma-alone files to lzip format
+without recompressing.
+
+Pdlzip is written in C.
+
+Pdlzip includes public domain (de)compression code from the LZMA SDK
+(Software Development Kit) written by Igor Pavlov.
+
+I would not write non-copylefted software unless it is too simple to be
+worth copylefting it, but one of the uses of the lzip format is the
+interchange of information, and it is therefore desirable that even the
+users of the most non-free platforms can share lzip files with everybody
+else.
+
+
+Copyright (C) 2010-2016 Antonio Diaz Diaz.
+
+This file is free documentation: you have unlimited permission to copy,
+distribute and modify it.
+
+The file Makefile.in is a data file used by configure to produce the
+Makefile. It has the same copyright owner and permissions that configure
+itself.

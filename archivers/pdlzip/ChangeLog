@@ -1,0 +1,74 @@
+2016-05-16  Antonio Diaz Diaz  <antonio@gnu.org>
+
+	* Version 1.7 released.
+	* main.c: Added new option '-a, --trailing-error'.
+	* main.c (main): Delete '--output' file if infd is a terminal.
+	* main.c (main): Don't use stdin more than once.
+	* configure: Avoid warning on some shells when testing for gcc.
+	* testsuite/check.sh: A POSIX shell is required to run the tests.
+	* testsuite/check.sh: Don't check error messages.
+
+2015-05-26  Antonio Diaz Diaz  <antonio@gnu.org>
+
+	* Version 1.6 released.
+	* main.c (close_and_set_permissions): Behave like 'cp -p'.
+	* Makefile.in: Added new targets 'install*-compress'.
+
+2013-09-14  Antonio Diaz Diaz  <antonio@gnu.org>
+
+	* Version 1.5 released.
+	* main.c (show_header): Don't show header version in lzip mode.
+	* Minor fixes.
+
+2013-05-27  Antonio Diaz Diaz  <antonio@gnu.org>
+
+	* Version 1.4 released.
+	* main.c: Added new option '-f, --force'.
+	* main.c: Added new option '-F, --recompress'.
+	* main.c: Added new option '-k, --keep'.
+	* main.c: Added new option '-o, --output'.
+	* main.c: Accept more than one file in command line.
+	* Decompression time has been reduced by 5%.
+	* main.c: '--test' no longer needs '/dev/null'.
+	* Fixed return value of '-d' and '-t' in case of data error.
+	* main.c: Changed info shown at verbosity levels 2 and 3.
+	* Ignore option '-n, --threads' for compatibility with plzip.
+	* configure: Options now accept a separate argument.
+	* configure: 'datadir' renamed to 'datarootdir'.
+	* Makefile.in: Added new target 'install-as-lzip'.
+	* Makefile.in: Added new target 'install-bin'.
+
+2012-01-03  Antonio Diaz Diaz  <ant_diaz@teleline.es>
+
+	* Version 1.3 released.
+	* Small change in '--help' output and man page.
+	* Changed quote characters in messages as advised by GNU Standards.
+	* main.c: Set stdin/stdout in binary mode on OS2.
+
+2011-01-05  Antonio Diaz Diaz  <ant_diaz@teleline.es>
+
+	* Version 1.2 released.
+	* Code cleanup. Minor fixes.
+
+2010-08-19  Antonio Diaz Diaz  <ant_diaz@teleline.es>
+
+	* Version 1.1 released.
+	* main.c: Added support for decompression of lzma-alone files.
+	* main.c: Match length limit set by options -1 to -8 has been
+	  reduced to extend range of use towards gzip. Lower numbers now
+	  compress less but faster. (-1 now takes 43% less time for only
+	  20% larger compressed size).
+	* Code has been converted to 'C89 + long long' from C99.
+
+2010-04-05  Antonio Diaz Diaz  <ant_diaz@teleline.es>
+
+	* Version 1.0 released.
+	* Initial release.
+	* Using LZMA SDK 9.10 (public domain) from Igor Pavlov.
+
+
+Copyright (C) 2010-2016 Antonio Diaz Diaz.
+
+This file is a collection of facts, and thus it is not copyrightable,
+but just in case, you have unlimited permission to copy, distribute and
+modify it.

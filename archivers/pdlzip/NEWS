@@ -1,0 +1,11 @@
+Changes in version 1.7:
+
+The option "-a, --trailing-error", which makes pdlzip exit with error
+status 2 if any remaining input is detected after decompressing the last
+member, has been added.
+
+When decompressing, the file specified with the '--output' option is now
+deleted if the input is a terminal.
+
+A harmless check failure on Windows, caused by the failed comparison of
+a message in text mode, has been fixed.
