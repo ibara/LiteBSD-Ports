@@ -4,4 +4,4 @@ Description: Updated version of the Whetstone benchmark in C.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: BSD-like
 Architecture: mipsel
-Installed-Size: 97408
+Installed-Size: 82980

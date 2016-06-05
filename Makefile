@@ -9,7 +9,7 @@ SUBDIR=	archivers benchmarks comms devel editors games \
 # There are here so we don't have to .include <bsd.port.mk>
 packages: package
 
-clean-work: cleandir
+clean-work: clean cleandir
 	find . -type d -name 'work' -exec rm -rf {} +
 
 clean-package clean-packages:

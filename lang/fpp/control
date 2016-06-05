@@ -4,4 +4,4 @@ Description: FORTRAN Preprocessor from Sun.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: May use and distribute freely, but read fpp_license.txt carefully
 Architecture: mipsel
-Installed-Size: 146286
+Installed-Size: 128068

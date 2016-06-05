@@ -4,4 +4,4 @@ Description: Small HTTP server for low and medium traffic sites.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: BSD
 Architecture: mipsel
-Installed-Size: 295542
+Installed-Size: 287246

@@ -4,4 +4,4 @@ Description: MIME base64 and uuencode file decoder.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: BSD
 Architecture: mipsel
-Installed-Size: 92372
+Installed-Size: 88224

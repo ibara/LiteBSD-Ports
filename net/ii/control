@@ -4,4 +4,4 @@ Description: Minimalist FIFO and filesystem-based IRC client
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: MIT
 Architecture: mipsel
-Installed-Size: 175497
+Installed-Size: 152106

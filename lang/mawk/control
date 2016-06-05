@@ -4,4 +4,4 @@ Description: Fast interpreter for the AWK programming language.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: GPLv2 only
 Architecture: mipsel
-Installed-Size: 328176
+Installed-Size: 220924

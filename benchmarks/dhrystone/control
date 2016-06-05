@@ -3,4 +3,4 @@ Version: 2.1
 Description: Dhrystone benchmark program written in C.
 Maintainer: Brian Callahan <bcallah@devio.us>
 Architecture: mipsel
-Installed-Size: 88368
+Installed-Size: 73916

@@ -4,4 +4,4 @@ Description: Lightweight Scheme implementation of a subset of R5RS.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: BSD
 Architecture: mipsel
-Installed-Size: 181645
+Installed-Size: 163877

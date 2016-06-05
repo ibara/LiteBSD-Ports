@@ -4,4 +4,4 @@ Description: Minimalist HTTP/1.0 server for static content
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: BSD
 Architecture: mipsel
-Installed-Size: 93352
+Installed-Size: 78028

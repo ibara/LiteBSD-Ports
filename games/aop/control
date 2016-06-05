@@ -4,4 +4,4 @@ Description: Arcade game in 64 lines of code.
 Maintainer: Brian Callahan <bcallah@devio.us>
 License: GPLv2 only
 Architecture: mipsel
-Installed-Size: 216784
+Installed-Size: 212636
