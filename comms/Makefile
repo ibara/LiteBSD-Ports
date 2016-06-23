@@ -3,6 +3,6 @@
 #
 
 # Hook up all net ports
-SUBDIR=	gkermit picocom zmtx-zmrx
+SUBDIR=	ekermit gkermit picocom zmtx-zmrx
 
 .include <bsd.subdir.mk>
