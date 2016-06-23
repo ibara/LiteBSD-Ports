@@ -1,0 +1,7 @@
+Package: daytimed
+Version: 20160704
+Description: Internet daemon that returns human readable date and time.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: ISC
+Architecture: mipsel
+Installed-Size: 135670

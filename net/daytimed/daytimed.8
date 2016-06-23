@@ -1,0 +1,60 @@
+.\"
+.\"     daytimed - standalone daytime protocol server
+.\"     Copyright (c) 2015-2016 Brian Callahan <bcallah@openbsd.org>
+.\"
+.\"     Permission to use, copy, modify, and distribute this software for any
+.\"     purpose with or without fee is hereby granted, provided that the above
+.\"     copyright notice and this permission notice appear in all copies.
+.\"
+.\"     THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\"     WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\"     MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\"     ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\"     WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\"     ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\"     OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.Dd July 4, 2016
+.Dt DAYTIMED 8
+.Os
+.Sh NAME
+.Nm daytimed
+.Nd standalone daytime protocol server
+.Sh SYNOPSIS
+.Nm
+.Op Fl u
+.Sh DESCRIPTION
+.Nm
+is a standalone server which implements the daytime protocol as specified in
+.Sy RFC 867 .
+It listens on TCP and, optionally, UDP port 13.
+.Pp
+.Nm
+returns the date and time in a format identical to the
+.Xr date 1
+command on OpenBSD executed without options.
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl u
+Enable listening on UDP.
+.El
+.Sh SEE ALSO
+.Xr date 1 ,
+.Xr ntpd 8
+.Sh STANDARDS
+.Rs
+.%A J. Postel
+.%D May 1983
+.%R RFC 867
+.%T Daytime Protocol
+.Re
+.Sh AUTHOR
+.Nm
+was written by
+.An Brian Callahan Aq Mt bcallah@openbsd.org .
+.Sh CAVEATS
+.Nm
+should not be used in situations where high accuracy is needed.
+.Pp
+UDP access should not be enabled on untrusted networks.
