@@ -1,0 +1,7 @@
+Package: retro12
+Version: 2018.1
+Description: Concatenative, stack based language with roots in Forth.
+Maintainer: Brian Callahan <bcallah@devio.us>
+License: ISC
+Architecture: mipsel
+Installed-Size: 360392
